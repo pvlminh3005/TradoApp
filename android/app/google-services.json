@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "789905111169",
+    "project_id": "tradoapp-e1100",
+    "storage_bucket": "tradoapp-e1100.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789905111169:android:87333ecfb1f57be6f93580",
+        "android_client_info": {
+          "package_name": "com.example.trado_app_uit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789905111169-97740kkkp9l1ic44ku4vc45dbvnktknq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trado_app_uit",
+            "certificate_hash": "2e5c8ec3a0712b505bf60e263139cf7495a3a5a3"
+          }
+        },
+        {
+          "client_id": "789905111169-4i7ik23pgd00kbr0rcciktfbbf2m0vqa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDlpT8A3b2WRnadJfXJKEWYjp88C4FaLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789905111169-4i7ik23pgd00kbr0rcciktfbbf2m0vqa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "789905111169-8mj5k8jlgr1lmj97kkhblf18nuf3cut7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tradoApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
