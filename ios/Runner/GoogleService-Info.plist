@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>789905111169-es6c0s9oaa9qcv5jssalfma6ukhho70k.apps.googleusercontent.com</string>
+	<string>789905111169-p6sjvkk7ir45vnsqjrvk37rg4vatq0r0.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.789905111169-es6c0s9oaa9qcv5jssalfma6ukhho70k</string>
+	<string>com.googleusercontent.apps.789905111169-p6sjvkk7ir45vnsqjrvk37rg4vatq0r0</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>789905111169-vbfagpo04de8fvkuqncudt0cj3rr7p9d.apps.googleusercontent.com</string>
+	<string>789905111169-97740kkkp9l1ic44ku4vc45dbvnktknq.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDSrAryI0cRKIx3OrGZL0kYzeUzAgzVR3c</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.tradoAppUit</string>
+	<string>com.trado.tradoAppUit</string>
 	<key>PROJECT_ID</key>
 	<string>tradoapp-e1100</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:789905111169:ios:1f4e0185bbc67f8ff93580</string>
+	<string>1:789905111169:ios:296a962423522cbef93580</string>
 </dict>
 </plist>
