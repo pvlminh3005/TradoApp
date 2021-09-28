@@ -27,11 +27,12 @@ class _NavigatorTabState extends State<NavigatorTab> {
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       bottomNavigationBar: CurvedNavigationBar(
         key: NavBarKey.getKey,
         index: 0,
         height: 65,
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Colors.transparent,
         // buttonBackgroundColor: Theme.of(context).primaryColor,
         onTap: (index) {
           setState(() {

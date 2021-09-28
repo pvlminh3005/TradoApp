@@ -21,6 +21,7 @@ class SplashScreen extends StatelessWidget {
                 titleApp,
                 style: Theme.of(context).textTheme.caption?.merge(
                       TextStyle(
+                        fontFamily: 'Raleway',
                         shadows: [
                           Shadow(
                             offset: Offset(2.5, 4.0),
