@@ -25,6 +25,43 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
   bool isFavorited = false;
   late ScrollController _scrollController;
 
+  Widget _buildImagesSlide(Size size, ThemeData theme, CategoryModel category) {
+    return Container(
+      height: size.height * .5,
+      width: size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+        color: Colors.transparent,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black54,
+            offset: Offset(2, 2),
+            blurRadius: 5,
+          )
+        ],
+      ),
+      child: CarouselSlider.builder(
+        itemCount: category.imageUrl.length,
+        itemBuilder: (ctx, index, realIndex) {
+          return _buildImageSlide(category: category, index: index);
+        },
+        options: CarouselOptions(
+          onPageChanged: (index, reason) {
+            setState(() {
+              activeIndex = index;
+            });
+          },
+          enlargeCenterPage: true,
+          viewportFraction: 1,
+          disableCenter: true,
+        ),
+      ),
+    );
+  }
+
   Widget _buildIndicator(ThemeData theme, List<String> image) {
     return AnimatedSmoothIndicator(
       activeIndex: activeIndex,
@@ -33,6 +70,168 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         dotWidth: 15,
         dotHeight: 7,
         activeDotColor: theme.primaryColor,
+      ),
+    );
+  }
+
+  Widget _buildInfoTitle(ThemeData theme, CategoryModel category) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            category.title,
+            style: theme.textTheme.caption?.merge(
+              TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Spacer(),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isFavorited = !isFavorited;
+              });
+            },
+            child: Icon(
+              isFavorited ? Icons.favorite : Icons.favorite_border_outlined,
+              size: 35,
+              color: isFavorited ? theme.errorColor : theme.textSelectionColor,
+            ),
+          ),
+          SizedBox(width: 5),
+          GestureDetector(
+            onTap: () {},
+            child: Icon(
+              Icons.share,
+              size: 35,
+              color: theme.textSelectionColor,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoPrice(ThemeData theme, CategoryModel category) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '${NumberFormat.currency(
+            locale: 'id',
+            decimalDigits: 0,
+            symbol: '',
+          ).format(category.price)} đ',
+          style: theme.textTheme.caption?.merge(
+            TextStyle(
+              fontFamily: 'RobotoCondensed',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        Row(
+          children: [
+            ButtonCount(
+              icon: Icons.remove,
+              onPressed: () {
+                setState(() {
+                  if (countCategory <= 0) return;
+                  countCategory--;
+                });
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text('${countCategory.toString().padLeft(2, "0")}',
+                  style: theme.textTheme.button),
+            ),
+            ButtonCount(
+              icon: Icons.add,
+              onPressed: () => setState(() {
+                countCategory++;
+              }),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVoteCategory(ThemeData theme, CategoryModel category) {
+    return GestureDetector(
+      onTap: () {
+        print('CLICK');
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.star_rounded,
+                  color: category.amountVoteStars == 0
+                      ? Color(0xFF777777)
+                      : theme.highlightColor,
+                  size: 35,
+                ),
+                Text(
+                  '${category.amountVoteStars}',
+                  style: theme.textTheme.headline3,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  category.amoutComment == 0
+                      ? 'Chưa có nhận xét nào'
+                      : '(${category.amoutComment} nhận xét)',
+                  style: theme.textTheme.headline3?.merge(
+                    TextStyle(
+                      color: theme.textSelectionColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Xem tất cả',
+                  style: theme.textTheme.headline2?.merge(
+                    TextStyle(
+                      color: theme.textSelectionColor,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 15,
+                  color: theme.textSelectionColor,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDescription(ThemeData theme, CategoryModel category) {
+    return Container(
+      child: Text(
+        category.description,
+        style: theme.textTheme.headline3?.merge(
+          TextStyle(
+            color: Colors.grey.shade700,
+            letterSpacing: .5,
+          ),
+        ),
+        overflow: TextOverflow.fade,
+        // maxLines: 7,
       ),
     );
   }
@@ -67,59 +266,16 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icon(Icons.arrow_back_ios),
+        ),
       ),
       body: Column(
         children: [
           Stack(
             children: [
-              Container(
-                height: size.height * .5,
-                width: size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.transparent,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black54,
-                      offset: Offset(2, 2),
-                      blurRadius: 5,
-                    )
-                  ],
-                ),
-                child: CarouselSlider.builder(
-                  itemCount: category.imageUrl.length,
-                  itemBuilder: (ctx, index, realIndex) {
-                    return _buildImageSlide(category: category, index: index);
-                  },
-                  options: CarouselOptions(
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        activeIndex = index;
-                      });
-                    },
-                    enlargeCenterPage: true,
-                    viewportFraction: 1,
-                    disableCenter: true,
-                  ),
-                ),
-              ),
-              // Positioned(
-              //   top: 30,
-              //   child: Row(
-              //     children: [
-              //       IconButton(
-              //         onPressed: () {
-              //           Navigator.of(context).pop();
-              //         },
-              //         icon: Icon(
-              //           Icons.arrow_back_ios,
-              //           size: 25,
-              //           // color: theme.primaryColor,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              _buildImagesSlide(size, theme, category),
               Positioned(
                 bottom: 10,
                 right: 20,
@@ -135,161 +291,10 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            category.title,
-                            style: theme.textTheme.caption?.merge(
-                              TextStyle(
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isFavorited = !isFavorited;
-                              });
-                            },
-                            child: Icon(
-                              isFavorited
-                                  ? Icons.favorite
-                                  : Icons.favorite_border_outlined,
-                              size: 35,
-                              color: isFavorited
-                                  ? theme.errorColor
-                                  : theme.textSelectionColor,
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Icon(
-                              Icons.share,
-                              size: 35,
-                              color: theme.textSelectionColor,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: size.width * .03),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '${NumberFormat.currency(
-                            locale: 'id',
-                            decimalDigits: 0,
-                            symbol: '',
-                          ).format(category.price)} đ',
-                          style: theme.textTheme.caption?.merge(
-                            TextStyle(
-                              fontFamily: 'RobotoCondensed',
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            ButtonCount(
-                              icon: Icons.remove,
-                              onPressed: () {
-                                setState(() {
-                                  if (countCategory <= 0) return;
-                                  countCategory--;
-                                });
-                              },
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                  '${countCategory.toString().padLeft(2, "0")}',
-                                  style: theme.textTheme.button),
-                            ),
-                            ButtonCount(
-                              icon: Icons.add,
-                              onPressed: () => setState(() {
-                                countCategory++;
-                              }),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        print('CLICK');
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.star_rounded,
-                                  color: category.amountVoteStars == 0
-                                      ? Color(0xFF777777)
-                                      : theme.highlightColor,
-                                  size: 35,
-                                ),
-                                Text(
-                                  '${category.amountVoteStars}',
-                                  style: theme.textTheme.headline3,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  category.amoutComment == 0
-                                      ? 'Chưa có nhận xét nào'
-                                      : '(${category.amoutComment} nhận xét)',
-                                  style: theme.textTheme.headline3?.merge(
-                                    TextStyle(
-                                      color: theme.textSelectionColor,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Xem tất cả',
-                                  style: theme.textTheme.headline2?.merge(
-                                    TextStyle(
-                                      color: theme.textSelectionColor,
-                                    ),
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 15,
-                                  color: theme.textSelectionColor,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Text(
-                      category.description,
-                      style: theme.textTheme.headline3?.merge(
-                        TextStyle(
-                          color: Colors.grey.shade700,
-                          letterSpacing: .5,
-                        ),
-                      ),
-                      overflow: TextOverflow.fade,
-                      // maxLines: 7,
-                    ),
+                    _buildInfoTitle(theme, category),
+                    _buildInfoPrice(theme, category),
+                    _buildVoteCategory(theme, category),
+                    _buildDescription(theme, category),
                   ],
                 ),
               ),
@@ -323,7 +328,10 @@ class _buildImageSlide extends StatelessWidget {
       transitionOnUserGestures: true,
       tag: category.imageUrl[index],
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
         child: Image(
           image: NetworkImage(category.imageUrl[index]),
           fit: BoxFit.cover,
