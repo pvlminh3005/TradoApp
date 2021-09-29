@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trado_app_uit/providers/category_provider.dart';
 import '../routes/navigator_tabs_route.dart';
 import 'providers/google/google_signin_controller.dart';
+import 'providers/rate_category_provider.dart';
 import 'screens/category_detail_screen.dart';
 import 'screens/login/signin_screen.dart';
 import '../screens/splash/splash_screen.dart';
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => CategoryProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RateCategoryProvider(),
         ),
       ],
       child: MaterialApp(
