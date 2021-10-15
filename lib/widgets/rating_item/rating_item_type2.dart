@@ -21,7 +21,7 @@ class RatingItemType2 extends StatelessWidget {
         childrenStars.add(
           Icon(
             Icons.star_rounded,
-            color: theme.backgroundColor,
+            color: theme.textSelectionColor.withOpacity(.2),
           ),
         );
       }
@@ -40,7 +40,8 @@ class RatingItemType2 extends StatelessWidget {
             arguments: rate.idCategory);
       },
       child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        shadowColor: Colors.black54,
+        margin: const EdgeInsets.all(5),
         color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),

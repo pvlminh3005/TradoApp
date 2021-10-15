@@ -26,6 +26,23 @@ class RateReviewProvider with ChangeNotifier {
   ];
   List<RateModel> get listRates => _listRates;
 
+  Map<String, dynamic> amountRates(String idCategory) {
+    List<RateModel> data = _listRates
+        .where((category) => category.idCategory == idCategory)
+        .toList();
+    if (data.length == 0)
+      return {
+        'rating': 0.0,
+        'review': 0,
+      };
+    ;
+    double averageStars = data.fold(0, (amount, rate) => amount + rate.stars);
+    return {
+      'rating': averageStars / (data.length),
+      'review': data.length,
+    };
+  }
+
   List<RateModel> findRateByIdCategory(String idCategory) {
     return _listRates
         .where((category) => category.idCategory == idCategory)

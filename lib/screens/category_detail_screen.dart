@@ -7,6 +7,8 @@ import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:trado_app_uit/components/sale_component.dart';
+import 'package:trado_app_uit/models/rate_category_model.dart';
+import 'package:trado_app_uit/providers/rate_review_provider.dart';
 import '/screens/rating_and_review_screen.dart';
 
 import '/providers/cart_provider.dart';
@@ -207,30 +209,37 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
   }
 
   Widget _buildVoteCategory(
-      BuildContext context, ThemeData theme, CategoryModel category) {
+      BuildContext context, ThemeData theme, String idCategory) {
+    Map<String, dynamic> rateInfo =
+        Provider.of<RateReviewProvider>(context, listen: false)
+            .amountRates(idCategory);
+    double amountStars = rateInfo['rating'];
+    int amountViews = rateInfo['review'];
     return GestureDetector(
-      onTap: () => Navigator.of(context)
-          .pushNamed(RatingAndReviewScreen.routeName, arguments: category),
+      onTap: () => amountViews == 0
+          ? null
+          : Navigator.of(context).pushNamed(RatingAndReviewScreen.routeName,
+              arguments: idCategory),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           children: [
             Icon(
               Icons.star_rounded,
-              color: category.amountVoteStars == 0
+              color: amountStars == 0
                   ? theme.textSelectionColor
                   : theme.highlightColor,
               size: 30,
             ),
             Text(
-              '${category.amountVoteStars}',
+              '${amountStars}',
               style: theme.textTheme.headline3,
             ),
             SizedBox(width: 10),
             Text(
-              category.amoutComment == 0
+              amountViews == 0
                   ? 'Chưa có nhận xét nào'
-                  : '(${category.amoutComment} nhận xét)',
+                  : '(${amountViews} nhận xét)',
               style: theme.textTheme.headline3?.merge(
                 TextStyle(
                   color: theme.textSelectionColor,
@@ -276,7 +285,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
             });
           },
           child: Padding(
-            padding: EdgeInsets.only(bottom: Platform.isIOS ? 15 : 0),
+            padding: EdgeInsets.only(bottom: Platform.isIOS ? 15 : 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -387,7 +396,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                   children: [
                     _buildInfoTitle(theme, category),
                     _buildInfoPrice(theme, category, priceDecreaseSale),
-                    _buildVoteCategory(context, theme, category),
+                    _buildVoteCategory(context, theme, category.id),
                     _buildDescription(theme, category),
                   ],
                 ),

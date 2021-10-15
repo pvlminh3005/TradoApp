@@ -5,11 +5,13 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final Color color;
   final String title;
   final Widget childAction;
+  final bool showLeading;
 
   const AppBarWidget({
     this.background = Colors.transparent,
     this.color = const Color(0xFF3EBACE),
     this.title = '',
+    this.showLeading = true,
     this.childAction = const SizedBox.shrink(),
     Key? key,
   }) : super(key: key);
@@ -28,13 +30,15 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         style: theme.textTheme.button,
       ),
       backgroundColor: background,
-      leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 22,
-            color: color,
-          )),
+      leading: showLeading
+          ? IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 22,
+                color: color,
+              ))
+          : SizedBox.shrink(),
       actions: [
         childAction,
       ],

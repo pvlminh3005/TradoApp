@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:trado_app_uit/components/sale_component.dart';
-import 'package:trado_app_uit/screens/category_detail_screen.dart';
+import 'package:provider/provider.dart';
+import '/components/sale_component.dart';
+import '/models/rate_category_model.dart';
+import '/providers/rate_review_provider.dart';
+import '/screens/category_detail_screen.dart';
 import '../models/category_model.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -38,13 +41,19 @@ class CategoryItem extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     ThemeData theme = Theme.of(context);
 
+    Map<String, dynamic> rate =
+        Provider.of<RateReviewProvider>(context, listen: false)
+            .amountRates(category.id);
+
     double priceDecreaseSale = category.priceSale != 0
         ? (category.price * (100 - category.priceSale) / 100)
         : category.price;
 
     return GestureDetector(
-      onTap: () => Navigator.of(context)
-          .pushNamed(CategoryDetailScreen.routeName, arguments: category.id),
+      onTap: () => Navigator.of(context).pushNamed(
+        CategoryDetailScreen.routeName,
+        arguments: category.id,
+      ),
       child: Container(
         child: Stack(
           alignment: Alignment.topCenter,
@@ -119,16 +128,18 @@ class CategoryItem extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.star_rate_rounded,
-                                color: theme.highlightColor,
+                                color: rate['rating'] != 0
+                                    ? theme.highlightColor
+                                    : theme.textSelectionColor,
                                 size: 20,
                               ),
                               Text(
-                                '${category.amountVoteStars.toStringAsFixed(1)}',
+                                '${rate['rating'].toStringAsFixed(1)}',
                                 style: theme.textTheme.headline2,
                               ),
                               SizedBox(width: 10),
                               Text(
-                                '(${category.amoutComment} nhận xét)',
+                                '(${rate['review']} nhận xét)',
                                 style: theme.textTheme.headline2?.merge(
                                   TextStyle(color: theme.textSelectionColor),
                                 ),
