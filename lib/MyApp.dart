@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/screens/rating_and_review_screen.dart';
+import 'providers/notification_provider.dart';
 import 'providers/rate_review_provider.dart';
 import 'screens/cart_screen.dart';
 import 'screens/diff_profile_screen.dart';
@@ -31,15 +32,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => CartProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => NotificationProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'RobotoCondensed',
           primaryColor: Color(0xFF3EBACE),
-          primaryColorDark: Color(0xFF37E2E2),
           primaryColorLight: Color(0xFFD0EFF1),
-          backgroundColor: Color(0xFFF3F3F3),
+          backgroundColor: Color(0xFFF3F5F7),
           cardColor: Colors.white,
           errorColor: Color(0xFFDA3400),
           dialogBackgroundColor: Color(0xFFFFE5E5),

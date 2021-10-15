@@ -21,7 +21,7 @@ class RatingItemType1 extends StatelessWidget {
         childrenStars.add(
           Icon(
             Icons.star_rounded,
-            color: theme.backgroundColor,
+            color: theme.textSelectionColor.withOpacity(.2),
           ),
         );
       }

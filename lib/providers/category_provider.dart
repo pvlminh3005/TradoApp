@@ -15,8 +15,6 @@ class CategoryProvider with ChangeNotifier {
         'https://images.unsplash.com/photo-1603208235561-006b83924146?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGNhbm9ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
       ],
       amountView: 120,
-      amoutComment: 1,
-      amountVoteStars: 5,
       priceSale: 10,
     ),
     CategoryModel(
@@ -29,20 +27,20 @@ class CategoryProvider with ChangeNotifier {
         'https://media.istockphoto.com/photos/portrait-of-a-vietnamese-girl-with-a-red-dress-in-the-lotus-hand-picture-id1187554319?k=20&m=1187554319&s=612x612&w=0&h=5l3PZl3ffXJZJbWZCkUNb5LwXRYrs4zogO3k_gdqTG8=',
       ],
       amountView: 120,
-      amoutComment: 1,
-      amountVoteStars: 1,
       priceSale: 10,
     ),
     CategoryModel(
       id: 'c3',
       title:
-          'Áo dàiiiiiiiiiiiiiiiiiiiiiiii iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii iiiiiiiiiii',
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem',
       description:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere!',
       price: 60000,
       imageUrl: [
         'https://media.istockphoto.com/photos/portrait-of-a-vietnamese-girl-with-a-red-dress-in-the-lotus-hand-picture-id1187554319?k=20&m=1187554319&s=612x612&w=0&h=5l3PZl3ffXJZJbWZCkUNb5LwXRYrs4zogO3k_gdqTG8=',
       ],
+      amountView: 120,
+      priceSale: 10,
     ),
   ];
   List<CategoryModel> get listCategories => _listCategories;

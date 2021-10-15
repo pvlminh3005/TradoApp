@@ -14,6 +14,7 @@ class NavigatorTab extends StatefulWidget {
 }
 
 class _NavigatorTabState extends State<NavigatorTab> {
+  double size = 25;
   int _pages = 0;
   final _screens = [
     HomeScreen(),
@@ -31,7 +32,7 @@ class _NavigatorTabState extends State<NavigatorTab> {
       bottomNavigationBar: CurvedNavigationBar(
         key: NavBarKey.getKey,
         index: 0,
-        height: 65,
+        height: 60,
         backgroundColor: Colors.transparent,
         // buttonBackgroundColor: Theme.of(context).primaryColor,
         onTap: (index) {
@@ -43,22 +44,22 @@ class _NavigatorTabState extends State<NavigatorTab> {
         items: [
           Icon(
             Icons.home,
-            size: 27,
+            size: size,
             color: color,
           ),
           Icon(
             Icons.verified,
-            size: 27,
+            size: size,
             color: color,
           ),
           Icon(
             Icons.notifications,
-            size: 27,
+            size: size,
             color: color,
           ),
           Icon(
             Icons.question_answer,
-            size: 27,
+            size: size,
             color: color,
           ),
           CircleAvatar(
