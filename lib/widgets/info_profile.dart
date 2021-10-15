@@ -65,7 +65,7 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return Container(
-      padding: const EdgeInsets.only(top: 5, bottom: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -82,10 +82,10 @@ class InfoCard extends StatelessWidget {
                       backgroundColor: info.isChecked
                           ? theme.primaryColor
                           : theme.backgroundColor,
-                      radius: MediaQuery.of(context).size.width * .07,
+                      radius: MediaQuery.of(context).size.width * .06,
                       child: Icon(
                         info.icon,
-                        size: 23,
+                        size: 22,
                         color:
                             info.isChecked ? Colors.white : Color(0xFF888888),
                       ),
