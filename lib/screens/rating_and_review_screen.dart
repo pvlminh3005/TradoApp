@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/constants/sizes.dart';
+
+import '/constants/constants.dart';
 import '/models/rate_category_model.dart';
 import '/providers/category_provider.dart';
 import '/providers/rate_review_provider.dart';
@@ -39,8 +42,8 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
                 return Icon(
                   Icons.star_rate_rounded,
                   color: index < amountStars
-                      ? theme.highlightColor
-                      : theme.textSelectionColor.withOpacity(.3),
+                      ? kHighlightColor
+                      : kTextColorGrey.withOpacity(.3),
                 );
               },
             ),
@@ -58,13 +61,12 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
     List<RateModel> listRates =
         Provider.of<RateReviewProvider>(context, listen: false)
             .findRateByIdCategory(idCategory);
-    ThemeData theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBarWidget(
         background: Colors.white,
-        color: theme.primaryColor,
+        color: kPrimaryColor,
         title: 'Nhận xét & đánh giá (${listRates.length})',
       ),
       body: Column(
@@ -136,25 +138,6 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
       ),
     );
   }
-
-  PopupMenuItem _builPopupMenuItem(
-      int amountStars, int total, Function() onPressed) {
-    return PopupMenuItem(
-      child: Row(
-        children: [
-          Row(
-            children: List.generate(
-              5,
-              (index) => Icon(
-                Icons.star_rate_rounded,
-              ),
-            ),
-          ),
-          Text('($total)'),
-        ],
-      ),
-    );
-  }
 }
 
 class HeaderInfo extends StatelessWidget {
@@ -166,7 +149,6 @@ class HeaderInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
     CategoryModel category =
         Provider.of<CategoryProvider>(context, listen: false)
@@ -174,7 +156,7 @@ class HeaderInfo extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(10.0),
-      color: theme.cardColor,
+      color: kCardColor,
       child: Row(
         children: [
           ClipRRect(
@@ -186,7 +168,7 @@ class HeaderInfo extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(width: 5),
+          const SizedBox(width: 7),
           Consumer<RateReviewProvider>(builder: (ctx, rate, _) {
             double amountStars = rate.amountRates(idCategory)['rating'];
             int amountViews = rate.amountRates(idCategory)['review'];
@@ -199,27 +181,26 @@ class HeaderInfo extends StatelessWidget {
                     category.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.bodyText1,
+                    style: kTextBoldDark_18,
                   ),
                   SizedBox(height: 6),
                   Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.end,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Icon(
                         Icons.star_rate_rounded,
-                        color: amountViews == 0
-                            ? theme.textSelectionColor
-                            : theme.highlightColor,
+                        color:
+                            amountViews == 0 ? kTextColorGrey : kHighlightColor,
+                        size: 30,
                       ),
-                      Text('${amountStars.toStringAsFixed(1)}'),
+                      Text('${amountStars.toStringAsFixed(1)}',
+                          style: kTextMediumDark_16),
                     ],
                   ),
                   SizedBox(height: 6),
                   Text(
                     '(${amountViews} nhận xét)',
-                    style: theme.textTheme.headline2?.merge(
-                      TextStyle(color: Colors.grey),
-                    ),
+                    style: kTextMediumGrey_14,
                   ),
                 ],
               ),

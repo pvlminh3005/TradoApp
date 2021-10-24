@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/google/google_signin_controller.dart';
 
+import '/components/input_password.dart';
+import '/providers/google/google_signin_controller.dart';
 import '../../routes/navigator_tabs_route.dart';
 import '../../components/or_divider.dart';
 import './signup_screen.dart';
@@ -37,10 +38,9 @@ class SigninScreen extends StatelessWidget {
                 onChanged: (value) {},
                 icon: Icons.person,
               ),
-              InputPasswordCard(
+              InputPassword(
                 hintText: 'Mật khẩu',
                 controller: passController,
-                onChanged: (value) {},
                 icon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),

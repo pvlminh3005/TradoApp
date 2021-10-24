@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/widgets/appbar_widget.dart';
 
+import '/constants/constants.dart';
 import '/widgets/notification_item.dart';
 import '/models/notification_model.dart';
 
 class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
+      backgroundColor: kBackgroundColor,
       body: ListView.builder(
         shrinkWrap: true,
         itemCount: listNotifications.length,

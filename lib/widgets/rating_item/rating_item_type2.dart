@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:trado_app_uit/models/rate_category_model.dart';
-import 'package:trado_app_uit/screens/category_detail_screen.dart';
+import '/constants/constants.dart';
+import '/constants/sizes.dart';
+
+import '/models/rate_category_model.dart';
 
 class RatingItemType2 extends StatelessWidget {
   final RateModel rate;
   RatingItemType2(this.rate, {Key? key}) : super(key: key);
 
   final childrenStars = <Widget>[];
-  void _buildRatingStars(ThemeData theme) {
+  void _buildRatingStars() {
     for (int i = 0; i < 5; i++) {
       if (i < rate.stars)
         childrenStars.add(
           Icon(
             Icons.star_rounded,
-            color: theme.highlightColor,
+            color: kHighlightColor,
           ),
         );
       else {
         childrenStars.add(
           Icon(
             Icons.star_rounded,
-            color: theme.textSelectionColor.withOpacity(.2),
+            color: kTextColorGrey.withOpacity(.2),
           ),
         );
       }
@@ -31,61 +33,54 @@ class RatingItemType2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    ThemeData theme = Theme.of(context);
-    _buildRatingStars(theme);
+    _buildRatingStars();
 
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(CategoryDetailScreen.routeName,
-            arguments: rate.idCategory);
-      },
-      child: Card(
-        shadowColor: Colors.black54,
-        margin: const EdgeInsets.all(5),
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundImage: NetworkImage(
-                          rate.imageUrl,
+    return Card(
+      shadowColor: Colors.black54,
+      margin: const EdgeInsets.all(5),
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundImage: NetworkImage(
+                        rate.imageUrl,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          rate.nameUser,
+                          style: kTextBoldDark_16,
                         ),
-                      ),
-                      SizedBox(width: 5),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            rate.nameUser,
-                            style: theme.textTheme.bodyText1,
-                          ),
-                          Row(children: childrenStars),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Text(
-                    '${DateFormat('dd/MM/yyy kk:mm').format(rate.date)}',
-                    style: theme.textTheme.headline2,
-                  ),
-                ],
-              ),
-              SizedBox(height: 15),
-              Text(rate.comment),
-            ],
-          ),
+                        Row(children: childrenStars),
+                      ],
+                    ),
+                  ],
+                ),
+                Text(
+                  '${DateFormat('dd/MM/yyy kk:mm').format(rate.date)}',
+                  style: kTextMediumDark_14,
+                ),
+              ],
+            ),
+            SizedBox(height: 15),
+            Text(rate.comment, style: kTextMediumDark_16),
+          ],
         ),
       ),
     );

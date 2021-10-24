@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import '/constants/sizes.dart';
+import '/constants/constants.dart';
 
 class GridButton extends StatelessWidget {
   const GridButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Row(
@@ -14,15 +15,15 @@ class GridButton extends StatelessWidget {
           Button(
             onPressed: () {},
             title: 'Quan tâm',
-            background: theme.primaryColor,
-            textColor: Colors.white,
+            background: kPrimaryColor,
+            textColor: kTextLight,
           ),
           SizedBox(width: 15),
           Button(
             onPressed: () {},
             title: 'Báo cáo',
-            background: theme.backgroundColor,
-            textColor: Colors.black,
+            background: kBackgroundColor,
+            textColor: kTextDark,
           ),
         ],
         // gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
@@ -52,19 +53,18 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return Expanded(
       child: RaisedButton(
         padding: const EdgeInsets.symmetric(vertical: 10),
         color: background,
         shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(20.0),
+          borderRadius: new BorderRadius.circular(10.0),
         ),
         elevation: 0,
         onPressed: onPressed,
         child: Text(
           title,
-          style: theme.textTheme.bodyText1?.merge(
+          style: kTextBoldDark_16.merge(
             TextStyle(
               color: textColor,
             ),

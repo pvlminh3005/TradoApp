@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '/constants/constants.dart';
 import '../widgets/appbar_widget.dart';
 import '../routes/tab_profile_screen.dart';
 import '../widgets/header_info_profile.dart';
@@ -10,9 +12,9 @@ class DiffProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: kBackgroundColor,
       appBar: AppBarWidget(
-        background: Colors.white,
+        background: kBackgroundColorWhite,
       ),
       body: Column(
         children: [
@@ -29,3 +31,5 @@ class DiffProfileScreen extends StatelessWidget {
     );
   }
 }
+
+//FIX colors

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '/constants/constants.dart';
+import '/constants/sizes.dart';
+
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final Color background;
   final Color color;
@@ -7,9 +10,9 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final Widget childAction;
   final bool showLeading;
 
-  const AppBarWidget({
+  AppBarWidget({
     this.background = Colors.transparent,
-    this.color = const Color(0xFF3EBACE),
+    this.color = kPrimaryColor,
     this.title = '',
     this.showLeading = true,
     this.childAction = const SizedBox.shrink(),
@@ -21,13 +24,12 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return AppBar(
       elevation: 0,
       centerTitle: true,
       title: Text(
         title,
-        style: theme.textTheme.button,
+        style: kTextBoldDark_20,
       ),
       backgroundColor: background,
       leading: showLeading

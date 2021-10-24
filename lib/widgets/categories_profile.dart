@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/category_provider.dart';
+
+import '/constants/constants.dart';
+import '/providers/category_provider.dart';
 import '../models/category_model.dart';
 import './category_item.dart';
 
@@ -11,9 +13,8 @@ class CategoriesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<CategoryModel> _listCategories =
         Provider.of<CategoryProvider>(context, listen: false).listCategories;
-    ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
+      backgroundColor: kBackgroundColor,
       body: Container(
         child: GridView.builder(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),

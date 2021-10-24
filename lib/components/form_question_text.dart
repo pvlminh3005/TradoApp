@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/constants/sizes.dart';
 
 class FormQuestionText extends StatelessWidget {
   final bool login;
@@ -13,18 +14,18 @@ class FormQuestionText extends StatelessWidget {
       children: [
         Text(
           login ? 'Bạn chưa có tài khoản? ' : 'Bạn đã có tài khoản? ',
-          style: Theme.of(context).textTheme.bodyText1,
+          style: kTextBoldDark_16,
         ),
         GestureDetector(
           onTap: toggleNavigator,
           child: Text(
             login ? 'Đăng ký ngay' : 'Đăng nhập',
-            style: Theme.of(context).textTheme.bodyText1?.merge(
-                  TextStyle(color: Theme.of(context).primaryColor),
-                ),
+            style: kTextBoldPrimary_16,
           ),
         )
       ],
     );
   }
 }
+
+//FIX colors

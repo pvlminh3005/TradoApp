@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:trado_app_uit/models/rate_category_model.dart';
-import 'package:trado_app_uit/screens/category_detail_screen.dart';
+import 'package:trado_app_uit/constants/sizes.dart';
+
+import '/constants/constants.dart';
+import '/models/rate_category_model.dart';
+import '/screens/category_detail_screen.dart';
 
 class RatingItemType1 extends StatelessWidget {
   final RateModel rate;
   RatingItemType1(this.rate, {Key? key}) : super(key: key);
 
   final childrenStars = <Widget>[];
-  void _buildRatingStars(ThemeData theme) {
+  void _buildRatingStars() {
     for (int i = 0; i < 5; i++) {
       if (i < rate.stars)
         childrenStars.add(
           Icon(
             Icons.star_rounded,
-            color: theme.highlightColor,
+            color: kHighlightColor,
           ),
         );
       else {
         childrenStars.add(
           Icon(
             Icons.star_rounded,
-            color: theme.textSelectionColor.withOpacity(.2),
+            color: kTextColorGrey.withOpacity(.2),
           ),
         );
       }
@@ -31,8 +34,7 @@ class RatingItemType1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    ThemeData theme = Theme.of(context);
-    _buildRatingStars(theme);
+    _buildRatingStars();
 
     return GestureDetector(
       onTap: () {
@@ -41,7 +43,7 @@ class RatingItemType1 extends StatelessWidget {
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        color: Colors.white,
+        color: kCardColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
@@ -68,11 +70,11 @@ class RatingItemType1 extends StatelessWidget {
                         children: [
                           Text(
                             rate.nameUser,
-                            style: theme.textTheme.bodyText1,
+                            style: kTextBoldDark_16,
                           ),
                           Text(
                             '${DateFormat('dd/MM/yyy kk:mm').format(rate.date)}',
-                            style: theme.textTheme.headline2,
+                            style: kTextMediumDark_14,
                           ),
                         ],
                       ),
@@ -89,11 +91,7 @@ class RatingItemType1 extends StatelessWidget {
                         },
                         child: Text(
                           'Xem sản phẩm',
-                          style: theme.textTheme.headline2?.merge(
-                            TextStyle(
-                              color: theme.primaryColor,
-                            ),
-                          ),
+                          style: kTextMediumPrimary_14,
                         ),
                       ),
                       Row(children: childrenStars),
@@ -102,7 +100,7 @@ class RatingItemType1 extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 15),
-              Text(rate.comment),
+              Text(rate.comment, style: kTextMediumDark_16),
             ],
           ),
         ),

@@ -39,7 +39,7 @@ class _ScrollToHideWidgetState extends State<ScrollToHideWidget> {
     // } else if (direction == ScrollDirection.reverse) {
     //   hide();
     // }
-    if (widget.controller.position.pixels >= 100) {
+    if (widget.controller.position.pixels >= 50) {
       hide();
     } else
       show();
