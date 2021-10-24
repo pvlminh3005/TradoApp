@@ -21,6 +21,8 @@ mongoose.connection.on("error", (err) => {
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+app.use('/api/account',require('./router/account'));
+
 app.get('/', (req, res) => {
     res.send("Welcome to Trado App")
 })
