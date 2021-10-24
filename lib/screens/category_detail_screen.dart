@@ -4,11 +4,13 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/sale_component.dart';
-import 'package:trado_app_uit/models/rate_category_model.dart';
-import 'package:trado_app_uit/providers/rate_review_provider.dart';
+import '/constants/sizes.dart';
+import '/components/config_price.dart';
+import '/components/sale_component.dart';
+import '/constants/constants.dart';
+import '/providers/rate_review_provider.dart';
+import '/widgets/change_quantity.dart';
 import '/screens/rating_and_review_screen.dart';
 
 import '/providers/cart_provider.dart';
@@ -36,7 +38,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
   bool isFavorited = false;
   late ScrollController _scrollController;
 
-  Widget _buildImagesSlide(Size size, ThemeData theme, CategoryModel category) {
+  Widget _buildImagesSlide(Size size, CategoryModel category) {
     return Hero(
       transitionOnUserGestures: true,
       tag: '${category.id}',
@@ -77,19 +79,19 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     );
   }
 
-  Widget _buildIndicator(ThemeData theme, List<String> image) {
+  Widget _buildIndicator(List<String> image) {
     return AnimatedSmoothIndicator(
       activeIndex: activeIndex,
       count: image.length,
       effect: ExpandingDotsEffect(
         dotWidth: 12,
         dotHeight: 5,
-        activeDotColor: theme.primaryColor,
+        activeDotColor: kPrimaryColor,
       ),
     );
   }
 
-  Widget _buildInfoTitle(ThemeData theme, CategoryModel category) {
+  Widget _buildInfoTitle(CategoryModel category) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -100,11 +102,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               category.title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.caption?.merge(
-                TextStyle(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              style: kTextMediumDark_24,
             ),
           ),
           GestureDetector(
@@ -116,7 +114,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
             child: Icon(
               isFavorited ? Icons.favorite : Icons.favorite_border_outlined,
               size: 35,
-              color: isFavorited ? theme.errorColor : theme.textSelectionColor,
+              color: isFavorited ? kErrorColor : kTextColorGrey,
             ),
           ),
           SizedBox(width: 5),
@@ -125,7 +123,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
             child: Icon(
               Icons.share,
               size: 35,
-              color: theme.textSelectionColor,
+              color: kTextColorGrey,
             ),
           )
         ],
@@ -133,83 +131,41 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     );
   }
 
-  Widget _buildInfoPrice(
-      ThemeData theme, CategoryModel category, double priceDecreaseSale) {
+  Widget _buildInfoPrice(CategoryModel category, double priceDecreaseSale) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         category.priceSale != 0
             ? Text(
-                '${NumberFormat.currency(
-                  locale: 'id',
-                  decimalDigits: 0,
-                  symbol: '',
-                ).format(category.price)} đ',
+                '${FormatPrice(priceDecreaseSale)} đ',
                 style: TextStyle(decoration: TextDecoration.lineThrough),
               )
             : SizedBox.shrink(),
         Row(
           children: [
             Text(
-              '${NumberFormat.currency(
-                locale: 'id',
-                decimalDigits: 0,
-                symbol: '',
-              ).format(priceDecreaseSale)} đ',
-              style: theme.textTheme.caption?.merge(
+              '${FormatPrice(priceDecreaseSale)} đ',
+              style: kTextBoldDark_24.merge(
                 TextStyle(
-                  color: category.priceSale != 0 ? theme.errorColor : null,
-                  fontWeight: FontWeight.w700,
+                  color: category.priceSale != 0 ? kErrorColor : null,
                 ),
               ),
             ),
             category.priceSale != 0
                 ? SaleComponent(
                     text: category.priceSale,
-                    textStyle: theme.textTheme.button?.merge(
-                      TextStyle(fontWeight: FontWeight.w500),
-                    ),
+                    textStyle: kTextBoldDark_18,
                   )
                 : SizedBox.shrink(),
             Spacer(),
-            Row(
-              children: [
-                ButtonCount(
-                  icon: Icons.remove,
-                  onPressed: () {
-                    setState(() {
-                      if (quantityCategory <= 1) return;
-                      quantityCategory--;
-                    });
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    '${quantityCategory.toString().padLeft(2, "0")}',
-                    style: theme.textTheme.button?.merge(
-                      TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ),
-                ButtonCount(
-                  icon: Icons.add,
-                  onPressed: () => setState(() {
-                    quantityCategory++;
-                  }),
-                ),
-              ],
-            ),
+            ChangeQuantity(),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildVoteCategory(
-      BuildContext context, ThemeData theme, String idCategory) {
+  Widget _buildVoteCategory(BuildContext context, String idCategory) {
     Map<String, dynamic> rateInfo =
         Provider.of<RateReviewProvider>(context, listen: false)
             .amountRates(idCategory);
@@ -218,31 +174,31 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     return GestureDetector(
       onTap: () => amountViews == 0
           ? null
-          : Navigator.of(context).pushNamed(RatingAndReviewScreen.routeName,
-              arguments: idCategory),
+          : Navigator.of(context).pushNamed(
+              RatingAndReviewScreen.routeName,
+              arguments: idCategory,
+            ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           children: [
             Icon(
               Icons.star_rounded,
-              color: amountStars == 0
-                  ? theme.textSelectionColor
-                  : theme.highlightColor,
+              color: amountStars == 0 ? kTextColorGrey : kHighlightColor,
               size: 30,
             ),
             Text(
               '${amountStars}',
-              style: theme.textTheme.headline3,
+              style: kTextMediumDark_18,
             ),
             SizedBox(width: 10),
             Text(
               amountViews == 0
                   ? 'Chưa có nhận xét nào'
                   : '(${amountViews} nhận xét)',
-              style: theme.textTheme.headline3?.merge(
+              style: kTextMediumDark_18.merge(
                 TextStyle(
-                  color: theme.textSelectionColor,
+                  color: kTextColorGrey,
                 ),
               ),
             ),
@@ -252,16 +208,12 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               children: [
                 Text(
                   'Xem tất cả',
-                  style: theme.textTheme.headline2?.merge(
-                    TextStyle(
-                      color: theme.textSelectionColor,
-                    ),
-                  ),
+                  style: kTextMediumGrey_14,
                 ),
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 15,
-                  color: theme.textSelectionColor,
+                  color: kTextColorGrey,
                 ),
               ],
             ),
@@ -271,12 +223,12 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     );
   }
 
-  Widget _buildDescription(ThemeData theme, CategoryModel category) {
+  Widget _buildDescription(CategoryModel category) {
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.symmetric(vertical: 7),
-          child: _buildText(theme, category.description),
+          child: _buildText(category.description),
         ),
         GestureDetector(
           onTap: () {
@@ -291,14 +243,13 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               children: [
                 Text(
                   isReadMore ? 'Thu gọn' : 'Xem thêm',
-                  style: theme.textTheme.headline2
-                      ?.merge(TextStyle(color: theme.textSelectionColor)),
+                  style: kTextMediumGrey_14,
                 ),
                 Icon(
                   isReadMore
                       ? Icons.keyboard_arrow_up
                       : Icons.keyboard_arrow_down,
-                  color: theme.textSelectionColor,
+                  color: kTextColorGrey,
                   size: 18,
                 ),
               ],
@@ -309,13 +260,13 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     );
   }
 
-  Widget _buildText(ThemeData theme, String text) {
-    final int platform = Platform.isIOS ? 6 : 5;
+  Widget _buildText(String text) {
+    final int platform = Platform.isIOS ? 5 : 4;
     final maxLines = isReadMore ? null : platform;
     final overflow = isReadMore ? TextOverflow.visible : TextOverflow.fade;
     return Text(
       text,
-      style: theme.textTheme.headline3?.merge(
+      style: kTextMediumDark_18.merge(
         TextStyle(
           color: Colors.grey.shade700,
           letterSpacing: .5,
@@ -351,20 +302,19 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         : category.price;
 
     Size size = MediaQuery.of(context).size;
-    ThemeData theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
+      backgroundColor: kBackgroundColor,
       extendBodyBehindAppBar: true,
       appBar: AppBarWidget(
-        color: Colors.white,
+        color: kBackgroundColorWhite,
         childAction: Consumer<CartProvider>(
           builder: (ctx, cartData, ch) => Badge(
             child: IconButton(
               icon: Icon(
                 Icons.shopping_cart,
                 size: 25,
-                color: Colors.white,
+                color: kCardColor,
               ),
               onPressed: () {
                 Navigator.of(context).pushNamed(CartScreen.routeName);
@@ -378,26 +328,26 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         children: [
           Stack(
             children: [
-              _buildImagesSlide(size, theme, category),
+              _buildImagesSlide(size, category),
               Positioned(
                 bottom: 10,
                 right: 20,
-                child: _buildIndicator(theme, category.imageUrl),
+                child: _buildIndicator(category.imageUrl),
               ),
             ],
           ),
           Expanded(
             child: SingleChildScrollView(
               controller: _scrollController,
-              child: Padding(
+              child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: Column(
                   children: [
-                    _buildInfoTitle(theme, category),
-                    _buildInfoPrice(theme, category, priceDecreaseSale),
-                    _buildVoteCategory(context, theme, category.id),
-                    _buildDescription(theme, category),
+                    _buildInfoTitle(category),
+                    _buildInfoPrice(category, priceDecreaseSale),
+                    _buildVoteCategory(context, category.id),
+                    _buildDescription(category),
                   ],
                 ),
               ),
@@ -411,6 +361,8 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         controller: _scrollController,
         child: BottomCategoryDetail(
           category: category,
+          priceDecreaseSale:
+              priceDecreaseSale == 0 ? priceDecreaseSale : priceDecreaseSale,
           quantity: quantityCategory,
         ),
       ),
@@ -438,33 +390,6 @@ class _buildImageSlide extends StatelessWidget {
       child: Image(
         image: NetworkImage(category.imageUrl[index]),
         fit: BoxFit.cover,
-      ),
-    );
-  }
-}
-
-class ButtonCount extends StatelessWidget {
-  final IconData icon;
-  final Function() onPressed;
-
-  ButtonCount({
-    required this.icon,
-    required this.onPressed,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        padding: const EdgeInsets.all(7),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: theme.accentColor,
-        ),
-        child: Icon(icon),
       ),
     );
   }

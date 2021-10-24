@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import '/constants/constants.dart';
 
 class BackgroundType1 extends StatelessWidget {
   final Widget child;
   BackgroundType1({required this.child});
   @override
   Widget build(BuildContext context) {
-    Color theme = Theme.of(context).primaryColor;
     Size size = MediaQuery.of(context).size;
     return Container(
       height: size.height,
@@ -21,7 +21,7 @@ class BackgroundType1 extends StatelessWidget {
               height: size.width * .5,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: theme.withOpacity(.65),
+                color: kPrimaryColor.withOpacity(.65),
               ),
             ),
           ),
@@ -32,7 +32,7 @@ class BackgroundType1 extends StatelessWidget {
               child: Container(
                 width: size.width * .55,
                 height: size.width * .7,
-                color: theme.withOpacity(.65),
+                color: kPrimaryColor.withOpacity(.65),
               ),
             ),
           ),
@@ -42,3 +42,5 @@ class BackgroundType1 extends StatelessWidget {
     );
   }
 }
+
+//FIX colors

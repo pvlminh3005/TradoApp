@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/constants/constants.dart';
+import 'package:trado_app_uit/constants/sizes.dart';
 import '/components/sale_component.dart';
-import '/models/rate_category_model.dart';
 import '/providers/rate_review_provider.dart';
 import '/screens/category_detail_screen.dart';
 import '../models/category_model.dart';
@@ -11,7 +14,7 @@ class CategoryItem extends StatelessWidget {
   final CategoryModel category;
   const CategoryItem({required this.category, Key? key}) : super(key: key);
 
-  Widget _buildFooterItem(ThemeData theme, IconData icon, String data) {
+  Widget _buildFooterItem(IconData icon, String data) {
     return Padding(
       padding: const EdgeInsets.only(top: 5.0),
       child: Row(
@@ -19,15 +22,14 @@ class CategoryItem extends StatelessWidget {
           Icon(
             icon,
             size: 17,
-            color: theme.textSelectionColor,
+            color: kTextColorGrey,
           ),
           SizedBox(width: 5),
           Text(
             data,
-            style: theme.textTheme.headline2?.merge(
+            style: kTextBoldDark_14.merge(
               TextStyle(
-                color: theme.textSelectionColor,
-                fontWeight: FontWeight.w700,
+                color: kTextColorGrey,
               ),
             ),
           ),
@@ -39,7 +41,6 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    ThemeData theme = Theme.of(context);
 
     Map<String, dynamic> rate =
         Provider.of<RateReviewProvider>(context, listen: false)
@@ -63,12 +64,12 @@ class CategoryItem extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.only(top: 25),
                 constraints: BoxConstraints(
-                  minHeight: 120,
+                  minHeight: Platform.isIOS ? 105 : 120,
                 ),
                 width: size.width * .45,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
-                  color: theme.cardColor,
+                  color: kCardColor,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -84,7 +85,7 @@ class CategoryItem extends StatelessWidget {
                         category.title,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: theme.textTheme.headline2,
+                        style: kTextMediumDark_14,
                       ),
 
                       //Widget Price & Sale
@@ -97,12 +98,11 @@ class CategoryItem extends StatelessWidget {
                               decimalDigits: 0,
                               symbol: '',
                             ).format(priceDecreaseSale)} đ',
-                            style: theme.textTheme.bodyText1?.merge(
+                            style: kTextBoldDark_16.merge(
                               TextStyle(
-                                fontWeight: FontWeight.w700,
                                 color: category.priceSale != 0
-                                    ? theme.errorColor
-                                    : Colors.black,
+                                    ? kErrorColor
+                                    : null,
                               ),
                             ),
                           ),
@@ -110,12 +110,7 @@ class CategoryItem extends StatelessWidget {
                           category.priceSale != 0
                               ? SaleComponent(
                                   text: category.priceSale,
-                                  textStyle: theme.textTheme.subtitle1?.merge(
-                                    TextStyle(
-                                      color: theme.errorColor,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
+                                  textStyle: kTextBoldError_12,
                                 )
                               : SizedBox.shrink(),
                         ],
@@ -129,20 +124,18 @@ class CategoryItem extends StatelessWidget {
                               Icon(
                                 Icons.star_rate_rounded,
                                 color: rate['rating'] != 0
-                                    ? theme.highlightColor
-                                    : theme.textSelectionColor,
+                                    ? kHighlightColor
+                                    : kTextColorGrey,
                                 size: 20,
                               ),
                               Text(
                                 '${rate['rating'].toStringAsFixed(1)}',
-                                style: theme.textTheme.headline2,
+                                style: kTextMediumDark_14,
                               ),
                               SizedBox(width: 10),
                               Text(
                                 '(${rate['review']} nhận xét)',
-                                style: theme.textTheme.headline2?.merge(
-                                  TextStyle(color: theme.textSelectionColor),
-                                ),
+                                style: kTextMediumGrey_14,
                               ),
                             ],
                           ),
@@ -150,12 +143,10 @@ class CategoryItem extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               _buildFooterItem(
-                                theme,
                                 Icons.remove_red_eye,
                                 0.toString(),
                               ),
                               _buildFooterItem(
-                                theme,
                                 Icons.near_me_outlined,
                                 '< 4km',
                               ),
@@ -170,7 +161,7 @@ class CategoryItem extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: kCardColor,
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(

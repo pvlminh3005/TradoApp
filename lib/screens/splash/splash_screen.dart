@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '/constants/constants.dart';
+import '/constants/sizes.dart';
 import '../../components/button_card.dart';
 import '../login/signin_screen.dart';
 import '../login/signup_screen.dart';
@@ -10,7 +13,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kBackgroundColorWhite,
       body: BackgroundType1(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -19,18 +22,7 @@ class SplashScreen extends StatelessWidget {
             children: [
               Text(
                 titleApp,
-                style: Theme.of(context).textTheme.caption?.merge(
-                      TextStyle(
-                        fontFamily: 'Raleway',
-                        shadows: [
-                          Shadow(
-                            offset: Offset(2.5, 4.0),
-                            blurRadius: 10.0,
-                            color: Color.fromRGBO(0, 0, 0, 0.5),
-                          ),
-                        ],
-                      ),
-                    ),
+                style: kTextCaption,
                 textAlign: TextAlign.center,
               ),
               Container(
@@ -51,3 +43,5 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
+
+//FIX colors

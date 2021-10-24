@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/components/input_password.dart';
 import '../login/signin_screen.dart';
 import '../../components/form_question_text.dart';
 import '../../components/button_card.dart';
@@ -37,10 +38,9 @@ class SignupScreen extends StatelessWidget {
                 onChanged: (value) {},
                 icon: Icons.person,
               ),
-              InputPasswordCard(
+              InputPassword(
                 hintText: 'Mật khẩu',
                 controller: passController,
-                onChanged: (value) {},
                 icon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),

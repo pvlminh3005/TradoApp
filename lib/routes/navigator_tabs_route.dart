@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+
+import '/constants/constants.dart';
 import './navigator_key.dart';
 import '../screens/highlight_screen.dart';
 import '../screens/notification_screen.dart';
@@ -26,9 +28,9 @@ class _NavigatorTabState extends State<NavigatorTab> {
 
   @override
   Widget build(BuildContext context) {
-    Color color = Theme.of(context).primaryColor;
+    Color color = kPrimaryColor;
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: kBackgroundColor,
       bottomNavigationBar: CurvedNavigationBar(
         key: NavBarKey.getKey,
         index: 0,

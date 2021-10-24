@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/rate_review_provider.dart';
+import '/constants/constants.dart';
+import '/constants/sizes.dart';
+import '/providers/rate_review_provider.dart';
 import '../providers/category_provider.dart';
 import '../widgets/categories_profile.dart';
 import '../widgets/info_profile.dart';
@@ -13,6 +15,10 @@ class TabScreen extends StatelessWidget {
     RatingWidget(),
   ];
 
+  Widget _buildTitleTab(String title) {
+    return Text(title, style: kTextMediumDark_15);
+  }
+
   @override
   Widget build(BuildContext context) {
     final providerCategory =
@@ -20,11 +26,10 @@ class TabScreen extends StatelessWidget {
     int amountRates = Provider.of<RateReviewProvider>(context, listen: false)
         .listRates
         .length;
-    ThemeData theme = Theme.of(context);
     return DefaultTabController(
       length: _pages.length,
       child: Container(
-        color: Colors.white,
+        color: kCardColor,
         child: Column(
           children: [
             TabBar(
@@ -32,11 +37,10 @@ class TabScreen extends StatelessWidget {
               labelColor: Colors.black,
               indicatorColor: Theme.of(context).primaryColor,
               tabs: [
-                Text('Thông tin', style: theme.textTheme.bodyText2),
-                Text('Mặt hàng (${providerCategory.listCategories.length})',
-                    style: theme.textTheme.bodyText2),
-                Text('Đánh giá (${amountRates})',
-                    style: theme.textTheme.bodyText2),
+                _buildTitleTab('Thông tin'),
+                _buildTitleTab(
+                    'Mặt hàng (${providerCategory.listCategories.length})'),
+                _buildTitleTab('Đánh giá (${amountRates})'),
               ],
             ),
             // BodyContent(),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '/constants/sizes.dart';
+import '/constants/constants.dart';
 
 class ButtonCard extends StatelessWidget {
   final int statusCheck;
@@ -17,15 +19,13 @@ class ButtonCard extends StatelessWidget {
             width: MediaQuery.of(context).size.width * .7,
             padding: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(30),
+              color: kPrimaryColor,
+            ),
             child: Center(
               child: Text(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .button
-                    ?.merge(TextStyle(color: Colors.white)),
+                style: kTextBoldLight_20,
               ),
             ),
           ),
@@ -38,10 +38,14 @@ class ButtonCard extends StatelessWidget {
             width: MediaQuery.of(context).size.width * .7,
             padding: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Theme.of(context).primaryColorLight),
+              borderRadius: BorderRadius.circular(30),
+              color: kPrimaryColorLight,
+            ),
             child: Center(
-              child: Text(title, style: Theme.of(context).textTheme.button),
+              child: Text(
+                title,
+                style: kTextBoldDark_20,
+              ),
             ),
           ),
         );
@@ -53,10 +57,14 @@ class ButtonCard extends StatelessWidget {
             width: MediaQuery.of(context).size.width * .7,
             padding: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).errorColor),
+              borderRadius: BorderRadius.circular(10),
+              color: kErrorColor,
+            ),
             child: Center(
-              child: Text(title, style: Theme.of(context).textTheme.button),
+              child: Text(
+                title,
+                style: kTextBoldDark_20,
+              ),
             ),
           ),
         );
@@ -68,15 +76,13 @@ class ButtonCard extends StatelessWidget {
             width: MediaQuery.of(context).size.width * .7,
             padding: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(30),
+              color: kPrimaryColor,
+            ),
             child: Center(
               child: Text(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .button
-                    ?.merge(TextStyle(color: Colors.white)),
+                style: kTextBoldLight_20,
               ),
             ),
           ),
@@ -89,3 +95,5 @@ class ButtonCard extends StatelessWidget {
     return _buildFormButton(context, this.statusCheck);
   }
 }
+
+//FIX color

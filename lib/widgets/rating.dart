@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/rate_review_provider.dart';
+import '/constants/constants.dart';
+import '/providers/rate_review_provider.dart';
 import '../models/rate_category_model.dart';
 import 'rating_item/rating_item_type1.dart';
 
@@ -12,9 +13,8 @@ class RatingWidget extends StatelessWidget {
     List<RateModel> listRates =
         Provider.of<RateReviewProvider>(context, listen: false).listRates;
 
-    ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
+      backgroundColor: kBackgroundColor,
       body: ListView.builder(
         itemCount: listRates.length,
         itemBuilder: (BuildContext context, int index) {

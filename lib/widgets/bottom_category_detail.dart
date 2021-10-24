@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/screens/diff_profile_screen.dart';
+
+import '/constants/sizes.dart';
+import '/constants/constants.dart';
+import '/screens/diff_profile_screen.dart';
 import '../models/category_model.dart';
 import '../providers/cart_provider.dart';
 
 class BottomCategoryDetail extends StatelessWidget {
   final CategoryModel category;
   final int quantity;
+  final double priceDecreaseSale;
 
-  const BottomCategoryDetail({
+  BottomCategoryDetail({
     required this.category,
     this.quantity = 1,
+    required this.priceDecreaseSale,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
     final providerCart = Provider.of<CartProvider>(context, listen: false);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -34,13 +38,13 @@ class BottomCategoryDetail extends StatelessWidget {
           SizedBox(width: size.width * .03),
           FormIcon(
             icon: Icons.add_shopping_cart_rounded,
-            color: theme.highlightColor,
+            color: kHighlightColor,
             onPressed: () {
               providerCart.addToCart(
                 category.id,
                 category.title,
                 category.imageUrl[0],
-                category.price,
+                priceDecreaseSale,
                 quantity,
               );
               // ScaffoldMessenger.of(context).showSnackBar(
@@ -66,12 +70,10 @@ class BottomCategoryDetail extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
               ),
-              color: theme.primaryColor,
+              color: kPrimaryColor,
               child: Text(
                 'Mua ngay',
-                style: theme.textTheme.headline1?.merge(TextStyle(
-                  color: Colors.white,
-                )),
+                style: kTextBoldLight_18,
               ),
             ),
           ),
@@ -95,14 +97,13 @@ class FormIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return GestureDetector(
       onTap: onPressed,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Container(
           padding: const EdgeInsets.all(10),
-          color: theme.accentColor.withOpacity(.6),
+          color: kColorItemGrey.withOpacity(.6),
           child: Icon(
             icon,
             size: 27,

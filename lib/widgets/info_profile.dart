@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/models/info_card_model.dart';
+import '/constants/sizes.dart';
+import '/constants/constants.dart';
+import '/models/info_card_model.dart';
 
 class InfoWidget extends StatelessWidget {
   const InfoWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
+      backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -43,16 +44,11 @@ class BuildTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Text(
         title,
-        style: theme.textTheme.headline2?.merge(
-          TextStyle(
-            color: Color(0xFF555555),
-          ),
-        ),
+        style: kTextMediumGrey_14,
       ),
     );
   }
@@ -63,11 +59,10 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: kCardColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
@@ -79,24 +74,21 @@ class InfoCard extends StatelessWidget {
                 child: Column(
                   children: [
                     CircleAvatar(
-                      backgroundColor: info.isChecked
-                          ? theme.primaryColor
-                          : theme.backgroundColor,
+                      backgroundColor:
+                          info.isChecked ? kPrimaryColor : kBackgroundColor,
                       radius: MediaQuery.of(context).size.width * .06,
                       child: Icon(
                         info.icon,
                         size: 22,
-                        color:
-                            info.isChecked ? Colors.white : Color(0xFF888888),
+                        color: info.isChecked ? kTextLight : Color(0xFF888888),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       info.title,
-                      style: theme.textTheme.subtitle1?.merge(
+                      style: kTextMediumDark_12.merge(
                         TextStyle(
-                          color:
-                              info.isChecked ? Colors.black : Color(0xFF888888),
+                          color: info.isChecked ? kTextDark : Color(0xFF888888),
                         ),
                       ),
                     ),
@@ -120,7 +112,6 @@ class Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
@@ -133,7 +124,7 @@ class Description extends StatelessWidget {
         description,
         maxLines: 10,
         overflow: TextOverflow.ellipsis,
-        style: theme.textTheme.headline2,
+        style: kTextMediumDark_14,
       ),
     );
   }
@@ -149,12 +140,12 @@ class TransactionCategories extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Widget _buildTransactionItem(ThemeData theme, String title, int count) {
+  Widget _buildTransactionItem(String title, int count) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: kCardColor,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
@@ -162,12 +153,12 @@ class TransactionCategories extends StatelessWidget {
           children: [
             Text(
               '$count',
-              style: theme.textTheme.caption,
+              style: kTextMediumDark_24,
             ),
             SizedBox(height: 10),
             Text(
               title,
-              style: theme.textTheme.headline2,
+              style: kTextMediumDark_14,
             ),
           ],
         ),
@@ -177,14 +168,12 @@ class TransactionCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildTransactionItem(theme, 'Mặt hàng đã bán', countCategoriesSell),
+        _buildTransactionItem('Mặt hàng đã bán', countCategoriesSell),
         SizedBox(width: 20),
-        _buildTransactionItem(theme, 'Mặt hàng đã mua', countCategoriesBuy),
+        _buildTransactionItem('Mặt hàng đã mua', countCategoriesBuy),
       ],
     );
   }

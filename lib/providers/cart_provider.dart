@@ -59,4 +59,9 @@ class CartProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void removeToCart(String categoryId) {
+    _listCart.removeWhere((key, category) => category.id == categoryId);
+    notifyListeners();
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:trado_app_uit/models/notification_model.dart';
+import '/constants/constants.dart';
+import '/constants/sizes.dart';
+import '/models/notification_model.dart';
 
 class NotificationItem extends StatelessWidget {
   final NotificationModel notification;
@@ -12,11 +14,10 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      color: notification.checked ? theme.cardColor : Color(0xFFEEEEEE),
+      color: notification.checked ? kCardColor : Color(0xFFEEEEEE),
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.all(8),
       child: Column(
@@ -48,16 +49,12 @@ class NotificationItem extends StatelessWidget {
                         'Đơn hàng #${notification.idOrder} đã được xác nhận',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodyText1,
+                        style: kTextBoldDark_16,
                       ),
                       SizedBox(height: 5),
                       Text(
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis viverra arcu vel sagittis consequat facilisis tempus .',
-                        style: theme.textTheme.headline2?.merge(
-                          TextStyle(
-                            color: theme.textSelectionColor,
-                          ),
-                        ),
+                        style: kTextMediumGrey_14,
                       )
                     ],
                   ),
@@ -69,9 +66,7 @@ class NotificationItem extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: Text(
               '${DateFormat('dd/MM/yyy').format(notification.date)}',
-              style: theme.textTheme.headline2?.merge(
-                TextStyle(fontWeight: FontWeight.w600),
-              ),
+              style: kTextBoldDark_14,
             ),
           ),
         ],

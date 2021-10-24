@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '/constants/sizes.dart';
+import '/constants/constants.dart';
 
 class Badge extends StatelessWidget {
   final Widget child;
@@ -11,7 +13,6 @@ class Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -20,17 +21,12 @@ class Badge extends StatelessWidget {
           right: 8,
           top: 8,
           child: CircleAvatar(
-            radius: 8,
-            backgroundColor: theme.highlightColor,
+            radius: 9,
+            backgroundColor: kErrorColor,
             child: Text(
               value,
               textAlign: TextAlign.center,
-              style: theme.textTheme.subtitle1?.merge(
-                TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              style: kTextBoldLight_12,
             ),
           ),
         )

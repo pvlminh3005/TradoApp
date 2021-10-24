@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import '/constants/sizes.dart';
+import 'package:trado_app_uit/constants/sizes.dart';
 import '/constants/constants.dart';
 
-class InputCard extends StatelessWidget {
+class InputPassword extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
-  final ValueChanged<String> onChanged;
   final IconData icon;
-  InputCard({
+
+  const InputPassword({
     required this.hintText,
     required this.controller,
-    required this.onChanged,
     required this.icon,
   });
 
+  @override
+  State<InputPassword> createState() => _InputPasswordState();
+}
+
+class _InputPasswordState extends State<InputPassword> {
+  bool obscureText = true;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -30,14 +35,27 @@ class InputCard extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-              controller: controller,
+              controller: widget.controller,
+              textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(
-                hintText: hintText,
+                hintMaxLines: 1,
+                hintText: widget.hintText,
                 hintStyle: kTextPlaceholder,
-                icon: Icon(icon, color: kPrimaryColor),
+                icon: Icon(widget.icon, color: kPrimaryColor),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      obscureText = !obscureText;
+                    });
+                  },
+                  child: Icon(
+                    obscureText ? Icons.visibility : Icons.visibility_off,
+                    color: kPrimaryColor,
+                  ),
+                ),
                 border: InputBorder.none,
               ),
-              onChanged: onChanged,
+              obscureText: obscureText,
             ),
           ),
         ],
@@ -45,3 +63,5 @@ class InputCard extends StatelessWidget {
     );
   }
 }
+
+//FIX colors
