@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
 import '/constants/sizes.dart';
 import '/components/config_price.dart';
 import '/components/sale_component.dart';
@@ -23,8 +24,6 @@ import '../providers/category_provider.dart';
 import 'cart_screen.dart';
 
 class CategoryDetailScreen extends StatefulWidget {
-  static String routeName = '/category_detail';
-
   CategoryDetailScreen({Key? key}) : super(key: key);
 
   @override
@@ -175,7 +174,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       onTap: () => amountViews == 0
           ? null
           : Navigator.of(context).pushNamed(
-              RatingAndReviewScreen.routeName,
+              RouteManage.rating_review,
               arguments: idCategory,
             ),
       child: Padding(
@@ -293,7 +292,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String idCategory = ModalRoute.of(context)?.settings.arguments as String;
+    var idCategory = ModalRoute.of(context)?.settings.arguments as String;
     CategoryModel category =
         Provider.of<CategoryProvider>(context, listen: false)
             .findCategoryById(idCategory);
@@ -317,7 +316,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                 color: kCardColor,
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(CartScreen.routeName);
+                Navigator.of(context).pushNamed(RouteManage.cart);
               },
             ),
             value: cartData.cartCount.toString(),

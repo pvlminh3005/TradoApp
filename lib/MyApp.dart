@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
+import 'package:trado_app_uit/screens/auth/auth_screen.dart';
+import '/providers/login/register_provider.dart';
+import 'providers/login/signin_provider.dart';
 import '/constants/constants.dart';
 
-import '/screens/rating_and_review_screen.dart';
 import 'providers/notification_provider.dart';
 import 'providers/rate_review_provider.dart';
-import 'screens/cart_screen.dart';
-import 'screens/diff_profile_screen.dart';
 import 'providers/cart_provider.dart';
 import 'providers/category_provider.dart';
-import 'routes/navigator_tabs_route.dart';
 import 'providers/google/google_signin_controller.dart';
-import 'screens/category_detail_screen.dart';
-import 'screens/login/signin_screen.dart';
-import 'screens/splash/splash_screen.dart';
-import 'screens/login/signup_screen.dart';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => RegisterProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SignInProvider(),
+        ),
         ChangeNotifierProvider(
           create: (_) => GoogleSiginController(),
         ),
@@ -43,17 +45,8 @@ class MyApp extends StatelessWidget {
           fontFamily: 'RobotoCondensed',
           primaryColor: kPrimaryColor,
         ),
-        initialRoute: '/',
-        routes: {
-          "/": (_) => SplashScreen(),
-          SigninScreen.routeName: (_) => SigninScreen(),
-          SignupScreen.routeName: (_) => SignupScreen(),
-          NavigatorTab.routeName: (_) => NavigatorTab(),
-          CategoryDetailScreen.routeName: (_) => CategoryDetailScreen(),
-          CartScreen.routeName: (_) => CartScreen(),
-          DiffProfileScreen.routeName: (_) => DiffProfileScreen(),
-          RatingAndReviewScreen.routeName: (_) => RatingAndReviewScreen(),
-        },
+        home: AuthScreen(),
+        routes: RouteManage.routesApp,
       ),
     );
   }

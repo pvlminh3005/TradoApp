@@ -10,7 +10,6 @@ import '../screens/message_screen.dart';
 import '../screens/profile_screen.dart';
 
 class NavigatorTab extends StatefulWidget {
-  static const routeName = '/tabnavigator';
   @override
   _NavigatorTabState createState() => _NavigatorTabState();
 }

@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/constants/constants.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
+import '/constants/constants.dart';
+import '/constants/sizes.dart';
+import '/routes/routes_manage.dart';
 import '/components/sale_component.dart';
 import '/providers/rate_review_provider.dart';
-import '/screens/category_detail_screen.dart';
 import '../models/category_model.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -52,7 +52,7 @@ class CategoryItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed(
-        CategoryDetailScreen.routeName,
+        RouteManage.category_detail,
         arguments: category.id,
       ),
       child: Container(

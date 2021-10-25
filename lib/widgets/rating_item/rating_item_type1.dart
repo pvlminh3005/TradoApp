@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
 
 import '/constants/constants.dart';
 import '/models/rate_category_model.dart';
@@ -38,8 +39,10 @@ class RatingItemType1 extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(CategoryDetailScreen.routeName,
-            arguments: rate.idCategory);
+        Navigator.of(context).pushNamed(
+          RouteManage.category_detail,
+          arguments: rate.idCategory,
+        );
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -86,8 +89,9 @@ class RatingItemType1 extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).pushNamed(
-                              CategoryDetailScreen.routeName,
-                              arguments: rate.idCategory);
+                            RouteManage.category_detail,
+                            arguments: rate.idCategory,
+                          );
                         },
                         child: Text(
                           'Xem sản phẩm',

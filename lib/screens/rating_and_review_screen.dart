@@ -20,7 +20,6 @@ enum FilterOptions {
 }
 
 class RatingAndReviewScreen extends StatefulWidget {
-  static const routeName = '/rating_review';
   const RatingAndReviewScreen({Key? key}) : super(key: key);
 
   @override

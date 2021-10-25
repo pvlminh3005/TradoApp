@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
+import 'package:trado_app_uit/utils/auth_preferences.dart';
 import '/constants/constants.dart';
 
 import '/constants/sizes.dart';
@@ -35,10 +37,21 @@ class HeaderInfoProfile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               children: [
-                CircleAvatar(
-                  radius: size.width * .1,
-                  backgroundImage:
-                      AssetImage('assets/images/background_blue.jpeg'),
+                GestureDetector(
+                  onTap: () async {
+                    print('Sign out');
+                    await AuthPreferences.removeToken();
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      RouteManage.splash,
+                      (Route<dynamic> route) => false,
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: size.width * .1,
+                    backgroundImage:
+                        AssetImage('assets/images/background_blue.jpeg'),
+                  ),
                 ),
                 SizedBox(width: 5),
                 Column(

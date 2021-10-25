@@ -87,6 +87,10 @@ const kTextMediumDark_15 = TextStyle(
 );
 
 //SIZE 14
+const kTextMediumLight_14 = TextStyle(
+  fontSize: 14,
+  color: kTextLight,
+);
 const kTextMediumDark_14 = TextStyle(
   fontSize: 14,
   color: kTextDark,

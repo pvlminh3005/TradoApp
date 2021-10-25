@@ -6,7 +6,6 @@ import '../routes/tab_profile_screen.dart';
 import '../widgets/header_info_profile.dart';
 
 class DiffProfileScreen extends StatelessWidget {
-  static String routeName = '/diff_profile';
   const DiffProfileScreen({Key? key}) : super(key: key);
 
   @override

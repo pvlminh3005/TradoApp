@@ -5,12 +5,10 @@ import '/constants/constants.dart';
 class InputCard extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
-  final ValueChanged<String> onChanged;
   final IconData icon;
   InputCard({
     required this.hintText,
     required this.controller,
-    required this.onChanged,
     required this.icon,
   });
 
@@ -37,7 +35,6 @@ class InputCard extends StatelessWidget {
                 icon: Icon(icon, color: kPrimaryColor),
                 border: InputBorder.none,
               ),
-              onChanged: onChanged,
             ),
           ),
         ],

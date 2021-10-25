@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/constants/sizes.dart';
+import '/routes/routes_manage.dart';
+import '/providers/login/signin_provider.dart';
 import '/components/input_password.dart';
 import '/providers/google/google_signin_controller.dart';
-import '../../routes/navigator_tabs_route.dart';
 import '../../components/or_divider.dart';
-import './signup_screen.dart';
 import '../../components/button_card.dart';
 import '../../components/form_question_text.dart';
 import '../../components/input_card.dart';
 import '../splash/background2.dart';
 
 class SigninScreen extends StatelessWidget {
-  static const routeName = '/signin';
   @override
   Widget build(BuildContext context) {
     GoogleSiginController provider =
@@ -35,7 +35,6 @@ class SigninScreen extends StatelessWidget {
               InputCard(
                 hintText: 'Tài khoản',
                 controller: userController,
-                onChanged: (value) {},
                 icon: Icons.person,
               ),
               InputPassword(
@@ -44,14 +43,26 @@ class SigninScreen extends StatelessWidget {
                 icon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
-              ButtonCard(1, 'Đăng nhập', () {
-                Navigator.of(context).pushNamed(NavigatorTab.routeName);
-              }),
+              Consumer<SignInProvider>(
+                builder: (ctx, controller, _) => ButtonCard(
+                  1,
+                  'Đăng nhập',
+                  () {
+                    controller.signInApp(
+                      context,
+                      userController.text,
+                      passController.text,
+                    );
+                  },
+                  isLoading: controller.isLoading,
+                ),
+              ),
               SizedBox(height: size.width * .05),
               FormQuestionText(
                 login: true,
                 toggleNavigator: () {
-                  Navigator.of(context).pushNamed(SignupScreen.routeName);
+                  Navigator.of(context)
+                      .pushReplacementNamed(RouteManage.register);
                 },
               ),
               SizedBox(height: size.width * .1),
