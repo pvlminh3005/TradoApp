@@ -20,6 +20,13 @@ const createAccount = async (req, res) => {
     try {
         const opts = {session}
 
+        const check = await Account.findOne({username:username})
+
+        if(check)
+        {
+            throw new Error("User exist")
+        }
+
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const newAccount = new Account({

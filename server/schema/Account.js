@@ -5,11 +5,9 @@ const { ObjectID } = mongoose.Schema.Types
 const AccountSchema = new Schema({
     username: {
         type: String,
-        unique: true,
     },
     email: {
         type: String,
-        unique: true,
     },
     password: {
         type: String,
