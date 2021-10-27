@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import '../login/signin_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:trado_app_uit/providers/login/register_provider.dart';
+import '/routes/routes_manage.dart';
+import '/components/input_password.dart';
 import '../../components/form_question_text.dart';
 import '../../components/button_card.dart';
 import '../../components/input_card.dart';
@@ -13,7 +16,6 @@ class ConCac extends StatelessWidget {
 }
 
 class SignupScreen extends StatelessWidget {
-  static const routeName = '/signup';
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,22 +36,34 @@ class SignupScreen extends StatelessWidget {
               InputCard(
                 hintText: 'Tài khoản',
                 controller: userController,
-                onChanged: (value) {},
                 icon: Icons.person,
               ),
-              InputPasswordCard(
+              InputPassword(
                 hintText: 'Mật khẩu',
                 controller: passController,
-                onChanged: (value) {},
                 icon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
-              ButtonCard(1, 'Đăng ký', () {}),
+              Consumer<RegisterProvider>(
+                builder: (ctx, controller, _) => ButtonCard(
+                  1,
+                  'Đăng ký',
+                  () {
+                    controller.registerApp(
+                      context,
+                      userController.text,
+                      passController.text,
+                    );
+                  },
+                  isLoading: controller.isLoading,
+                ),
+              ),
               SizedBox(height: size.width * .05),
               FormQuestionText(
                 login: false,
                 toggleNavigator: () {
-                  Navigator.of(context).pushNamed(SigninScreen.routeName);
+                  Navigator.of(context)
+                      .pushReplacementNamed(RouteManage.signin);
                 },
               ),
             ],

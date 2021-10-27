@@ -54,3 +54,5 @@ class BackgroundType2 extends StatelessWidget {
     );
   }
 }
+
+//FIX colors

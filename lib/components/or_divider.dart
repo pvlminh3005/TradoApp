@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
+import '/constants/sizes.dart';
+import '/constants/constants.dart';
 
 class OrDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width * .8,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          _buildDivider(theme.primaryColor),
+          _buildDivider(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               'Hoặc đăng nhập với',
-              style: theme.textTheme.headline1?.merge(
-                TextStyle(color: theme.primaryColor),
+              style: kTextBoldDark_18.merge(
+                TextStyle(color: kPrimaryColor),
               ),
             ),
           ),
-          _buildDivider(theme.primaryColor),
+          _buildDivider(),
         ],
       ),
     );
   }
 }
 
-Expanded _buildDivider(Color color) {
+Expanded _buildDivider() {
   return Expanded(
     child: Divider(
-      color: color,
+      color: kPrimaryColor,
       height: 1.5,
       thickness: 1.5,
     ),
