@@ -13,5 +13,7 @@ const kTextColorGrey = Color(0xFF777777);
 const kColorItemGrey = Color(0xFFE0E0E0);
 const kTextLight = Colors.white;
 const kTextDark = Colors.black;
+const kBlack = Colors.black;
 
-const String fontFamily = 'RobotoCondensed';
+const String font_family = 'RobotoCondensed';
+const String font_family_Raleway = 'Raleway';

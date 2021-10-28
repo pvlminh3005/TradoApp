@@ -24,6 +24,7 @@ class ApiController {
 
   Future<dynamic> signIn(String username, String password) async {
     try {
+      print('signIn');
       var _user = UserModel(username: username, email: '', password: password);
       var response = await _dio.post(loginURL, data: _user.toJson());
 

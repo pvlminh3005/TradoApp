@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/login/register_provider.dart';
+import '/components/custom_button.dart';
+import '/components/custom_input.dart';
+import '/components/custom_input_password.dart';
+import '/providers/login/register_provider.dart';
 import '/routes/routes_manage.dart';
-import '/components/input_password.dart';
 import '../../components/form_question_text.dart';
-import '../../components/button_card.dart';
-import '../../components/input_card.dart';
 import '../splash/background2.dart';
 
 class ConCac extends StatelessWidget {
@@ -33,22 +33,21 @@ class SignupScreen extends StatelessWidget {
                 height: size.width * .5,
                 fit: BoxFit.cover,
               ),
-              InputCard(
+              CustomInput(
                 hintText: 'Tài khoản',
                 controller: userController,
                 icon: Icons.person,
               ),
-              InputPassword(
+              CustomInputPassword(
                 hintText: 'Mật khẩu',
                 controller: passController,
                 icon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
               Consumer<RegisterProvider>(
-                builder: (ctx, controller, _) => ButtonCard(
-                  1,
-                  'Đăng ký',
-                  () {
+                builder: (ctx, controller, _) => CustomButton(
+                  title: 'Đăng ký',
+                  onTap: () {
                     controller.registerApp(
                       context,
                       userController.text,

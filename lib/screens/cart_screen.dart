@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/custom_text.dart';
+import '/constants/dimen.dart';
+import '/constants/sizes.dart';
 import '/constants/constants.dart';
 
 import '../models/cart_model.dart';
@@ -19,16 +22,9 @@ class CartScreen extends StatelessWidget {
         color: kPrimaryColor,
         title: 'Giỏ hàng',
       ),
-      body: ListView.builder(
-        itemCount: listCart.length,
-        itemBuilder: (BuildContext context, int index) {
-          CartModel cart = listCart.values.toList()[index];
-          return CartItem(cart);
-        },
-      ),
+      body: _buildBody(listCart),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-        height: 174,
         decoration: BoxDecoration(
           color: kCardColor,
           borderRadius: BorderRadius.only(
@@ -44,29 +40,101 @@ class CartScreen extends StatelessWidget {
           ],
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
+            _buildVoucher(),
+            const SizedBox(height: AppDimen.verticalSpacing_16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: kBackgroundColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(
-                    Icons.receipt,
-                    color: kPrimaryColor,
-                    size: 35,
-                  ),
-                ),
-                const Spacer(),
-                Text('Mã giảm giá'),
-                const SizedBox(width: 10),
-                Icon(Icons.arrow_forward_ios, size: 15, color: kTextColorGrey),
+                _buildTotal(),
+                const SizedBox(width: AppDimen.spacing_2),
+                _buildButton(),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody(Map<String, CartModel> listCart) {
+    return ListView.builder(
+      itemCount: listCart.length,
+      itemBuilder: (BuildContext context, int index) {
+        CartModel cart = listCart.values.toList()[index];
+        return CartItem(cart);
+      },
+    );
+  }
+
+  Widget _buildVoucher() {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(AppDimen.spacing_1),
+          decoration: BoxDecoration(
+            color: kBackgroundColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(
+            Icons.receipt,
+            color: kPrimaryColor,
+            size: AppDimen.icon_size_big,
+          ),
+        ),
+        const Spacer(),
+        CustomText(
+          'Nhập mã giảm giá',
+          fontSize: FontSize.SMALL,
+          color: kTextColorGrey,
+        ),
+        const SizedBox(width: 6),
+        Icon(
+          Icons.arrow_forward_ios,
+          size: AppDimen.icon_size_small,
+          color: kTextColorGrey,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTotal() {
+    return Text.rich(
+      TextSpan(
+        text: 'Tổng cộng: \n',
+        style: TextStyle(
+          color: kTextColorGrey,
+          fontSize: FontSize.MEDIUM,
+        ),
+        children: [
+          TextSpan(
+            text: '100.000 đ',
+            style: TextStyle(
+              color: kTextDark,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildButton() {
+    return Expanded(
+      child: RaisedButton(
+        elevation: 0.0,
+        color: kPrimaryColor,
+        padding: const EdgeInsets.symmetric(
+          vertical: AppDimen.verticalSpacing_10 + 3.0,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(AppDimen.radiusNormal),
+        ),
+        onPressed: () {},
+        child: CustomText(
+          'Tiếp tục',
+          color: kTextLight,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );

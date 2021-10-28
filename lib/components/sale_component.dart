@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import '/constants/sizes.dart';
 
 import '/constants/constants.dart';
+import 'custom_text.dart';
 
 class SaleComponent extends StatelessWidget {
   final int text;
-  final TextStyle? textStyle;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final Color? color;
 
   const SaleComponent({
     required this.text,
-    required this.textStyle,
+    this.fontSize = FontSize.MEDIUM,
+    this.fontWeight = FontWeight.w500,
+    this.color = kTextDark,
     Key? key,
   }) : super(key: key);
 
@@ -24,13 +30,10 @@ class SaleComponent extends StatelessWidget {
         ),
         color: kErrorLightColor,
       ),
-      child: Text(
+      child: CustomText(
         '- ${text.toStringAsFixed(0)}%',
-        style: textStyle?.merge(
-          TextStyle(
-            color: kErrorColor,
-          ),
-        ),
+        color: kErrorColor,
+        fontSize: FontSize.SMALL_1,
       ),
     );
   }

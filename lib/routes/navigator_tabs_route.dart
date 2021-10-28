@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/screens/order_screen.dart';
 
 import '/constants/constants.dart';
 import './navigator_key.dart';
@@ -15,11 +16,12 @@ class NavigatorTab extends StatefulWidget {
 }
 
 class _NavigatorTabState extends State<NavigatorTab> {
-  double size = 25;
+  double size = 27;
   int _pages = 0;
   final _screens = [
     HomeScreen(),
-    HighlightScreen(),
+    OrderScreen(),
+    // HighlightScreen(),
     NotificationScreen(),
     MessageScreen(),
     ProfileScreen(),
@@ -33,7 +35,7 @@ class _NavigatorTabState extends State<NavigatorTab> {
       bottomNavigationBar: CurvedNavigationBar(
         key: NavBarKey.getKey,
         index: 0,
-        height: 60,
+        height: 65,
         backgroundColor: Colors.transparent,
         // buttonBackgroundColor: Theme.of(context).primaryColor,
         onTap: (index) {

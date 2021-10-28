@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/constants/sizes.dart';
 import '/constants/constants.dart';
+import 'custom_text.dart';
 
 class OrDivider extends StatelessWidget {
   @override
@@ -14,11 +15,11 @@ class OrDivider extends StatelessWidget {
           _buildDivider(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
+            child: CustomText(
               'Hoặc đăng nhập với',
-              style: kTextBoldDark_18.merge(
-                TextStyle(color: kPrimaryColor),
-              ),
+              color: kPrimaryColor,
+              fontSize: FontSize.BIG,
+              fontWeight: FontWeight.w700,
             ),
           ),
           _buildDivider(),

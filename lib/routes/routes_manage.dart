@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/screens/order_screen.dart';
 
 import '/screens/cart_screen.dart';
 import '/screens/diff_profile_screen.dart';
@@ -18,6 +19,7 @@ class RouteManage {
   static const cart = '/cart';
   static const diff_profile = '/diff_profile';
   static const rating_review = '/rating_review';
+  static const order = '/order';
 
   static const initialRoute = splash;
 
@@ -30,45 +32,6 @@ class RouteManage {
     cart: (_) => CartScreen(),
     diff_profile: (_) => DiffProfileScreen(),
     rating_review: (_) => RatingAndReviewScreen(),
+    order: (_) => OrderScreen(),
   };
-
-  // static Route<void> generateRoute(RouteSettings settings) {
-  //   switch (settings.name!) {
-  //     case splash:
-  //       (_) => SplashScreen();
-  //       return MaterialPageRoute(
-  //         builder: (ctx) => SplashScreen(),
-  //       );
-  //     case register:
-  //       return MaterialPageRoute(
-  //         builder: (ctx) => SignupScreen(),
-  //       );
-  //     case signin:
-  //       return MaterialPageRoute(
-  //         builder: (ctx) => SigninScreen(),
-  //       );
-  //     case navigator_tab:
-  //       return MaterialPageRoute(
-  //         builder: (ctx) => NavigatorTab(),
-  //       );
-  //     case category_detail:
-  //       return MaterialPageRoute(
-  //         builder: (ctx) => CategoryDetailScreen(),
-  //       );
-  //     case cart:
-  //       return MaterialPageRoute(
-  //         builder: (ctx) => CartScreen(),
-  //       );
-  //     case diff_profile:
-  //       return MaterialPageRoute(
-  //         builder: (ctx) => DiffProfileScreen(),
-  //       );
-  //     case rating_review:
-  //       return MaterialPageRoute(
-  //         builder: (ctx) => RatingAndReviewScreen(),
-  //       );
-  //     default:
-  //       throw FormatException('Route not found! Check route again');
-  //   }
-  // }
 }

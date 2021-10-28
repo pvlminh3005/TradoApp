@@ -7,6 +7,6 @@ class RegisterProvider with ChangeNotifier {
   Future<void> registerApp(
       BuildContext context, String username, String password) async {
     _isLoading = true;
-    var tokenUser = notifyListeners();
+    // var tokenUser = notifyListeners();
   }
 }

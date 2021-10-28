@@ -13,6 +13,7 @@ class SignInProvider with ChangeNotifier {
   Future<void> signInApp(
       BuildContext context, String username, String password) async {
     _isLoading = true;
+    print('gg');
     await ApiController().signIn(username, password).then((tokenUser) async {
       if (tokenUser == null) {
         dialogMessenger(context, 'Tài khoản hoặc mật khẩu không đúng');

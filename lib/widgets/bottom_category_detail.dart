@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/custom_button.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 import '/routes/routes_manage.dart';
 
 import '/constants/sizes.dart';
@@ -63,18 +65,26 @@ class BottomCategoryDetail extends StatelessWidget {
           ),
           SizedBox(width: size.width * .04),
           Expanded(
-            child: RaisedButton(
-              onPressed: () {},
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              color: kPrimaryColor,
-              child: Text(
-                'Mua ngay',
-                style: kTextBoldLight_18,
-              ),
+            // child: RaisedButton(
+            //   onPressed: () {},
+            //   elevation: 0,
+            //   padding: const EdgeInsets.symmetric(vertical: 12),
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(5),
+            //   ),
+            //   color: kPrimaryColor,
+            //   child: (
+            //     'Mua ngay',
+            //     style: kTextBoldLight_18,
+            //   ),
+            // ),
+            child: CustomButton(
+              radius: AppDimen.radiusNormal,
+              title: 'Mua ngay',
+              textColor: kTextLight,
+              backgroundColor: kPrimaryColor,
+              padding: AppDimen.verticalSpacing_10,
+              onTap: () {},
             ),
           ),
         ],

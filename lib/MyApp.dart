@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/providers/order_provider.dart';
 import 'package:trado_app_uit/routes/routes_manage.dart';
 import 'package:trado_app_uit/screens/auth/auth_screen.dart';
 import '/providers/login/register_provider.dart';
@@ -38,11 +39,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => NotificationProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => OrderProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: 'RobotoCondensed',
+          fontFamily: font_family,
           primaryColor: kPrimaryColor,
         ),
         home: AuthScreen(),

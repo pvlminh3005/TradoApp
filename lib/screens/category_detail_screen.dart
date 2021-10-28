@@ -5,6 +5,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/custom_text.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 import 'package:trado_app_uit/routes/routes_manage.dart';
 import '/constants/sizes.dart';
 import '/components/config_price.dart';
@@ -12,7 +14,6 @@ import '/components/sale_component.dart';
 import '/constants/constants.dart';
 import '/providers/rate_review_provider.dart';
 import '/widgets/change_quantity.dart';
-import '/screens/rating_and_review_screen.dart';
 
 import '/providers/cart_provider.dart';
 import '/widgets/bage.dart';
@@ -21,7 +22,6 @@ import '../widgets/scroll_hide_widget.dart';
 import '../widgets/bottom_category_detail.dart';
 import '../models/category_model.dart';
 import '../providers/category_provider.dart';
-import 'cart_screen.dart';
 
 class CategoryDetailScreen extends StatefulWidget {
   CategoryDetailScreen({Key? key}) : super(key: key);
@@ -97,11 +97,10 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Text(
+            child: CustomText(
               category.title,
               maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: kTextMediumDark_24,
+              fontSize: FontSize.BIG_1,
             ),
           ),
           GestureDetector(
@@ -135,25 +134,25 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         category.priceSale != 0
-            ? Text(
-                '${FormatPrice(priceDecreaseSale)} đ',
-                style: TextStyle(decoration: TextDecoration.lineThrough),
+            ? CustomText(
+                '${FormatPrice(category.price)} đ',
+                fontSize: FontSize.SMALL,
+                decoration: TextDecoration.lineThrough,
+                // style: TextStyle(decoration: ),
               )
             : SizedBox.shrink(),
         Row(
           children: [
-            Text(
+            CustomText(
               '${FormatPrice(priceDecreaseSale)} đ',
-              style: kTextBoldDark_24.merge(
-                TextStyle(
-                  color: category.priceSale != 0 ? kErrorColor : null,
-                ),
-              ),
+              fontSize: FontSize.BIG_1,
+              fontWeight: FontWeight.w700,
+              color: category.priceSale != 0 ? kErrorColor : null!,
             ),
             category.priceSale != 0
                 ? SaleComponent(
                     text: category.priceSale,
-                    textStyle: kTextBoldDark_18,
+                    // textStyle: kTextBoldDark_18,
                   )
                 : SizedBox.shrink(),
             Spacer(),
@@ -186,32 +185,30 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               color: amountStars == 0 ? kTextColorGrey : kHighlightColor,
               size: 30,
             ),
-            Text(
+            CustomText(
               '${amountStars}',
-              style: kTextMediumDark_18,
+              fontSize: FontSize.BIG,
             ),
             SizedBox(width: 10),
-            Text(
+            CustomText(
               amountViews == 0
                   ? 'Chưa có nhận xét nào'
                   : '(${amountViews} nhận xét)',
-              style: kTextMediumDark_18.merge(
-                TextStyle(
-                  color: kTextColorGrey,
-                ),
-              ),
+              fontSize: FontSize.BIG,
+              color: kTextColorGrey,
             ),
             Spacer(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                CustomText(
                   'Xem tất cả',
-                  style: kTextMediumGrey_14,
+                  color: kTextColorGrey,
+                  fontSize: FontSize.SMALL,
                 ),
                 Icon(
                   Icons.arrow_forward_ios,
-                  size: 15,
+                  size: AppDimen.icon_size_small_1,
                   color: kTextColorGrey,
                 ),
               ],
@@ -236,20 +233,25 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
             });
           },
           child: Padding(
-            padding: EdgeInsets.only(bottom: Platform.isIOS ? 15 : 5),
+            padding: EdgeInsets.only(
+              bottom: Platform.isIOS
+                  ? AppDimen.verticalSpacing_16
+                  : AppDimen.verticalSpacing_5,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                CustomText(
                   isReadMore ? 'Thu gọn' : 'Xem thêm',
-                  style: kTextMediumGrey_14,
+                  fontSize: FontSize.SMALL,
+                  color: kTextColorGrey,
                 ),
                 Icon(
                   isReadMore
                       ? Icons.keyboard_arrow_up
                       : Icons.keyboard_arrow_down,
                   color: kTextColorGrey,
-                  size: 18,
+                  size: AppDimen.icon_size_small_1,
                 ),
               ],
             ),
@@ -261,16 +263,13 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
 
   Widget _buildText(String text) {
     final int platform = Platform.isIOS ? 5 : 4;
-    final maxLines = isReadMore ? null : platform;
+    final maxLines = isReadMore ? 100 : platform;
     final overflow = isReadMore ? TextOverflow.visible : TextOverflow.fade;
-    return Text(
+    return CustomText(
       text,
-      style: kTextMediumDark_18.merge(
-        TextStyle(
-          color: Colors.grey.shade700,
-          letterSpacing: .5,
-        ),
-      ),
+      fontSize: FontSize.BIG,
+      color: Colors.grey.shade700,
+      letterSpacing: .5,
       overflow: overflow,
       maxLines: maxLines,
     );

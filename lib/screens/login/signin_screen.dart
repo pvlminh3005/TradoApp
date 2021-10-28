@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/custom_button.dart';
+import '/components/custom_input.dart';
+import '/components/custom_input_password.dart';
 
-import '/constants/sizes.dart';
 import '/routes/routes_manage.dart';
 import '/providers/login/signin_provider.dart';
-import '/components/input_password.dart';
 import '/providers/google/google_signin_controller.dart';
 import '../../components/or_divider.dart';
-import '../../components/button_card.dart';
 import '../../components/form_question_text.dart';
-import '../../components/input_card.dart';
 import '../splash/background2.dart';
 
 class SigninScreen extends StatelessWidget {
@@ -32,22 +31,21 @@ class SigninScreen extends StatelessWidget {
                 height: size.width * .6,
                 fit: BoxFit.cover,
               ),
-              InputCard(
+              CustomInput(
                 hintText: 'Tài khoản',
                 controller: userController,
                 icon: Icons.person,
               ),
-              InputPassword(
+              CustomInputPassword(
                 hintText: 'Mật khẩu',
                 controller: passController,
                 icon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
               Consumer<SignInProvider>(
-                builder: (ctx, controller, _) => ButtonCard(
-                  1,
-                  'Đăng nhập',
-                  () {
+                builder: (ctx, controller, _) => CustomButton(
+                  title: 'Đăng nhập',
+                  onTap: () {
                     controller.signInApp(
                       context,
                       userController.text,
@@ -72,7 +70,7 @@ class SigninScreen extends StatelessWidget {
                   SizedBox(height: size.width * .1),
                   GestureDetector(
                     onTap: () {
-                      provider.signin();
+                      // provider.signin();
                     },
                     child: Image.asset(
                       'assets/images/google.png',

@@ -1,11 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/utils/convert_timer.dart';
+import 'package:trado_app_uit/components/custom_button.dart';
+import 'package:trado_app_uit/components/custom_text.dart';
+import '/utils/convert_timer.dart';
+import '/widgets/loading_page.dart';
 import '/routes/routes_manage.dart';
 import '/constants/constants.dart';
 import '/constants/sizes.dart';
-import '../../components/button_card.dart';
 import './background1.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColorWhite,
       body: isLoadingPage
-          ? Center(child: CircularProgressIndicator(color: kPrimaryColor))
+          ? LoadingPage()
           : SingleChildScrollView(
               child: BackgroundType1(
                 child: Padding(
@@ -44,10 +44,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      CustomText(
                         titleApp,
-                        style: kTextCaption,
-                        textAlign: TextAlign.center,
+                        align: TextAlign.center,
                       ),
                       Container(
                         width: size.width * .8,
@@ -55,12 +54,18 @@ class _SplashScreenState extends State<SplashScreen> {
                         child: Image.asset(
                             'assets/images/undraw_shopping_eii3.png'),
                       ),
-                      ButtonCard(1, 'Đăng nhập', () {
-                        Navigator.of(context).pushNamed(RouteManage.signin);
-                      }),
-                      ButtonCard(2, 'Đăng ký', () {
-                        Navigator.of(context).pushNamed(RouteManage.register);
-                      }),
+                      CustomButton(
+                        title: 'Đăng nhập',
+                        onTap: () {
+                          Navigator.of(context).pushNamed(RouteManage.signin);
+                        },
+                      ),
+                      CustomButton(
+                        title: 'Đăng ký',
+                        onTap: () {
+                          Navigator.of(context).pushNamed(RouteManage.register);
+                        },
+                      ),
                     ],
                   ),
                 ),

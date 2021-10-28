@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/config_price.dart';
+import 'package:trado_app_uit/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/constants/sizes.dart';
 import '/routes/routes_manage.dart';
@@ -25,13 +27,11 @@ class CategoryItem extends StatelessWidget {
             color: kTextColorGrey,
           ),
           SizedBox(width: 5),
-          Text(
+          CustomText(
             data,
-            style: kTextBoldDark_14.merge(
-              TextStyle(
-                color: kTextColorGrey,
-              ),
-            ),
+            fontSize: FontSize.SMALL,
+            fontWeight: FontWeight.w700,
+            color: kTextColorGrey,
           ),
         ],
       ),
@@ -81,37 +81,25 @@ class CategoryItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      CustomText(
                         category.title,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: kTextMediumDark_14,
+                        fontSize: FontSize.SMALL,
                       ),
 
                       //Widget Price & Sale
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            '${NumberFormat.currency(
-                              locale: 'id',
-                              decimalDigits: 0,
-                              symbol: '',
-                            ).format(priceDecreaseSale)} đ',
-                            style: kTextBoldDark_16.merge(
-                              TextStyle(
-                                color: category.priceSale != 0
-                                    ? kErrorColor
-                                    : null,
-                              ),
-                            ),
+                          CustomText(
+                            '${FormatPrice(priceDecreaseSale)} đ',
+                            fontWeight: FontWeight.w700,
+                            color: category.priceSale != 0
+                                ? kErrorColor
+                                : kTextDark,
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           category.priceSale != 0
-                              ? SaleComponent(
-                                  text: category.priceSale,
-                                  textStyle: kTextBoldError_12,
-                                )
+                              ? SaleComponent(text: category.priceSale)
                               : SizedBox.shrink(),
                         ],
                       ),
@@ -128,14 +116,15 @@ class CategoryItem extends StatelessWidget {
                                     : kTextColorGrey,
                                 size: 20,
                               ),
-                              Text(
+                              CustomText(
                                 '${rate['rating'].toStringAsFixed(1)}',
-                                style: kTextMediumDark_14,
+                                fontSize: FontSize.SMALL,
                               ),
-                              SizedBox(width: 10),
-                              Text(
+                              const SizedBox(width: 10),
+                              CustomText(
                                 '(${rate['review']} nhận xét)',
-                                style: kTextMediumGrey_14,
+                                fontSize: FontSize.SMALL,
+                                color: kTextColorGrey,
                               ),
                             ],
                           ),

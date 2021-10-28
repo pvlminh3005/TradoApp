@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '/constants/constants.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 import '/constants/sizes.dart';
+import '/components/custom_text.dart';
+import '/constants/constants.dart';
 import '/models/notification_model.dart';
 
 class NotificationItem extends StatelessWidget {
@@ -19,7 +21,7 @@ class NotificationItem extends StatelessWidget {
     return Container(
       color: notification.checked ? kCardColor : Color(0xFFEEEEEE),
       alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(AppDimen.horizontalSpacing_10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,17 +47,17 @@ class NotificationItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
+                      CustomText(
                         'Đơn hàng #${notification.idOrder} đã được xác nhận',
                         maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: kTextBoldDark_16,
+                        fontWeight: FontWeight.w700,
                       ),
-                      SizedBox(height: 5),
-                      Text(
+                      const SizedBox(height: 5),
+                      CustomText(
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis viverra arcu vel sagittis consequat facilisis tempus .',
-                        style: kTextMediumGrey_14,
-                      )
+                        color: kTextColorGrey,
+                        fontSize: FontSize.SMALL,
+                      ),
                     ],
                   ),
                 ),
@@ -64,9 +66,10 @@ class NotificationItem extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.centerRight,
-            child: Text(
+            child: CustomText(
               '${DateFormat('dd/MM/yyy').format(notification.date)}',
-              style: kTextBoldDark_14,
+              fontSize: FontSize.SMALL,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
