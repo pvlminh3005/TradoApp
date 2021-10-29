@@ -3,9 +3,9 @@ import 'package:trado_app_uit/models/user_model.dart';
 import 'package:trado_app_uit/utils/auth_preferences.dart';
 import '/services/url.dart';
 
-class ApiController {
+class AuthController {
   late Dio _dio;
-  ApiController() {
+  AuthController() {
     _dio = Dio();
   }
 

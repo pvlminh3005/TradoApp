@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -310,7 +311,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
           builder: (ctx, cartData, ch) => Badge(
             child: IconButton(
               icon: Icon(
-                Icons.shopping_cart,
+                CupertinoIcons.cart_fill,
                 size: 25,
                 color: kCardColor,
               ),

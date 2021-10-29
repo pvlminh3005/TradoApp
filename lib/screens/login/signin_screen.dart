@@ -39,12 +39,11 @@ class SigninScreen extends StatelessWidget {
               CustomInputPassword(
                 hintText: 'Mật khẩu',
                 controller: passController,
-                icon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
               Consumer<SignInProvider>(
                 builder: (ctx, controller, _) => CustomButton(
-                  title: 'Đăng nhập',
+                  'Đăng nhập',
                   onTap: () {
                     controller.signInApp(
                       context,

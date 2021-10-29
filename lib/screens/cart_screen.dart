@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/widgets/primary_button.dart';
 import '/components/custom_text.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
@@ -24,12 +25,15 @@ class CartScreen extends StatelessWidget {
       ),
       body: _buildBody(listCart),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        padding: const EdgeInsets.symmetric(
+          vertical: AppDimen.verticalSpacing_16,
+          horizontal: AppDimen.spacing_3,
+        ),
         decoration: BoxDecoration(
           color: kCardColor,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
+            topLeft: Radius.circular(AppDimen.radiusBig_2),
+            topRight: Radius.circular(AppDimen.radiusBig_2),
           ),
           boxShadow: [
             BoxShadow(
@@ -47,7 +51,7 @@ class CartScreen extends StatelessWidget {
             Row(
               children: [
                 _buildTotal(),
-                const SizedBox(width: AppDimen.spacing_2),
+                const SizedBox(width: AppDimen.spacing_3),
                 _buildButton(),
               ],
             ),
@@ -121,21 +125,11 @@ class CartScreen extends StatelessWidget {
 
   Widget _buildButton() {
     return Expanded(
-      child: RaisedButton(
-        elevation: 0.0,
-        color: kPrimaryColor,
-        padding: const EdgeInsets.symmetric(
-          vertical: AppDimen.verticalSpacing_10 + 3.0,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(AppDimen.radiusNormal),
-        ),
-        onPressed: () {},
-        child: CustomText(
-          'Tiếp tục',
-          color: kTextLight,
-          fontWeight: FontWeight.w700,
-        ),
+      child: PrimaryButton(
+        title: 'Tiếp tục',
+        onPressed: () {
+          print('Tiep tuc');
+        },
       ),
     );
   }

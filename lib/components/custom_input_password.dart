@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/constants/constants.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
 
 class CustomInputPassword extends StatefulWidget {
@@ -9,16 +10,18 @@ class CustomInputPassword extends StatefulWidget {
   final double? fontSize;
   final double? radius;
   final Color backgroundColor;
-  final double? margin;
+  final Color textColor;
+  final EdgeInsets margin;
 
   const CustomInputPassword({
     this.hintText = '',
     this.controller,
-    this.icon = null,
-    this.fontSize = FontSize.MEDIUM,
-    this.radius = 8,
+    this.icon = Icons.lock,
+    this.fontSize = FontSize.SMALL,
+    this.radius = AppDimen.radiusBig_2,
     this.backgroundColor = kPrimaryColorLight,
-    this.margin = 0,
+    this.textColor = kTextColorGrey,
+    this.margin = const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
     Key? key,
   }) : super(key: key);
 
@@ -32,8 +35,11 @@ class _CustomInputPasswordState extends State<CustomInputPassword> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(widget.margin!),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      margin: widget.margin,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimen.horizontalSpacing_16,
+        vertical: 5,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(widget.radius!),
         color: widget.backgroundColor,
@@ -44,15 +50,28 @@ class _CustomInputPasswordState extends State<CustomInputPassword> {
           Expanded(
             child: TextField(
               controller: widget.controller,
+              obscureText: obscureText,
               decoration: InputDecoration(
                 hintText: widget.hintText,
                 hintStyle: TextStyle(
                   fontFamily: font_family,
                   fontSize: widget.fontSize,
+                  color: widget.textColor,
                 ),
                 icon: widget.icon != null
                     ? Icon(widget.icon, color: kPrimaryColor)
                     : SizedBox.shrink(),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      obscureText = !obscureText;
+                    });
+                  },
+                  child: Icon(
+                    obscureText ? Icons.visibility : Icons.visibility_off,
+                    color: kPrimaryColor,
+                  ),
+                ),
                 border: InputBorder.none,
               ),
             ),

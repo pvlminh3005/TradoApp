@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import '/components/custom_text.dart';
 
-import '/widgets/order_widget/pay_order.dart';
+import '../widgets/order_widget/in_processing_order.dart';
 import '/widgets/order_widget/all_order.dart';
 import '/widgets/order_widget/cancel_order.dart';
 import '/widgets/order_widget/complete_order.dart';
 import '/widgets/order_widget/ship_order.dart';
 import '/constants/constants.dart';
-import '/constants/sizes.dart';
 import '/widgets/appbar_widget.dart';
 
 List<Widget> _listWidgets = [
   AllOrderWidget(),
-  PayOrderWidget(),
+  InprocessingOrderWidget(),
   ShipOrderWidget(),
   CompleteOrderWidget(),
   CancelOrderWidget(),
@@ -25,7 +24,8 @@ class OrderScreen extends StatefulWidget {
   _OrderScreenState createState() => _OrderScreenState();
 }
 
-class _OrderScreenState extends State<OrderScreen> {
+class _OrderScreenState extends State<OrderScreen>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -50,6 +50,7 @@ class _OrderScreenState extends State<OrderScreen> {
           indicatorColor: kPrimaryColor,
           indicatorSize: TabBarIndicatorSize.tab,
           isScrollable: true,
+          unselectedLabelColor: Colors.red,
           tabs: [
             _buildTabText('Tất cả'),
             _buildTabText('Đang xử lý'),
@@ -63,7 +64,10 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   _buildTabText(String? title) {
-    return CustomText(title!);
+    return CustomText(
+      title!,
+      padding: EdgeInsets.only(bottom: 5.0),
+    );
   }
 
   _buildBody() {

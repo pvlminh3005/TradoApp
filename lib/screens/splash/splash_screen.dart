@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/components/custom_button.dart';
 import 'package:trado_app_uit/components/custom_text.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 import '/utils/convert_timer.dart';
 import '/widgets/loading_page.dart';
 import '/routes/routes_manage.dart';
@@ -47,6 +48,15 @@ class _SplashScreenState extends State<SplashScreen> {
                       CustomText(
                         titleApp,
                         align: TextAlign.center,
+                        fontSize: FontSize.BIG_2,
+                        fontWeight: FontWeight.w700,
+                        textShadow: [
+                          Shadow(
+                            color: kBlack.withOpacity(.15),
+                            offset: Offset(4, 4),
+                            blurRadius: 15,
+                          ),
+                        ],
                       ),
                       Container(
                         width: size.width * .8,
@@ -55,13 +65,27 @@ class _SplashScreenState extends State<SplashScreen> {
                             'assets/images/undraw_shopping_eii3.png'),
                       ),
                       CustomButton(
-                        title: 'Đăng nhập',
+                        'Đăng nhập',
+                        padding: const EdgeInsets.symmetric(
+                            vertical: AppDimen.verticalSpacing_16),
+                        margin: const EdgeInsets.symmetric(
+                          vertical: AppDimen.spacing_1,
+                          horizontal: AppDimen.spacing_2,
+                        ),
                         onTap: () {
                           Navigator.of(context).pushNamed(RouteManage.signin);
                         },
                       ),
                       CustomButton(
-                        title: 'Đăng ký',
+                        'Đăng ký',
+                        padding: const EdgeInsets.symmetric(
+                            vertical: AppDimen.verticalSpacing_16),
+                        margin: const EdgeInsets.symmetric(
+                          vertical: AppDimen.spacing_1,
+                          horizontal: AppDimen.spacing_2,
+                        ),
+                        textColor: kTextDark,
+                        backgroundColor: kPrimaryColorLight,
                         onTap: () {
                           Navigator.of(context).pushNamed(RouteManage.register);
                         },

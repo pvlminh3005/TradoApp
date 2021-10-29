@@ -33,7 +33,7 @@ class SaleComponent extends StatelessWidget {
       child: CustomText(
         '- ${text.toStringAsFixed(0)}%',
         color: kErrorColor,
-        fontSize: FontSize.SMALL_1,
+        fontSize: FontSize.SMALL,
       ),
     );
   }

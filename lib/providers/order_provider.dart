@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class OrderProvider with ChangeNotifier {
+  //status 0 => cancel, 1 => in processing, 2 => delivered
   List<Map<String, dynamic>> _listOrders = [
     {
       'idOrder': '12312312',
@@ -28,7 +29,7 @@ class OrderProvider with ChangeNotifier {
       'date': '27/09/2021',
       'quantity': 02,
       'total': 100.50,
-      'status': 0,
+      'status': 3,
     }
   ];
 
@@ -38,7 +39,15 @@ class OrderProvider with ChangeNotifier {
     return _listOrders.where((order) => order['status'] == 0).toList();
   }
 
-  List<Map<String, dynamic>> deliveredOrders() {
+  List<Map<String, dynamic>> inProcessingOrders() {
+    return _listOrders.where((order) => order['status'] == 1).toList();
+  }
+
+  List<Map<String, dynamic>> deliveringOrders() {
     return _listOrders.where((order) => order['status'] == 2).toList();
+  }
+
+  List<Map<String, dynamic>> deliveredOrders() {
+    return _listOrders.where((order) => order['status'] == 3).toList();
   }
 }

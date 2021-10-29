@@ -20,7 +20,7 @@ class TabScreen extends StatelessWidget {
   Widget _buildTitleTab(String title) {
     return CustomText(
       title,
-      fontSize: FontSize.MEDIUM,
+      fontSize: FontSize.MEDIUM - 1,
     );
   }
 

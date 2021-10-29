@@ -19,10 +19,10 @@ class CustomInput extends StatelessWidget {
     this.controller,
     this.icon = null,
     this.fontSize = FontSize.SMALL,
-    this.radius = 8,
+    this.radius = AppDimen.radiusBig_2,
     this.backgroundColor = kPrimaryColorLight,
     this.colorIcon = kPrimaryColor,
-    this.textColor = kTextDark,
+    this.textColor = kTextColorGrey,
     this.margin = 0,
     Key? key,
   }) : super(key: key);

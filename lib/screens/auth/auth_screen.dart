@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/routes/navigator_tabs_route.dart';
-import 'package:trado_app_uit/screens/splash/splash_screen.dart';
-import 'package:trado_app_uit/utils/auth_preferences.dart';
-import 'package:trado_app_uit/widgets/loading_page.dart';
+import '/routes/navigator_tabs_route.dart';
+import '/screens/splash/splash_screen.dart';
+import '/utils/auth_preferences.dart';
+import '/widgets/loading_page.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);

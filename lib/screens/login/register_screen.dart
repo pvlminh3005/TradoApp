@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 import '/components/custom_button.dart';
 import '/components/custom_input.dart';
 import '/components/custom_input_password.dart';
@@ -41,15 +42,13 @@ class SignupScreen extends StatelessWidget {
               CustomInputPassword(
                 hintText: 'Mật khẩu',
                 controller: passController,
-                icon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
               Consumer<RegisterProvider>(
                 builder: (ctx, controller, _) => CustomButton(
-                  title: 'Đăng ký',
+                  'Đăng ký',
                   onTap: () {
                     controller.registerApp(
-                      context,
                       userController.text,
                       passController.text,
                     );

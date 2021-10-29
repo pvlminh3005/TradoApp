@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '/controllers/auth_controller.dart';
 import '/utils/conver_scaffold_messenger.dart';
 import '/routes/routes_manage.dart';
 import '/utils/auth_preferences.dart';
-import '/controllers/auth_controller.dart';
 
 class SignInProvider with ChangeNotifier {
   bool _isLoading = false;
@@ -13,8 +13,7 @@ class SignInProvider with ChangeNotifier {
   Future<void> signInApp(
       BuildContext context, String username, String password) async {
     _isLoading = true;
-    print('gg');
-    await ApiController().signIn(username, password).then((tokenUser) async {
+    await AuthController().signIn(username, password).then((tokenUser) async {
       if (tokenUser == null) {
         dialogMessenger(context, 'Tài khoản hoặc mật khẩu không đúng');
         _isLoading = false;

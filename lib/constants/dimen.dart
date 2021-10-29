@@ -23,4 +23,5 @@ class AppDimen {
   static const double radiusNormal = 8.0;
   static const double radiusBig = 15.0;
   static const double radiusBig_1 = 20.0;
+  static const double radiusBig_2 = 30.0;
 }

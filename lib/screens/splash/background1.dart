@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/constants/dimen.dart';
 import '/constants/constants.dart';
 
 class BackgroundType1 extends StatelessWidget {
@@ -36,7 +37,10 @@ class BackgroundType1 extends StatelessWidget {
               ),
             ),
           ),
-          child,
+          Padding(
+            padding: const EdgeInsets.all(AppDimen.spacing_3),
+            child: child,
+          ),
         ],
       ),
     );

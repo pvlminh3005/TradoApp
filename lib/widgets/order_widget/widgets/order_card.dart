@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '/components/card_shadow.dart';
+import '/components/config_price.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
@@ -10,7 +12,7 @@ class OrderCard extends StatelessWidget {
   final String? date;
   final int? quantity;
   final double? total;
-  final int? status;
+  final int? status; //0,1,2,3
 
   const OrderCard({
     this.idOrder = '123456789',
@@ -23,32 +25,15 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
+    return CardShadow(
+      margin: const EdgeInsets.symmetric(
         horizontal: AppDimen.horizontalSpacing_16,
         vertical: AppDimen.spacing_1,
       ),
       child: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(1, 1),
-                  blurRadius: 12,
-                  color: kTextDark.withOpacity(.15),
-                )
-              ],
-            ),
-            child: Column(
-              children: [
-                _buildHeader(),
-                _buildInfo(),
-              ],
-            ),
-          ),
+          _buildHeader(),
+          _buildInfo(),
         ],
       ),
     );
@@ -66,7 +51,7 @@ class OrderCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomText(
-            'Order #$idOrder',
+            'Đơn hàng #$idOrder',
           ),
           CustomText(
             '$date',
@@ -80,14 +65,14 @@ class OrderCard extends StatelessWidget {
 
   Widget _buildInfo() {
     return Padding(
-      padding: const EdgeInsets.all(AppDimen.verticalSpacing_16),
+      padding: const EdgeInsets.all(AppDimen.verticalSpacing_10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildDetailInfo(title: 'Quantity', number: '$quantity'),
+          _buildDetailInfo(title: 'Số lượng', number: '$quantity'),
           _buildDetailInfo(
-            title: 'Total Amount',
-            number: '${total!.toStringAsFixed(3)} \$',
+            title: 'Tổng cộng',
+            number: '${FormatPrice(total!)} đ',
           ),
           _buildStatusOrder(),
         ],
@@ -117,20 +102,26 @@ class OrderCard extends StatelessWidget {
     switch (status) {
       case 0: // cancelled
         return _buildStatusStyle(
-          // icon: Icons.local_shipping_outlined,
-          title: 'Cancelled',
+          icon: CupertinoIcons.clear_circled,
+          title: 'Đã huỷ',
           color: Colors.red,
         );
       case 1: //in processing
         return _buildStatusStyle(
-          icon: Icons.watch_later_outlined,
-          title: 'In Processing',
+          icon: CupertinoIcons.clock,
+          title: 'Đang xử lý',
+          color: kTextColorGrey,
+        );
+      case 2:
+        return _buildStatusStyle(
+          icon: Icons.local_shipping_outlined,
+          title: 'Đang giao',
           color: kBlack,
         );
       default: //delivered
         return _buildStatusStyle(
-          icon: Icons.local_shipping_outlined,
-          title: 'Delivered',
+          icon: CupertinoIcons.checkmark_circle,
+          title: 'Đã giao thành công',
           color: Colors.green,
         );
     }
@@ -146,8 +137,8 @@ class OrderCard extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10.0),
                   child: Icon(
                     icon,
-                    size: AppDimen.spacing_4,
-                    color: kBlack,
+                    size: AppDimen.spacing_3,
+                    color: color!,
                   ),
                 )
               : SizedBox.shrink(),

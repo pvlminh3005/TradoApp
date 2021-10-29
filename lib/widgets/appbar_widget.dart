@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/constants/dimen.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
@@ -43,7 +44,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           ? IconButton(
               onPressed: () => Navigator.of(context).pop(),
               icon: Icon(
-                Icons.arrow_back_ios,
+                CupertinoIcons.back,
                 size: AppDimen.icon_size_small,
                 color: color,
               ))
