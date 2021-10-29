@@ -22,6 +22,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/account',require('./router/account'));
+app.use('/api/product',require('./router/product'));
 
 app.get('/', (req, res) => {
     res.send("Welcome to Trado App")
