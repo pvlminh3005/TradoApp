@@ -44,14 +44,13 @@ class SigninScreen extends StatelessWidget {
               Consumer<SignInProvider>(
                 builder: (ctx, controller, _) => CustomButton(
                   'Đăng nhập',
-                  onTap: () {
-                    controller.signInApp(
+                  onTap: () async {
+                    await controller.signInApp(
                       context,
                       userController.text,
                       passController.text,
                     );
                   },
-                  isLoading: controller.isLoading,
                 ),
               ),
               SizedBox(height: size.width * .05),

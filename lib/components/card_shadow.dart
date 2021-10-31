@@ -11,7 +11,7 @@ class CardShadow extends StatelessWidget {
 
   const CardShadow({
     this.child = const SizedBox.shrink(),
-    this.padding = const EdgeInsets.all(AppDimen.spacing_1),
+    this.padding = const EdgeInsets.all(AppDimen.spacing_2),
     this.margin = const EdgeInsets.all(0),
     this.height = null,
     this.onTap,
@@ -28,13 +28,13 @@ class CardShadow extends StatelessWidget {
         padding: padding,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(AppDimen.radiusSmall),
+          borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 2),
+              offset: Offset(0, 4),
               spreadRadius: 0,
-              blurRadius: 10,
-              color: kTextDark.withOpacity(.2),
+              blurRadius: 30,
+              color: Color(0xFF8A959E).withOpacity(.2),
             )
           ],
         ),

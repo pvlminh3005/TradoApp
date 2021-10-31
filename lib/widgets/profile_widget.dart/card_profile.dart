@@ -9,10 +9,12 @@ import '/constants/sizes.dart';
 class CardInfoProfileWidget extends StatelessWidget {
   final String title;
   final String subtitle;
+  final Function(BuildContext)? onTap;
 
   const CardInfoProfileWidget({
     this.title = '',
     this.subtitle = '',
+    this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -22,6 +24,7 @@ class CardInfoProfileWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
       padding: const EdgeInsets.all(AppDimen.spacing_2),
       height: 80.0,
+      onTap: () => onTap!(context),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

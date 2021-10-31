@@ -25,17 +25,16 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed,
       child: Container(
         margin: margin,
-        height: 50,
+        height: 52.0,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: kBlack.withOpacity(0.3),
+              offset: Offset(0, 5),
               spreadRadius: 0,
-              blurRadius: 5,
-              offset: Offset(0, 2), // changes position of shadow
+              blurRadius: 30,
+              color: Color(0xFF8A959E).withOpacity(.5),
             ),
           ],
         ),
@@ -46,6 +45,9 @@ class PrimaryButton extends StatelessWidget {
           backgroundColor: backgroundColor,
           radius: AppDimen.radiusNormal,
           sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
+          onTap: () async {
+            await onPressed!();
+          },
         ),
       ),
     );

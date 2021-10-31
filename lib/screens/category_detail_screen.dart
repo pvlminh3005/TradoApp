@@ -307,21 +307,23 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBarWidget(
         color: kBackgroundColorWhite,
-        childAction: Consumer<CartProvider>(
-          builder: (ctx, cartData, ch) => Badge(
-            child: IconButton(
-              icon: Icon(
-                CupertinoIcons.cart_fill,
-                size: 25,
-                color: kCardColor,
+        childAction: [
+          Consumer<CartProvider>(
+            builder: (ctx, cartData, ch) => Badge(
+              child: IconButton(
+                icon: Icon(
+                  CupertinoIcons.cart_fill,
+                  size: 25,
+                  color: kCardColor,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(RouteManage.cart);
+                },
               ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(RouteManage.cart);
-              },
+              value: cartData.cartCount.toString(),
             ),
-            value: cartData.cartCount.toString(),
           ),
-        ),
+        ],
       ),
       body: Column(
         children: [

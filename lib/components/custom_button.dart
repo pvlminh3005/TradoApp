@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/utils/convert_timer.dart';
 import '/constants/dimen.dart';
 import '/widgets/loading_page.dart';
 import '/constants/sizes.dart';
@@ -10,7 +11,7 @@ class CustomBottomSizeStyle {
   static const MATCH_PARENT = 1;
 }
 
-class CustomButton extends StatelessWidget {
+class CustomButton extends StatefulWidget {
   final String? title;
   final Color? backgroundColor;
   final Color? textColor;
@@ -26,7 +27,6 @@ class CustomButton extends StatelessWidget {
   final double borderWidth;
 
   final Function()? onTap;
-  final bool? isLoading;
 
   const CustomButton(
     this.title, {
@@ -44,13 +44,24 @@ class CustomButton extends StatelessWidget {
     this.borderOpacity = 0.3,
     this.borderWidth = 0,
     this.onTap,
-    this.isLoading = false,
     Key? key,
   }) : super(key: key);
 
   @override
+  State<CustomButton> createState() => _CustomButtonState();
+}
+
+class _CustomButtonState extends State<CustomButton> {
+  bool isLoading = false;
+  void changeLoad() {
+    setState(() {
+      isLoading = !isLoading;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return sizeStyle == CustomBottomSizeStyle.WRAP_CONTENT
+    return widget.sizeStyle == CustomBottomSizeStyle.WRAP_CONTENT
         ? Row(
             mainAxisSize: MainAxisSize.min,
             children: [_buildChild()],
@@ -60,32 +71,36 @@ class CustomButton extends StatelessWidget {
 
   Widget _buildChild() {
     return InkWell(
-      onTap: onTap,
+      onTap: () async {
+        changeLoad();
+        await widget.onTap!();
+        changeLoad();
+      },
       child: Container(
-        margin: margin,
-        padding: padding,
+        margin: widget.margin,
+        padding: widget.padding,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(radius!),
+          color: widget.backgroundColor,
+          borderRadius: BorderRadius.circular(widget.radius!),
           border: Border.all(
-            color: Colors.grey.withOpacity(borderOpacity),
-            width: borderWidth,
+            color: Colors.grey.withOpacity(widget.borderOpacity),
+            width: widget.borderWidth,
           ),
         ),
-        child: isLoading!
+        child: isLoading
             ? SizedBox(
                 width: 22,
                 height: 22,
-                child: LoadingPage(color: indicatorColor),
+                child: LoadingPage(color: widget.indicatorColor),
               )
             : CustomText(
-                title!,
+                widget.title!,
                 overflow: TextOverflow.visible,
-                color: textColor!,
-                fontSize: fontSize!,
-                fontWeight: fontWeight,
-                align: textAlignment!,
+                color: widget.textColor!,
+                fontSize: widget.fontSize!,
+                fontWeight: widget.fontWeight,
+                align: widget.textAlignment!,
               ),
       ),
     );

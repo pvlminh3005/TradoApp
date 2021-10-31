@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/widgets/primary_button.dart';
+import 'package:trado_app_uit/components/primary_button.dart';
 import '/components/custom_text.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';

@@ -9,7 +9,7 @@ import '/routes/routes_manage.dart';
 import '/widgets/appbar_widget.dart';
 import '/widgets/bage.dart';
 import '/widgets/header_info_profile.dart';
-import '/widgets/primary_button.dart';
+import '../components/primary_button.dart';
 import '/widgets/profile_widget.dart/card_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -27,21 +27,23 @@ class ProfileScreen extends StatelessWidget {
       background: kBackgroundColorWhite,
       color: kPrimaryColor,
       showLeading: false,
-      childAction: Consumer<CartProvider>(
-        builder: (ctx, cartData, ch) => Badge(
-          child: IconButton(
-            icon: Icon(
-              CupertinoIcons.cart_fill,
-              size: 25,
-              color: kPrimaryColor,
+      childAction: [
+        Consumer<CartProvider>(
+          builder: (ctx, cartData, ch) => Badge(
+            child: IconButton(
+              icon: Icon(
+                CupertinoIcons.cart_fill,
+                size: 25,
+                color: kPrimaryColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(RouteManage.cart);
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(RouteManage.cart);
-            },
+            value: cartData.cartCount.toString(),
           ),
-          value: cartData.cartCount.toString(),
         ),
-      ),
+      ],
     );
   }
 
@@ -51,8 +53,16 @@ class ProfileScreen extends StatelessWidget {
       child: Column(
         children: [
           _buildHeaderInfo(),
-          _buildCardProfile(),
-          _buildButtonLogout(context),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildCardProfile(),
+                  _buildButtonLogout(context),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -63,31 +73,31 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildCardProfile() {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(
-            AppDimen.verticalSpacing_16,
+    return Padding(
+      padding: const EdgeInsets.all(
+        AppDimen.verticalSpacing_16,
+      ),
+      child: Column(
+        children: [
+          CardInfoProfileWidget(
+            title: 'Quản lý sản phẩm',
+            subtitle: '10 sản phẩm',
           ),
-          child: Column(
-            children: [
-              CardInfoProfileWidget(
-                title: 'Quản lý sản phẩm',
-                subtitle: '10 sản phẩm',
-              ),
-              CardInfoProfileWidget(
-                title: 'Đơn hàng của tôi',
-                subtitle: '0 đơn hàng sẵn có',
-              ),
-              CardInfoProfileWidget(
-                title: 'Địa chỉ giao hàng',
-                subtitle: '2 địa chỉ',
-              ),
-              CardInfoProfileWidget(title: 'Thông tin cá nhân'),
-              CardInfoProfileWidget(title: 'Cài đặt'),
-            ],
-          ),
-        ),
+          CardInfoProfileWidget(
+              title: 'Đơn hàng của tôi',
+              subtitle: '4 đơn hàng sẵn có',
+              onTap: (context) {
+                Navigator.of(context).pushNamed(RouteManage.order);
+              }),
+          CardInfoProfileWidget(
+              title: 'Địa chỉ giao hàng',
+              subtitle: '2 địa chỉ',
+              onTap: (context) {
+                Navigator.of(context).pushNamed(RouteManage.shipping_address);
+              }),
+          CardInfoProfileWidget(title: 'Thông tin cá nhân'),
+          CardInfoProfileWidget(title: 'Cài đặt'),
+        ],
       ),
     );
   }

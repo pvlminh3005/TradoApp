@@ -10,7 +10,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final Color? background;
   final Color? color;
   final String? title;
-  final Widget? childAction;
+  final List<Widget>? childAction;
   final bool? showLeading;
   final PreferredSize? bottom;
 
@@ -19,7 +19,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.color = kPrimaryColor,
     this.title = '',
     this.showLeading = true,
-    this.childAction = const SizedBox.shrink(),
+    this.childAction = const [const SizedBox.shrink()],
     this.bottom,
     Key? key,
   }) : super(key: key);
@@ -49,9 +49,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                 color: color,
               ))
           : SizedBox.shrink(),
-      actions: [
-        childAction!,
-      ],
+      actions: childAction!,
       bottom: bottom ??
           PreferredSize(
             preferredSize: Size.zero,

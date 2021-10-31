@@ -53,7 +53,7 @@ class SignupScreen extends StatelessWidget {
                       passController.text,
                     );
                   },
-                  isLoading: controller.isLoading,
+                  // isLoading: controller.isLoading,
                 ),
               ),
               SizedBox(height: size.width * .05),

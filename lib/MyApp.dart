@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: font_family,
           primaryColor: kPrimaryColor,
+          scaffoldBackgroundColor: kBackgroundColor,
         ),
         home: AuthScreen(),
         routes: RouteManage.routesApp,

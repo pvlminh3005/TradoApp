@@ -30,6 +30,7 @@ class OrderCard extends StatelessWidget {
         horizontal: AppDimen.horizontalSpacing_16,
         vertical: AppDimen.spacing_1,
       ),
+      padding: const EdgeInsets.all(0),
       child: Column(
         children: [
           _buildHeader(),
@@ -44,7 +45,7 @@ class OrderCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimen.verticalSpacing_16),
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: kPrimaryColorLight),
+          bottom: BorderSide(color: kColorItemGrey),
         ),
       ),
       child: Row(
@@ -65,7 +66,7 @@ class OrderCard extends StatelessWidget {
 
   Widget _buildInfo() {
     return Padding(
-      padding: const EdgeInsets.all(AppDimen.verticalSpacing_10),
+      padding: const EdgeInsets.all(AppDimen.horizontalSpacing_16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
