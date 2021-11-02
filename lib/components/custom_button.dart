@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/utils/convert_timer.dart';
 import '/constants/dimen.dart';
 import '/widgets/loading_page.dart';
 import '/constants/sizes.dart';
@@ -32,7 +31,7 @@ class CustomButton extends StatefulWidget {
     this.title, {
     this.backgroundColor = kPrimaryColor,
     this.textColor = kTextLight,
-    this.indicatorColor = kBackgroundColorWhite,
+    this.indicatorColor = kColorItemGrey,
     this.radius = AppDimen.radiusBig_2,
     this.padding =
         const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_16),
@@ -84,7 +83,7 @@ class _CustomButtonState extends State<CustomButton> {
           color: widget.backgroundColor,
           borderRadius: BorderRadius.circular(widget.radius!),
           border: Border.all(
-            color: Colors.grey.withOpacity(widget.borderOpacity),
+            color: kBlack.withOpacity(widget.borderOpacity),
             width: widget.borderWidth,
           ),
         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/components/custom_text.dart';
-import 'package:trado_app_uit/constants/constants.dart';
-import '/constants/sizes.dart';
+import '/components/custom_text.dart';
+import '/constants/constants.dart';
 
 class FormQuestionText extends StatelessWidget {
   final bool login;

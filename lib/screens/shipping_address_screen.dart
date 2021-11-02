@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trado_app_uit/components/custom_text.dart';
 import 'package:trado_app_uit/components/primary_button.dart';
 import 'package:trado_app_uit/constants/constants.dart';
 import 'package:trado_app_uit/constants/dimen.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
+import 'package:trado_app_uit/providers/shipping_address_provider.dart';
 import 'package:trado_app_uit/routes/routes_manage.dart';
 import 'package:trado_app_uit/widgets/appbar_widget.dart';
-import 'package:trado_app_uit/widgets/checkout_widget/shipping_address_widget.dart';
+import 'package:trado_app_uit/widgets/checkout_widget/address_detail_widget.dart';
+import 'package:trado_app_uit/widgets/loading_page.dart';
+import 'package:trado_app_uit/widgets/shipping_address/shipping_address_item.dart';
 
 class ShippingAddressScreen extends StatelessWidget {
   const ShippingAddressScreen({Key? key}) : super(key: key);
@@ -35,48 +39,23 @@ class ShippingAddressScreen extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.all(AppDimen.spacing_2),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildDetailAddress(),
-          _buildButton(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDetailAddress() {
-    return Column(
-      children: [
-        _buildTitle(),
-        _buildInfo(),
-      ],
-    );
-  }
-
-  Widget _buildTitle() {
-    return Row(
-      children: [
-        Image.asset('assets/images/icon_checked.png'),
-        const SizedBox(width: 6.0),
-        CustomText(
-          'Đặt làm địa chỉ mặc định',
-          fontSize: FontSize.MEDIUM - 1,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInfo() {
-    return ShippingAddressWidget();
-  }
-
-  Widget _buildButton() {
-    return PrimaryButton(
-      title: 'Lưu địa chỉ',
-      onPressed: () {},
+    return Consumer<ShippingAddressProvider>(
+      builder: (context, provider, _) {
+        return Padding(
+          padding: const EdgeInsets.all(AppDimen.spacing_2),
+          child: provider.listAddresses.isEmpty
+              ? LoadingPage()
+              : ListView.builder(
+                  itemCount: provider.listAddresses.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var address = provider.listAddresses[index];
+                    return ShippingAddressItem(
+                      shippingAddress: address,
+                    );
+                  },
+                ),
+        );
+      },
     );
   }
 }

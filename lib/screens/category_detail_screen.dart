@@ -148,7 +148,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               '${FormatPrice(priceDecreaseSale)} đ',
               fontSize: FontSize.BIG_1,
               fontWeight: FontWeight.w700,
-              color: category.priceSale != 0 ? kErrorColor : null!,
+              color: category.priceSale != 0 ? kErrorColor : kTextDark,
             ),
             category.priceSale != 0
                 ? SaleComponent(

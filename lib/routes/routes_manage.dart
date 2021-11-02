@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/screens/add_shipping_address_screen.dart';
+import 'package:trado_app_uit/screens/success_screen.dart';
 import '/screens/checkout_screen.dart';
 import '/screens/order_screen.dart';
 import '/screens/shipping_address_screen.dart';
@@ -14,6 +15,8 @@ import '../screens/login/register_screen.dart';
 import '/screens/splash/splash_screen.dart';
 
 class RouteManage {
+  RouteManage._();
+
   static const splash = '/splash';
   static const register = '/register';
   static const signin = '/signin';
@@ -26,8 +29,9 @@ class RouteManage {
   static const checkout = '/checkout';
   static const shipping_address = '/shipping_address';
   static const add_shipping_address = '/add_shipping_address';
+  static const success = '/success';
 
-  static const initialRoute = splash;
+  static const initialRoute = navigator_tab;
 
   static Map<String, Widget Function(BuildContext)> routesApp = {
     splash: (_) => SplashScreen(),
@@ -42,5 +46,6 @@ class RouteManage {
     checkout: (_) => CheckOutScreen(),
     shipping_address: (_) => ShippingAddressScreen(),
     add_shipping_address: (_) => AddShippingAddressScreen(),
+    success: (_) => SuccessScreen(),
   };
 }

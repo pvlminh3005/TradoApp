@@ -10,7 +10,11 @@ class PrimaryButton extends StatelessWidget {
   final bool? primaryStyle;
   final Color? primaryColor;
   final Color? backgroundColor;
+  final Color? indicatorColor;
+  final Color? textColor;
   final EdgeInsets margin;
+  final double borderWidth;
+  final double borderOpacity;
 
   const PrimaryButton({
     Key? key,
@@ -19,7 +23,11 @@ class PrimaryButton extends StatelessWidget {
     this.primaryStyle = true,
     this.primaryColor = kPrimaryColor,
     this.backgroundColor = kPrimaryColor,
+    this.indicatorColor = kPrimaryColor,
+    this.textColor = Colors.white,
     this.margin = const EdgeInsets.all(0),
+    this.borderWidth = 0,
+    this.borderOpacity = 0,
   }) : super(key: key);
 
   @override
@@ -33,8 +41,8 @@ class PrimaryButton extends StatelessWidget {
             BoxShadow(
               offset: Offset(0, 5),
               spreadRadius: 0,
-              blurRadius: 30,
-              color: Color(0xFF8A959E).withOpacity(.5),
+              blurRadius: 20,
+              color: Color(0xFF8A959E).withOpacity(.3),
             ),
           ],
         ),
@@ -42,8 +50,11 @@ class PrimaryButton extends StatelessWidget {
           title,
           padding: EdgeInsets.all(16),
           fontSize: FontSize.BIG,
+          textColor: textColor,
           backgroundColor: backgroundColor,
+          indicatorColor: indicatorColor!,
           radius: AppDimen.radiusNormal,
+          borderWidth: borderWidth,
           sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
           onTap: () async {
             await onPressed!();

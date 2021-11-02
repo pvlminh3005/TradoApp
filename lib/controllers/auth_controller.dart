@@ -12,7 +12,7 @@ class AuthController {
   Future<dynamic> register(String username, String password) async {
     try {
       var _user = UserModel(username: username, email: '', password: password);
-      var response = await _dio.post(registerURL, data: _user.toJson());
+      var response = await _dio.post(MainURL.registerURL, data: _user.toJson());
       if (response.statusCode == 200) {
         return response.data;
       }
@@ -26,7 +26,7 @@ class AuthController {
     try {
       print('signIn');
       var _user = UserModel(username: username, email: '', password: password);
-      var response = await _dio.post(loginURL, data: _user.toJson());
+      var response = await _dio.post(MainURL.loginURL, data: _user.toJson());
 
       if (response.statusCode == 200) {
         return response.data;

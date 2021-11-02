@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:trado_app_uit/components/card_shadow.dart';
-import 'package:trado_app_uit/components/config_price.dart';
-import 'package:trado_app_uit/components/primary_button.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
-import 'package:trado_app_uit/widgets/checkout_widget/shipping_address_widget.dart';
-import 'package:trado_app_uit/widgets/payment_method_widget.dart';
+import '/components/card_shadow.dart';
+import '/components/config_price.dart';
+import '/components/primary_button.dart';
+import '/constants/sizes.dart';
+import '../widgets/checkout_widget/address_detail_widget.dart';
+import '/widgets/payment_method_widget.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
@@ -76,7 +75,7 @@ class CheckOutScreen extends StatelessWidget {
   }
 
   Widget _buildDetailShippingAddress() {
-    return ShippingAddressWidget();
+    return AddressDetailWidget();
   }
 
   Widget _buildDetailPaymentMethod() {

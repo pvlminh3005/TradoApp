@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/providers/shipping_address_provider.dart';
 import '/controllers/auth_controller.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
@@ -89,12 +90,15 @@ class ProfileScreen extends StatelessWidget {
               onTap: (context) {
                 Navigator.of(context).pushNamed(RouteManage.order);
               }),
-          CardInfoProfileWidget(
+          Consumer<ShippingAddressProvider>(builder: (context, provider, _) {
+            return CardInfoProfileWidget(
               title: 'Địa chỉ giao hàng',
-              subtitle: '2 địa chỉ',
+              subtitle: '${provider.listAddresses.length} địa chỉ',
               onTap: (context) {
                 Navigator.of(context).pushNamed(RouteManage.shipping_address);
-              }),
+              },
+            );
+          }),
           CardInfoProfileWidget(title: 'Thông tin cá nhân'),
           CardInfoProfileWidget(title: 'Cài đặt'),
         ],

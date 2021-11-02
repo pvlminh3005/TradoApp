@@ -5,12 +5,12 @@ import 'package:trado_app_uit/constants/constants.dart';
 import 'package:trado_app_uit/constants/dimen.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
 
-class ShippingAddressWidget extends StatelessWidget {
+class AddressDetailWidget extends StatelessWidget {
   final String? name;
   final String? phoneNumber;
   final String? address;
 
-  const ShippingAddressWidget({
+  const AddressDetailWidget({
     this.name = 'Le Minh Pham',
     this.phoneNumber = '(+84) 123456789',
     this.address = 'Nha xx, Duong xx, Quan XX, Tp XXX, Tỉnh XX',
@@ -47,7 +47,7 @@ class ShippingAddressWidget extends StatelessWidget {
         children: [
           CustomText(
             name!,
-            fontSize: FontSize.BIG,
+            fontSize: FontSize.BIG - 1,
             fontWeight: FontWeight.w700,
             maxLines: 1,
           ),
