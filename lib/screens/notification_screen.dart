@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trado_app_uit/providers/notification_provider.dart';
-import 'package:trado_app_uit/widgets/custom_refresh_page.dart';
+import 'package:trado_app_uit/components/custom_refresh_page.dart';
 import 'package:trado_app_uit/widgets/loading_page.dart';
 
 import '/constants/constants.dart';

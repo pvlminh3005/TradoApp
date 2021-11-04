@@ -15,6 +15,7 @@ class PrimaryButton extends StatelessWidget {
   final EdgeInsets margin;
   final double borderWidth;
   final double borderOpacity;
+  final bool showShadow;
 
   const PrimaryButton({
     Key? key,
@@ -28,6 +29,7 @@ class PrimaryButton extends StatelessWidget {
     this.margin = const EdgeInsets.all(0),
     this.borderWidth = 0,
     this.borderOpacity = 0,
+    this.showShadow = true,
   }) : super(key: key);
 
   @override
@@ -41,8 +43,10 @@ class PrimaryButton extends StatelessWidget {
             BoxShadow(
               offset: Offset(0, 5),
               spreadRadius: 0,
-              blurRadius: 20,
-              color: Color(0xFF8A959E).withOpacity(.3),
+              blurRadius: 30,
+              color: showShadow
+                  ? Color(0xFF8A959E).withOpacity(.25)
+                  : Colors.transparent,
             ),
           ],
         ),
@@ -52,7 +56,8 @@ class PrimaryButton extends StatelessWidget {
           fontSize: FontSize.BIG,
           textColor: textColor,
           backgroundColor: backgroundColor,
-          indicatorColor: indicatorColor!,
+          indicatorColor:
+              backgroundColor == kPrimaryColor ? Colors.white : indicatorColor!,
           radius: AppDimen.radiusNormal,
           borderWidth: borderWidth,
           sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,

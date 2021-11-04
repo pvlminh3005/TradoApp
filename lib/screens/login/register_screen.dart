@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
+import '/constants/dimen.dart';
 import '/components/custom_button.dart';
 import '/components/custom_input.dart';
-import '/components/custom_input_password.dart';
 import '/providers/login/register_provider.dart';
 import '/routes/routes_manage.dart';
 import '../../components/form_question_text.dart';
@@ -37,11 +36,21 @@ class SignupScreen extends StatelessWidget {
               CustomInput(
                 hintText: 'Tài khoản',
                 controller: userController,
-                icon: Icons.person,
+                radius: AppDimen.radiusBig_2,
+                maxLength: 30,
+                showPrefixIcon: true,
+                showSuffixIcon: false,
+                prefixIcon: Icons.person,
               ),
-              CustomInputPassword(
+              CustomInput(
                 hintText: 'Mật khẩu',
+                margin:
+                    const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
                 controller: passController,
+                radius: AppDimen.radiusBig_2,
+                showPrefixIcon: true,
+                showSuffixIcon: true,
+                prefixIcon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
               Consumer<RegisterProvider>(

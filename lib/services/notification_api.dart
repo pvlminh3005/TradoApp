@@ -23,6 +23,7 @@ class NotificationApi {
         checked: true,
       ),
     ];
+    await Future.delayed(Duration(seconds: 2));
     return data;
   }
 }

@@ -1,15 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/screens/success_screen.dart';
+import '/screens/success_screen.dart';
 import '/screens/checkout_screen.dart';
-import '/screens/order_screen.dart';
 
 import '/constants/constants.dart';
 import './navigator_key.dart';
-import '../screens/highlight_screen.dart';
 import '../screens/notification_screen.dart';
 import '../screens/home_screen.dart';
-import '../screens/message_screen.dart';
 import '../screens/profile_screen.dart';
 
 class NavigatorTab extends StatefulWidget {

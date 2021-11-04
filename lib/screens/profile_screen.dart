@@ -99,7 +99,11 @@ class ProfileScreen extends StatelessWidget {
               },
             );
           }),
-          CardInfoProfileWidget(title: 'Thông tin cá nhân'),
+          CardInfoProfileWidget(
+            title: 'Thông tin cá nhân',
+            onTap: (context) =>
+                Navigator.pushNamed(context, RouteManage.edit_profile),
+          ),
           CardInfoProfileWidget(title: 'Cài đặt'),
         ],
       ),
@@ -111,7 +115,9 @@ class ProfileScreen extends StatelessWidget {
       title: 'Đăng xuất',
       margin: const EdgeInsets.all(AppDimen.horizontalSpacing_16),
       backgroundColor: kErrorColor,
+      indicatorColor: kBackgroundColorWhite,
       onPressed: () async {
+        await Future.delayed(Duration(seconds: 1));
         await AuthController().signOut();
         Navigator.of(context)
             .pushNamedAndRemoveUntil(RouteManage.splash, (route) => false);

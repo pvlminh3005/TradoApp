@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/constants/dimen.dart';
 import '/components/custom_button.dart';
 import '/components/custom_input.dart';
-import '/components/custom_input_password.dart';
 
 import '/routes/routes_manage.dart';
 import '/providers/login/signin_provider.dart';
@@ -34,11 +34,21 @@ class SigninScreen extends StatelessWidget {
               CustomInput(
                 hintText: 'Tài khoản',
                 controller: userController,
-                icon: Icons.person,
+                radius: AppDimen.radiusBig_2,
+                maxLength: 30,
+                showPrefixIcon: true,
+                showSuffixIcon: false,
+                prefixIcon: Icons.person,
               ),
-              CustomInputPassword(
+              CustomInput(
                 hintText: 'Mật khẩu',
+                margin:
+                    const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
                 controller: passController,
+                radius: AppDimen.radiusBig_2,
+                showPrefixIcon: true,
+                showSuffixIcon: true,
+                prefixIcon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
               Consumer<SignInProvider>(

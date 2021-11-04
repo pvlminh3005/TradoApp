@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/components/custom_text.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
-import 'package:trado_app_uit/models/shipping_address_model.dart';
-import 'package:trado_app_uit/widgets/checkout_widget/address_detail_widget.dart';
+import '/components/custom_text.dart';
+import '/constants/sizes.dart';
+import '/models/shipping_address_model.dart';
+import '/widgets/checkout_widget/address_detail_widget.dart';
 
 class ShippingAddressItem extends StatefulWidget {
   final ShippingAddressModel? shippingAddress;
@@ -69,6 +69,7 @@ class _ShippingAddressItemState extends State<ShippingAddressItem> {
       name: widget.shippingAddress!.name,
       phoneNumber: widget.shippingAddress!.phoneNumber,
       address: widget.shippingAddress!.address,
+      note: widget.shippingAddress!.note,
     );
   }
 }

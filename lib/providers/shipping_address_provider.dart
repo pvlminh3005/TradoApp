@@ -18,4 +18,19 @@ class ShippingAddressProvider with ChangeNotifier {
   // void changeDefaultAddress(String id) {
   //   _listAddresses.
   // }
+
+  Future<void> addNewAddress(
+      {String? name, String? phone, String? address, String? note = ''}) async {
+    await Future.delayed(Duration(seconds: 2));
+    print(name);
+    _listAddresses.add(
+      ShippingAddressModel(
+        name: name,
+        phoneNumber: phone,
+        address: address,
+        note: note,
+      ),
+    );
+    notifyListeners();
+  }
 }

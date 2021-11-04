@@ -42,7 +42,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: background,
       leading: showLeading!
           ? IconButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.of(context).pop(false),
               icon: Icon(
                 CupertinoIcons.back,
                 size: AppDimen.icon_size_small,

@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/components/card_shadow.dart';
-import 'package:trado_app_uit/components/custom_text.dart';
-import 'package:trado_app_uit/constants/constants.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
+import '/components/card_shadow.dart';
+import '/components/custom_text.dart';
+import '/constants/constants.dart';
+import '/constants/dimen.dart';
+import '/constants/sizes.dart';
+import '/screens/add_shipping_address_screen.dart';
 
 class AddressDetailWidget extends StatelessWidget {
   final String? name;
   final String? phoneNumber;
   final String? address;
+  final String? note;
 
   const AddressDetailWidget({
-    this.name = 'Le Minh Pham',
-    this.phoneNumber = '(+84) 123456789',
-    this.address = 'Nha xx, Duong xx, Quan XX, Tp XXX, Tỉnh XX',
+    this.name,
+    this.phoneNumber,
+    this.address,
+    this.note,
     Key? key,
   }) : super(key: key);
 
@@ -25,14 +28,26 @@ class AddressDetailWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(),
+          _buildHeader(context),
           _buildDetailInfo(),
+          note!.isNotEmpty
+              ? Column(
+                  children: [
+                    const Divider(
+                      height: 0,
+                      thickness: 1,
+                      color: kColorItemGrey,
+                    ),
+                    _buildNote(),
+                  ],
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(var context) {
     return Container(
       padding: const EdgeInsets.all(AppDimen.verticalSpacing_16),
       decoration: BoxDecoration(
@@ -51,22 +66,36 @@ class AddressDetailWidget extends StatelessWidget {
             fontWeight: FontWeight.w700,
             maxLines: 1,
           ),
-          _buildButtonIcon(),
+          _buildButtonIcon(context),
         ],
       ),
     );
   }
 
-  Widget _buildButtonIcon() {
+  Widget _buildButtonIcon(BuildContext context) {
+    void onTap() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => AddShippingAddressScreen(
+            name: name!,
+            phone: phoneNumber!,
+            address: address!,
+            note: note!,
+          ),
+        ),
+      );
+    }
+
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Image.asset('assets/images/edit-2.png'),
     );
   }
 
   Widget _buildDetailInfo() {
     return Padding(
-      padding: const EdgeInsets.all(AppDimen.verticalSpacing_16),
+      padding: const EdgeInsets.all(AppDimen.spacing_2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -78,10 +107,28 @@ class AddressDetailWidget extends StatelessWidget {
     );
   }
 
+  Widget _buildNote() {
+    return Padding(
+      padding: const EdgeInsets.all(AppDimen.verticalSpacing_16),
+      child: Row(
+        children: [
+          CustomText(
+            'Ghi chú:',
+            fontSize: FontSize.SMALL + 1,
+            fontWeight: FontWeight.bold,
+            color: kErrorColor.withOpacity(.7),
+          ),
+          const SizedBox(width: 5.0),
+          _buildTextInfo(note!),
+        ],
+      ),
+    );
+  }
+
   Widget _buildTextInfo(String? text) {
     return CustomText(
       text!,
-      fontSize: FontSize.SMALL,
+      fontSize: FontSize.SMALL + 1,
       color: kTextColorGrey,
     );
   }
