@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/screens/edit_my_category_screen.dart';
 import 'package:trado_app_uit/screens/manage_my_category_screen.dart';
+import 'package:trado_app_uit/screens/sale_order_screen.dart';
 import '/screens/edit_info_profile_screen.dart';
 import '/screens/add_shipping_address_screen.dart';
 import '/screens/profile_screen.dart';
@@ -31,6 +32,7 @@ class RouteManage {
   static const my_profile = '/my_profile';
   static const rating_review = '/rating_review';
   static const order = '/order';
+  static const sale_order = '/sale_order';
   static const checkout = '/checkout';
   static const shipping_address = '/shipping_address';
   static const add_shipping_address = '/add_shipping_address';
@@ -52,6 +54,7 @@ class RouteManage {
     my_profile: (_) => ProfileScreen(),
     rating_review: (_) => RatingAndReviewScreen(),
     order: (_) => OrderScreen(),
+    sale_order: (_) => SaleOrderScreen(),
     checkout: (_) => CheckOutScreen(),
     shipping_address: (_) => ShippingAddressScreen(),
     add_shipping_address: (_) => AddShippingAddressScreen(),

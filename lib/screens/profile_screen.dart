@@ -86,13 +86,21 @@ class ProfileScreen extends StatelessWidget {
         children: [
           _buildTitle('Danh mục sản phẩm'),
           CardInfoProfileWidget(
-              title: 'Quản lý sản phẩm',
-              subtitle: '10 sản phẩm',
-              onTap: (context) {
-                Navigator.pushNamed(context, RouteManage.my_category);
-              }),
+            title: 'Danh mục sản phẩm',
+            subtitle: '10 sản phẩm',
+            onTap: (context) {
+              Navigator.pushNamed(context, RouteManage.my_category);
+            },
+          ),
           CardInfoProfileWidget(
-            title: 'Đơn hàng của tôi',
+            title: 'Quản lý đơn bán hàng',
+            subtitle: '2 đơn hàng chờ xác nhận',
+            onTap: (context) {
+              Navigator.of(context).pushNamed(RouteManage.sale_order);
+            },
+          ),
+          CardInfoProfileWidget(
+            title: 'Quản lý đơn đặt hàng',
             subtitle: '4 đơn hàng sẵn có',
             onTap: (context) {
               Navigator.of(context).pushNamed(RouteManage.order);
