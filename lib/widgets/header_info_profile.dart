@@ -1,24 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/routes/routes_manage.dart';
-import 'package:trado_app_uit/utils/auth_preferences.dart';
+
+import '/components/custom_button.dart';
+import '/constants/dimen.dart';
+import '/components/custom_text.dart';
+import '/routes/routes_manage.dart';
+import '/utils/auth_preferences.dart';
 import '/constants/constants.dart';
 
 import '/constants/sizes.dart';
-import 'grid_button.dart';
 
 class HeaderInfoProfile extends StatelessWidget {
-  const HeaderInfoProfile({Key? key}) : super(key: key);
+  final String? name;
+  final int follow;
+  final double countPerStars;
+  final int amountReviews;
+  final bool isMyProfile;
+
+  const HeaderInfoProfile({
+    this.name = 'Le Minh',
+    this.follow = 0,
+    this.countPerStars = 0.0,
+    this.amountReviews = 0,
+    this.isMyProfile = false,
+    Key? key,
+  }) : super(key: key);
 
   Widget _buildAmountFollow(num follow, String content) {
     return RichText(
       text: TextSpan(
-        style: kTextMediumDark_14,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: FontSize.SMALL,
+          color: kTextDark,
+          fontFamily: font_family,
+        ),
         children: [
           TextSpan(
-            text: (follow is int)
-                ? '$follow '
-                : '${(follow * 100).toStringAsFixed(0)}% ',
-            style: kTextBoldDark_14,
+            text: '$follow ',
+            style: TextStyle(fontWeight: FontWeight.w700),
           ),
           TextSpan(text: content),
         ],
@@ -34,12 +53,12 @@ class HeaderInfoProfile extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppDimen.horizontalSpacing_16),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () async {
-                    print('Sign out');
                     await AuthPreferences.removeToken();
                     Navigator.pushNamedAndRemoveUntil(
                       context,
@@ -53,30 +72,61 @@ class HeaderInfoProfile extends StatelessWidget {
                         AssetImage('assets/images/background_blue.jpeg'),
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildInfoAccount(
-                      name: 'Le Minh',
-                      countPerStars: 4,
-                      countRating: 21,
+                      name: name!,
+                      countPerStars: countPerStars,
+                      countRating: amountReviews,
                     ),
-                    Row(
-                      children: [
-                        _buildAmountFollow(100, 'quan tâm'),
-                        SizedBox(width: 8.0),
-                        _buildAmountFollow(1.0, 'phản hồi'),
-                      ],
-                    ),
+                    _buildAmountFollow(follow, 'quan tâm'),
                   ],
                 ),
               ],
             ),
           ),
-          GridButton(),
+          !isMyProfile
+              ? _buildButtonProfile()
+              : const SizedBox(height: AppDimen.spacing_1),
         ],
       ),
+    );
+  }
+
+  _buildButtonProfile() {
+    return Row(
+      children: [
+        Flexible(
+          child: CustomButton(
+            'Quan tâm',
+            margin: const EdgeInsets.all(AppDimen.spacing_1),
+            padding: const EdgeInsets.symmetric(
+                vertical: AppDimen.verticalSpacing_10),
+            radius: AppDimen.radiusBig_1,
+            textColor: kTextLight,
+            backgroundColor: kPrimaryColor,
+            fontSize: FontSize.MEDIUM,
+            onTap: () {
+              print('Quan Tam');
+            },
+          ),
+        ),
+        Flexible(
+          child: CustomButton(
+            'Báo cáo',
+            textColor: kTextDark,
+            padding: const EdgeInsets.symmetric(
+                vertical: AppDimen.verticalSpacing_10),
+            margin: const EdgeInsets.all(AppDimen.spacing_1),
+            backgroundColor: kBackgroundColor,
+            radius: AppDimen.radiusBig_1,
+            fontSize: FontSize.MEDIUM,
+            onTap: () {},
+          ),
+        ),
+      ],
     );
   }
 }
@@ -88,8 +138,8 @@ class _buildInfoAccount extends StatelessWidget {
 
   const _buildInfoAccount({
     required this.name,
-    this.countPerStars = 5,
-    required this.countRating,
+    this.countPerStars = 0,
+    this.countRating = 0,
     Key? key,
   }) : super(key: key);
 
@@ -98,9 +148,10 @@ class _buildInfoAccount extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        CustomText(
           name,
-          style: kTextBoldDark_18,
+          fontSize: FontSize.BIG,
+          fontWeight: FontWeight.w700,
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,13 +161,9 @@ class _buildInfoAccount extends StatelessWidget {
               size: 22,
               color: kHighlightColor,
             ),
-            Text(
-              '$countPerStars',
-              style: kTextHighlight_16,
-            ),
-            Text(
-              ' ($countRating)',
-              style: kTextHighlight_16,
+            CustomText(
+              '$countPerStars ($countRating)',
+              color: kHighlightColor,
             ),
           ],
         ),

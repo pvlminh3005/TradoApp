@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/login/register_provider.dart';
+import 'package:trado_app_uit/providers/auth_provider.dart';
+import '/constants/dimen.dart';
+import '/components/custom_button.dart';
+import '/components/custom_input.dart';
 import '/routes/routes_manage.dart';
-import '/components/input_password.dart';
 import '../../components/form_question_text.dart';
-import '../../components/button_card.dart';
-import '../../components/input_card.dart';
 import '../splash/background2.dart';
 
 class ConCac extends StatelessWidget {
@@ -33,32 +33,40 @@ class SignupScreen extends StatelessWidget {
                 height: size.width * .5,
                 fit: BoxFit.cover,
               ),
-              InputCard(
+              CustomInput(
                 hintText: 'Tài khoản',
                 controller: userController,
-                icon: Icons.person,
+                radius: AppDimen.radiusBig_2,
+                maxLength: 30,
+                showPrefixIcon: true,
+                showSuffixIcon: false,
+                prefixIcon: Icons.person,
               ),
-              InputPassword(
+              CustomInput(
                 hintText: 'Mật khẩu',
+                margin:
+                    const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
                 controller: passController,
-                icon: Icons.lock,
+                radius: AppDimen.radiusBig_2,
+                showPrefixIcon: true,
+                showSuffixIcon: true,
+                prefixIcon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
-              Consumer<RegisterProvider>(
-                builder: (ctx, controller, _) => ButtonCard(
-                  1,
+              Consumer<AuthProvider>(
+                builder: (ctx, controller, _) => CustomButton(
                   'Đăng ký',
-                  () {
+                  onTap: () {
                     controller.registerApp(
                       context,
                       userController.text,
                       passController.text,
                     );
                   },
-                  isLoading: controller.isLoading,
+                  // isLoading: controller.isLoading,
                 ),
               ),
-              SizedBox(height: size.width * .05),
+              SizedBox(height: AppDimen.spacing_2),
               FormQuestionText(
                 login: false,
                 toggleNavigator: () {

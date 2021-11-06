@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/providers/auth_provider.dart';
+import '/constants/dimen.dart';
+import '/components/custom_button.dart';
+import '/components/custom_input.dart';
 
-import '/constants/sizes.dart';
 import '/routes/routes_manage.dart';
-import '/providers/login/signin_provider.dart';
-import '/components/input_password.dart';
 import '/providers/google/google_signin_controller.dart';
 import '../../components/or_divider.dart';
-import '../../components/button_card.dart';
 import '../../components/form_question_text.dart';
-import '../../components/input_card.dart';
 import '../splash/background2.dart';
 
 class SigninScreen extends StatelessWidget {
@@ -32,29 +31,36 @@ class SigninScreen extends StatelessWidget {
                 height: size.width * .6,
                 fit: BoxFit.cover,
               ),
-              InputCard(
+              CustomInput(
                 hintText: 'Tài khoản',
                 controller: userController,
-                icon: Icons.person,
+                radius: AppDimen.radiusBig_2,
+                maxLength: 30,
+                showPrefixIcon: true,
+                showSuffixIcon: false,
+                prefixIcon: Icons.person,
               ),
-              InputPassword(
+              CustomInput(
                 hintText: 'Mật khẩu',
+                margin:
+                    const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
                 controller: passController,
-                icon: Icons.lock,
+                radius: AppDimen.radiusBig_2,
+                showPrefixIcon: true,
+                showSuffixIcon: true,
+                prefixIcon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
-              Consumer<SignInProvider>(
-                builder: (ctx, controller, _) => ButtonCard(
-                  1,
+              Consumer<AuthProvider>(
+                builder: (ctx, controller, _) => CustomButton(
                   'Đăng nhập',
-                  () {
-                    controller.signInApp(
+                  onTap: () async {
+                    await controller.signInApp(
                       context,
                       userController.text,
                       passController.text,
                     );
                   },
-                  isLoading: controller.isLoading,
                 ),
               ),
               SizedBox(height: size.width * .05),
@@ -71,8 +77,8 @@ class SigninScreen extends StatelessWidget {
                   OrDivider(),
                   SizedBox(height: size.width * .1),
                   GestureDetector(
-                    onTap: () {
-                      provider.signin();
+                    onTap: () async {
+                      await provider.signin();
                     },
                     child: Image.asset(
                       'assets/images/google.png',

@@ -1,8 +1,13 @@
-String mainURL = 'http://localhost:3000/api';
+class MainURL {
+  MainURL._();
 
-final String account = '/account';
-final String register = '/';
-final String login = '/login';
+  static String mainURL = 'http://localhost:3000/api';
 
-final String registerURL = '$mainURL$account$register';
-final String loginURL = '$mainURL$account$login';
+  static String account = '/account';
+  static String register = '/';
+  static String login = '/login';
+  static String headerToken = 'trado-token';
+
+  static String registerURL = '$mainURL$account$register';
+  static String loginURL = '$mainURL$account$login';
+}

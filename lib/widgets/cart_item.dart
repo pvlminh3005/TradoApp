@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/constants/constants.dart';
+import 'package:trado_app_uit/constants/sizes.dart';
+import '/constants/dimen.dart';
+import '/components/custom_text.dart';
+import '/constants/constants.dart';
 
-import '/constants/sizes.dart';
 import '/providers/cart_provider.dart';
 import '/components/config_price.dart';
 import '/widgets/change_quantity.dart';
@@ -24,25 +26,26 @@ class CartItem extends StatelessWidget {
         key: Key(cart.id),
         onDismissed: (direction) => provider.removeToCart(cart.id),
         background: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFE6E6),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Row(
-              children: [
-                Spacer(),
-                Icon(
-                  Icons.delete,
-                  size: 30,
-                  color: kErrorColor.withOpacity(.8),
-                ),
-              ],
-            )),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFE6E6),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Row(
+            children: [
+              Spacer(),
+              Icon(
+                Icons.delete,
+                size: AppDimen.icon_size_big,
+                color: kErrorColor.withOpacity(.8),
+              ),
+            ],
+          ),
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(AppDimen.radiusBig),
               child: Image.network(
                 cart.imageUrl,
                 width: size.width * .25,
@@ -54,26 +57,43 @@ class CartItem extends StatelessWidget {
             Expanded(
               child: Container(
                 height: size.width * .3,
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                    vertical: AppDimen.verticalSpacing_10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    CustomText(
                       cart.title,
-                      style: kTextBoldDark_20,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20.0,
                       maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    Text('${FormatPrice(cart.price)} đ',
-                        style: kTextBoldError_18),
+                    CustomText(
+                      '${FormatPrice(cart.price)} đ',
+                      fontSize: FontSize.BIG,
+                      fontWeight: FontWeight.w700,
+                      color: kErrorColor,
+                    ),
                     ChangeQuantity(quantity: cart.quantity),
                   ],
                 ),
               ),
             ),
+            _buildCheckbox(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildCheckbox() {
+    return Transform.scale(
+      scale: 1.2,
+      child: Checkbox(
+        activeColor: kPrimaryColor,
+        value: true,
+        onChanged: (value) {},
       ),
     );
   }

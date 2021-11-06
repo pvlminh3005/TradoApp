@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '/constants/sizes.dart';
+import '/components/custom_text.dart';
+import '/constants/constants.dart';
 
 class FormQuestionText extends StatelessWidget {
   final bool login;
@@ -12,20 +13,20 @@ class FormQuestionText extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
+        CustomText(
           login ? 'Bạn chưa có tài khoản? ' : 'Bạn đã có tài khoản? ',
-          style: kTextBoldDark_16,
+          color: kTextDark,
+          fontWeight: FontWeight.w700,
         ),
         GestureDetector(
           onTap: toggleNavigator,
-          child: Text(
+          child: CustomText(
             login ? 'Đăng ký ngay' : 'Đăng nhập',
-            style: kTextBoldPrimary_16,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.w700,
           ),
         )
       ],
     );
   }
 }
-
-//FIX colors

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import '/constants/dimen.dart';
+import '/components/custom_text.dart';
+import '/constants/sizes.dart';
 
 import '/constants/constants.dart';
-import '/constants/sizes.dart';
 
 class ChangeQuantity extends StatefulWidget {
   late int quantity;
@@ -31,9 +33,9 @@ class _ChangeQuantityState extends State<ChangeQuantity> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Text(
+          child: CustomText(
             '${widget.quantity.toString().padLeft(2, "0")}',
-            style: kTextMediumDark_18,
+            fontSize: FontSize.BIG,
           ),
         ),
         ButtonCount(
@@ -59,13 +61,12 @@ class ButtonCount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return GestureDetector(
       onTap: onPressed,
       child: Container(
         padding: const EdgeInsets.all(7),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppDimen.radiusBig),
           color: kColorItemGrey,
         ),
         child: Icon(icon),

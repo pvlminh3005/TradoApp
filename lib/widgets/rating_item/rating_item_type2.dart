@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '/components/custom_text.dart';
+import '/constants/dimen.dart';
 import '/constants/constants.dart';
 import '/constants/sizes.dart';
 
@@ -32,15 +34,14 @@ class RatingItemType2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     _buildRatingStars();
 
     return Card(
       shadowColor: Colors.black54,
       margin: const EdgeInsets.all(5),
-      color: Colors.white,
+      color: kCardColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(AppDimen.radiusSmall),
       ),
       child: Container(
         padding: const EdgeInsets.all(8.0),
@@ -59,27 +60,27 @@ class RatingItemType2 extends StatelessWidget {
                         rate.imageUrl,
                       ),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        CustomText(
                           rate.nameUser,
-                          style: kTextBoldDark_16,
+                          fontWeight: FontWeight.w700,
                         ),
                         Row(children: childrenStars),
                       ],
                     ),
                   ],
                 ),
-                Text(
+                CustomText(
                   '${DateFormat('dd/MM/yyy kk:mm').format(rate.date)}',
-                  style: kTextMediumDark_14,
+                  fontSize: FontSize.SMALL,
                 ),
               ],
             ),
             SizedBox(height: 15),
-            Text(rate.comment, style: kTextMediumDark_16),
+            CustomText(rate.comment),
           ],
         ),
       ),

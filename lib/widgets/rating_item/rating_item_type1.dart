@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
-import 'package:trado_app_uit/routes/routes_manage.dart';
+import '/constants/sizes.dart';
+import '/components/custom_text.dart';
+import '/constants/dimen.dart';
+import '/routes/routes_manage.dart';
 
 import '/constants/constants.dart';
 import '/models/rate_category_model.dart';
-import '/screens/category_detail_screen.dart';
 
 class RatingItemType1 extends StatelessWidget {
   final RateModel rate;
@@ -34,7 +35,6 @@ class RatingItemType1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     _buildRatingStars();
 
     return GestureDetector(
@@ -48,7 +48,7 @@ class RatingItemType1 extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         color: kCardColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(AppDimen.radiusSmall),
         ),
         child: Container(
           padding: const EdgeInsets.all(8.0),
@@ -71,13 +71,13 @@ class RatingItemType1 extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          CustomText(
                             rate.nameUser,
-                            style: kTextBoldDark_16,
+                            fontWeight: FontWeight.w700,
                           ),
-                          Text(
+                          CustomText(
                             '${DateFormat('dd/MM/yyy kk:mm').format(rate.date)}',
-                            style: kTextMediumDark_14,
+                            fontSize: FontSize.SMALL,
                           ),
                         ],
                       ),
@@ -93,9 +93,10 @@ class RatingItemType1 extends StatelessWidget {
                             arguments: rate.idCategory,
                           );
                         },
-                        child: Text(
+                        child: CustomText(
                           'Xem sản phẩm',
-                          style: kTextMediumPrimary_14,
+                          fontSize: FontSize.SMALL,
+                          color: kPrimaryColor,
                         ),
                       ),
                       Row(children: childrenStars),
@@ -104,7 +105,7 @@ class RatingItemType1 extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 15),
-              Text(rate.comment, style: kTextMediumDark_16),
+              CustomText(rate.comment),
             ],
           ),
         ),

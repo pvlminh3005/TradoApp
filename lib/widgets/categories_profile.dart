@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 
 import '/constants/constants.dart';
 import '/providers/category_provider.dart';
@@ -17,7 +18,8 @@ class CategoriesWidget extends StatelessWidget {
       backgroundColor: kBackgroundColor,
       body: Container(
         child: GridView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+          padding: const EdgeInsets.symmetric(
+              vertical: AppDimen.verticalSpacing_10, horizontal: 5),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 2 / 3,

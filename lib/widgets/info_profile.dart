@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '/constants/sizes.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
+import 'package:trado_app_uit/constants/sizes.dart';
+import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/models/info_card_model.dart';
 
@@ -46,9 +48,10 @@ class BuildTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Text(
+      child: CustomText(
         title,
-        style: kTextMediumGrey_14,
+        color: kTextColorGrey,
+        fontSize: FontSize.SMALL,
       ),
     );
   }
@@ -79,18 +82,15 @@ class InfoCard extends StatelessWidget {
                       radius: MediaQuery.of(context).size.width * .06,
                       child: Icon(
                         info.icon,
-                        size: 22,
+                        size: AppDimen.icon_size_small,
                         color: info.isChecked ? kTextLight : Color(0xFF888888),
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
+                    CustomText(
                       info.title,
-                      style: kTextMediumDark_12.merge(
-                        TextStyle(
-                          color: info.isChecked ? kTextDark : Color(0xFF888888),
-                        ),
-                      ),
+                      fontSize: FontSize.SMALL_1,
+                      color: info.isChecked ? kTextDark : Color(0xFF888888),
                     ),
                   ],
                 ),
@@ -112,7 +112,6 @@ class Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -120,11 +119,10 @@ class Description extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
       ),
-      child: Text(
+      child: CustomText(
         description,
         maxLines: 10,
-        overflow: TextOverflow.ellipsis,
-        style: kTextMediumDark_14,
+        fontSize: FontSize.SMALL,
       ),
     );
   }
@@ -143,22 +141,22 @@ class TransactionCategories extends StatelessWidget {
   Widget _buildTransactionItem(String title, int count) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(AppDimen.horizontalSpacing_16),
         decoration: BoxDecoration(
           color: kCardColor,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppDimen.radiusBig),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            CustomText(
               '$count',
-              style: kTextMediumDark_24,
+              fontSize: FontSize.BIG_1,
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            CustomText(
               title,
-              style: kTextMediumDark_14,
+              fontSize: FontSize.SMALL,
             ),
           ],
         ),
@@ -172,7 +170,7 @@ class TransactionCategories extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildTransactionItem('Mặt hàng đã bán', countCategoriesSell),
-        SizedBox(width: 20),
+        const SizedBox(width: 20),
         _buildTransactionItem('Mặt hàng đã mua', countCategoriesBuy),
       ],
     );

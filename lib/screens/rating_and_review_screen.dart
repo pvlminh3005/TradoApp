@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/custom_text.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
 
 import '/constants/constants.dart';
@@ -176,11 +177,11 @@ class HeaderInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
+                  CustomText(
                     category.title,
                     maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: kTextBoldDark_18,
+                    fontSize: FontSize.BIG,
+                    fontWeight: FontWeight.w700,
                   ),
                   SizedBox(height: 6),
                   Wrap(
@@ -192,14 +193,14 @@ class HeaderInfo extends StatelessWidget {
                             amountViews == 0 ? kTextColorGrey : kHighlightColor,
                         size: 30,
                       ),
-                      Text('${amountStars.toStringAsFixed(1)}',
-                          style: kTextMediumDark_16),
+                      CustomText('${amountStars.toStringAsFixed(1)}'),
                     ],
                   ),
-                  SizedBox(height: 6),
-                  Text(
+                  const SizedBox(height: 6),
+                  CustomText(
                     '(${amountViews} nhận xét)',
-                    style: kTextMediumGrey_14,
+                    color: kTextColorGrey,
+                    fontSize: FontSize.SMALL,
                   ),
                 ],
               ),

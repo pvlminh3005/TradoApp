@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/constants/constants.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 import '/constants/sizes.dart';
+import '/components/custom_text.dart';
+import '/constants/constants.dart';
 import '/providers/rate_review_provider.dart';
 import '../providers/category_provider.dart';
 import '../widgets/categories_profile.dart';
@@ -16,7 +18,10 @@ class TabScreen extends StatelessWidget {
   ];
 
   Widget _buildTitleTab(String title) {
-    return Text(title, style: kTextMediumDark_15);
+    return CustomText(
+      title,
+      fontSize: FontSize.MEDIUM - 1,
+    );
   }
 
   @override
@@ -29,13 +34,14 @@ class TabScreen extends StatelessWidget {
     return DefaultTabController(
       length: _pages.length,
       child: Container(
+        padding: const EdgeInsets.only(top: AppDimen.horizontalSpacing_5),
         color: kCardColor,
         child: Column(
           children: [
             TabBar(
               labelPadding: const EdgeInsets.only(bottom: 5),
-              labelColor: Colors.black,
-              indicatorColor: Theme.of(context).primaryColor,
+              labelColor: kTextDark,
+              indicatorColor: kPrimaryColor,
               tabs: [
                 _buildTitleTab('Thông tin'),
                 _buildTitleTab(

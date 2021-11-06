@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '/constants/sizes.dart';
+import 'package:trado_app_uit/constants/sizes.dart';
+import '/components/custom_text.dart';
 import '/constants/constants.dart';
 
 class Badge extends StatelessWidget {
@@ -23,10 +24,12 @@ class Badge extends StatelessWidget {
           child: CircleAvatar(
             radius: 9,
             backgroundColor: kErrorColor,
-            child: Text(
+            child: CustomText(
               value,
-              textAlign: TextAlign.center,
-              style: kTextBoldLight_12,
+              align: TextAlign.center,
+              color: kTextLight,
+              fontSize: FontSize.SMALL_1,
+              fontWeight: FontWeight.w700,
             ),
           ),
         )

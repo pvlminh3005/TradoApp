@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthPreferences {
   static SharedPreferences? preferences;
   static const _keyToken = '';
+  static String get keyToken => _keyToken;
 
   static Future init() async =>
       preferences = await SharedPreferences.getInstance();

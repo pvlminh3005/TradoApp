@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/custom_button.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 import '/routes/routes_manage.dart';
 
-import '/constants/sizes.dart';
 import '/constants/constants.dart';
 import '../models/category_model.dart';
 import '../providers/cart_provider.dart';
@@ -25,7 +27,10 @@ class BottomCategoryDetail extends StatelessWidget {
     final providerCart = Provider.of<CartProvider>(context, listen: false);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimen.horizontalSpacing_16,
+        vertical: 5.0,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -37,7 +42,7 @@ class BottomCategoryDetail extends StatelessWidget {
           ),
           SizedBox(width: size.width * .03),
           FormIcon(
-            icon: Icons.add_shopping_cart_rounded,
+            icon: CupertinoIcons.cart_fill_badge_plus,
             color: kHighlightColor,
             onPressed: () {
               providerCart.addToCart(
@@ -63,18 +68,12 @@ class BottomCategoryDetail extends StatelessWidget {
           ),
           SizedBox(width: size.width * .04),
           Expanded(
-            child: RaisedButton(
-              onPressed: () {},
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              color: kPrimaryColor,
-              child: Text(
-                'Mua ngay',
-                style: kTextBoldLight_18,
-              ),
+            child: CustomButton(
+              'Mua ngay',
+              radius: AppDimen.radiusNormal,
+              textColor: kTextLight,
+              backgroundColor: kPrimaryColor,
+              onTap: () {},
             ),
           ),
         ],

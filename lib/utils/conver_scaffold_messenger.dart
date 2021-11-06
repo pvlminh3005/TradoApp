@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import '/constants/constants.dart';
 import '/constants/sizes.dart';
+import '/components/custom_text.dart';
 
 void dialogMessenger(BuildContext context, String content) {
   var snackBar = SnackBar(
-    content: Text(
+    content: CustomText(
       content,
-      style: kTextMediumLight_14,
+      color: kTextLight,
+      fontSize: FontSize.SMALL,
     ),
     action: SnackBarAction(
       label: 'OK',
