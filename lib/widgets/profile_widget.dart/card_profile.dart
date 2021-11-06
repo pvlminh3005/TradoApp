@@ -21,7 +21,7 @@ class CardInfoProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardShadow(
-      margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_5),
       padding: const EdgeInsets.all(AppDimen.spacing_2),
       height: 80.0,
       onTap: () => onTap!(context),

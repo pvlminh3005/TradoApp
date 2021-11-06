@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/controllers/auth_controller.dart';
+import 'package:trado_app_uit/providers/auth_provider.dart';
 import '/routes/navigator_tabs_route.dart';
 import '/screens/splash/splash_screen.dart';
 import '/utils/auth_preferences.dart';
@@ -20,7 +22,15 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       tokenUser = getTokenUser();
     });
+    print(tokenUser!);
+    if (tokenUser!.isEmpty) return;
+    fetchCurrentUser();
     super.initState();
+  }
+
+  Future<void> fetchCurrentUser() async {
+    await AuthProvider().getCurrentUser();
+    print(AuthProvider.currentUser.name);
   }
 
   String getTokenUser() {
@@ -32,7 +42,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
       body: isLoading
           ? LoadingPage()
-          : (tokenUser! != '' ? NavigatorTab() : SplashScreen()),
+          : (tokenUser != '' ? NavigatorTab() : SplashScreen()),
     );
   }
 }

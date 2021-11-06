@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/providers/auth_provider.dart';
 import '/constants/dimen.dart';
 import '/components/custom_button.dart';
 import '/components/custom_input.dart';
-import '/providers/login/register_provider.dart';
 import '/routes/routes_manage.dart';
 import '../../components/form_question_text.dart';
 import '../splash/background2.dart';
@@ -53,11 +53,12 @@ class SignupScreen extends StatelessWidget {
                 prefixIcon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
-              Consumer<RegisterProvider>(
+              Consumer<AuthProvider>(
                 builder: (ctx, controller, _) => CustomButton(
                   'Đăng ký',
                   onTap: () {
                     controller.registerApp(
+                      context,
                       userController.text,
                       passController.text,
                     );
@@ -65,7 +66,7 @@ class SignupScreen extends StatelessWidget {
                   // isLoading: controller.isLoading,
                 ),
               ),
-              SizedBox(height: size.width * .05),
+              SizedBox(height: AppDimen.spacing_2),
               FormQuestionText(
                 login: false,
                 toggleNavigator: () {

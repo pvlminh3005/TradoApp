@@ -2,25 +2,33 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import '/controllers/auth_controller.dart';
-import '/utils/conver_scaffold_messenger.dart';
+import '/models/user_model.dart';
 import '/routes/routes_manage.dart';
+import '/screens/edit_info_profile_screen.dart';
 import '/utils/auth_preferences.dart';
+import '/utils/conver_scaffold_messenger.dart';
 
-class SignInProvider with ChangeNotifier {
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+class AuthProvider extends ChangeNotifier {
+  // static var user;
+  static late UserModel _currentUser;
+  static UserModel get currentUser => _currentUser;
+
+  Future getCurrentUser() async {
+    _currentUser = await AuthController().getCurrentUser();
+    notifyListeners();
+  }
 
   Future<void> signInApp(
       BuildContext context, String username, String password) async {
-    _isLoading = true;
     await AuthController().signIn(username, password).then((tokenUser) async {
       if (tokenUser == null) {
         dialogMessenger(context, 'Tài khoản hoặc mật khẩu không đúng');
-        _isLoading = false;
         notifyListeners();
         return;
       }
       await AuthPreferences.setToken(tokenUser['accessToken']);
+      // await getCurrentUser();
+      await AuthController().getCurrentUser();
       await Timer(
         Duration(seconds: 2),
         () {
@@ -29,10 +37,21 @@ class SignInProvider with ChangeNotifier {
             RouteManage.navigator_tab,
             (Route<dynamic> route) => false,
           );
-          _isLoading = false;
         },
       );
       notifyListeners();
     });
+  }
+
+  Future<void> registerApp(
+      BuildContext context, String username, String password) async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) =>
+            EditProfileScreen(editType: EditProfileType.register),
+      ),
+    );
+    notifyListeners();
   }
 }

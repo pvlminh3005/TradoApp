@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trado_app_uit/models/shipping_address_model.dart';
+import 'package:trado_app_uit/providers/shipping_address_provider.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
 import '/components/primary_button.dart';
@@ -75,7 +78,17 @@ class CheckOutScreen extends StatelessWidget {
   }
 
   Widget _buildDetailShippingAddress() {
-    return AddressDetailWidget();
+    return Consumer<ShippingAddressProvider>(
+      builder: (ctx, provider, _) {
+        ShippingAddressModel data = provider.getDefaultAddress();
+        return AddressDetailWidget(
+          name: data.name,
+          phoneNumber: data.phoneNumber,
+          address: data.address,
+          note: data.note,
+        );
+      },
+    );
   }
 
   Widget _buildDetailPaymentMethod() {

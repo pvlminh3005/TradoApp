@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/screens/edit_my_category_screen.dart';
+import 'package:trado_app_uit/screens/manage_my_category_screen.dart';
 import '/screens/edit_info_profile_screen.dart';
 import '/screens/add_shipping_address_screen.dart';
 import '/screens/profile_screen.dart';
@@ -34,6 +36,8 @@ class RouteManage {
   static const add_shipping_address = '/add_shipping_address';
   static const success = '/success';
   static const edit_profile = '/edit_profile';
+  static const my_category = '/my_category';
+  static const edit_my_category = 'edit_my_category';
 
   static const initialRoute = navigator_tab;
 
@@ -53,5 +57,7 @@ class RouteManage {
     add_shipping_address: (_) => AddShippingAddressScreen(),
     success: (_) => SuccessScreen(),
     edit_profile: (_) => EditProfileScreen(),
+    my_category: (_) => ManageMyCategoryScreen(),
+    edit_my_category: (_) => EditMyCategoryScreen(),
   };
 }

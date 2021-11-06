@@ -33,4 +33,24 @@ class ShippingAddressProvider with ChangeNotifier {
     );
     notifyListeners();
   }
+
+  ShippingAddressModel getDefaultAddress() {
+    int index =
+        _listAddresses.indexWhere((address) => address.defaultAddress == true);
+    return _listAddresses[index];
+  }
+
+  void setDefaultAddress(String? idAddress) {
+    _listAddresses.forEach((address) {
+      if (address.id == idAddress) {
+        address.defaultAddress = true;
+        return;
+      }
+      address.defaultAddress = false;
+    });
+    _listAddresses.forEach((address) {
+      print(address.defaultAddress);
+    });
+    notifyListeners();
+  }
 }

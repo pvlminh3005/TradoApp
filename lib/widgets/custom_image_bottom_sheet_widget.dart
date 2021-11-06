@@ -1,17 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/controllers/choose_image_controller.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
 
 class CustomImageBttomSheetWidget extends StatelessWidget {
-  final Function()? onTapGallery;
-  final Function()? onTapCamera;
-
   const CustomImageBttomSheetWidget({
-    this.onTapGallery,
-    this.onTapCamera,
     Key? key,
   }) : super(key: key);
 
@@ -25,13 +21,13 @@ class CustomImageBttomSheetWidget extends StatelessWidget {
           _buildButton(
             title: 'Chọn ảnh từ thư viện',
             icon: CupertinoIcons.photo_fill_on_rectangle_fill,
-            onTap: onTapGallery,
+            onTap: ImageController.openImageFromGallery,
           ),
           const SizedBox(height: AppDimen.verticalSpacing_10),
           _buildButton(
             title: 'Chụp ảnh',
             icon: CupertinoIcons.camera_fill,
-            onTap: onTapCamera,
+            onTap: ImageController.openCamera,
           ),
         ],
       ),

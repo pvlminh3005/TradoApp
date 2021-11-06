@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/custom_text.dart';
+import 'package:trado_app_uit/constants/sizes.dart';
 import 'package:trado_app_uit/providers/shipping_address_provider.dart';
 import '/controllers/auth_controller.dart';
 import '/constants/constants.dart';
@@ -16,6 +18,7 @@ import '/widgets/profile_widget.dart/card_profile.dart';
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('PROFILE');
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: _buildAppBar(context),
@@ -79,34 +82,53 @@ class ProfileScreen extends StatelessWidget {
         AppDimen.verticalSpacing_16,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _buildTitle('Danh mục sản phẩm'),
           CardInfoProfileWidget(
-            title: 'Quản lý sản phẩm',
-            subtitle: '10 sản phẩm',
-          ),
-          CardInfoProfileWidget(
-              title: 'Đơn hàng của tôi',
-              subtitle: '4 đơn hàng sẵn có',
+              title: 'Quản lý sản phẩm',
+              subtitle: '10 sản phẩm',
               onTap: (context) {
-                Navigator.of(context).pushNamed(RouteManage.order);
+                Navigator.pushNamed(context, RouteManage.my_category);
               }),
-          Consumer<ShippingAddressProvider>(builder: (context, provider, _) {
-            return CardInfoProfileWidget(
-              title: 'Địa chỉ giao hàng',
-              subtitle: '${provider.listAddresses.length} địa chỉ',
-              onTap: (context) {
-                Navigator.of(context).pushNamed(RouteManage.shipping_address);
-              },
-            );
-          }),
+          CardInfoProfileWidget(
+            title: 'Đơn hàng của tôi',
+            subtitle: '4 đơn hàng sẵn có',
+            onTap: (context) {
+              Navigator.of(context).pushNamed(RouteManage.order);
+            },
+          ),
+          _buildTitle('Quản lý tài khoản'),
+          Consumer<ShippingAddressProvider>(
+            builder: (context, provider, _) {
+              return CardInfoProfileWidget(
+                title: 'Địa chỉ giao hàng',
+                subtitle: '${provider.listAddresses.length} địa chỉ',
+                onTap: (context) {
+                  Navigator.of(context).pushNamed(RouteManage.shipping_address);
+                },
+              );
+            },
+          ),
           CardInfoProfileWidget(
             title: 'Thông tin cá nhân',
             onTap: (context) =>
                 Navigator.pushNamed(context, RouteManage.edit_profile),
           ),
+          _buildTitle('Khác'),
           CardInfoProfileWidget(title: 'Cài đặt'),
         ],
       ),
+    );
+  }
+
+  Widget _buildTitle(String title) {
+    return CustomText(
+      title,
+      fontWeight: FontWeight.w700,
+      color: kTextColorGrey,
+      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_5),
+      fontSize: FontSize.MEDIUM - 1,
     );
   }
 

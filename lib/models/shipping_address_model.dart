@@ -1,10 +1,10 @@
 class ShippingAddressModel {
   final String? id;
-  final String? name;
-  final String? phoneNumber;
-  final String? address;
-  final String? note;
-  final bool defaultAddress;
+  late String? name;
+  late String? phoneNumber;
+  late String? address;
+  late String? note;
+  late bool defaultAddress;
 
   ShippingAddressModel({
     this.id,

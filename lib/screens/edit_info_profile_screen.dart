@@ -2,16 +2,24 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/controllers/choose_image_controller.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
 import 'package:trado_app_uit/widgets/custom_image_bottom_sheet_widget.dart';
 import '/components/primary_button.dart';
-import '/controllers/choose_image_controller.dart';
 import '/components/custom_input.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/widgets/appbar_widget.dart';
 
+enum EditProfileType { register, profile }
+
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+  final editType;
+
+  const EditProfileScreen({
+    this.editType = EditProfileType.profile,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -76,10 +84,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Widget _buildAvatar() {
     void showProfileBottomSheet() {
-      showModalBottomSheet(
-        context: context,
-        builder: (builder) => CustomImageBttomSheetWidget(),
-      );
+      ImageController.showBottomSheetManageImage(context);
     }
 
     return InkWell(
@@ -125,7 +130,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return PrimaryButton(
       title: 'Lưu thông tin',
       showShadow: false,
-      onPressed: () {},
+      onPressed: () {
+        switch (widget.editType) {
+          case EditProfileType.register:
+            Navigator.pushReplacementNamed(context, RouteManage.diff_profile);
+            break;
+          default:
+            Navigator.pushReplacementNamed(context, RouteManage.my_profile);
+            break;
+        }
+      },
     );
   }
 }

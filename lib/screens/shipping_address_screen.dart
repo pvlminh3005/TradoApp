@@ -1,37 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/custom_text.dart';
+import '/components/custom_text.dart';
 
-import 'package:trado_app_uit/constants/constants.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
+import '/constants/constants.dart';
+import '/constants/dimen.dart';
 
-import 'package:trado_app_uit/providers/shipping_address_provider.dart';
-import 'package:trado_app_uit/routes/routes_manage.dart';
-import 'package:trado_app_uit/widgets/appbar_widget.dart';
-import 'package:trado_app_uit/widgets/loading_page.dart';
-import 'package:trado_app_uit/widgets/shipping_address/shipping_address_item.dart';
+import '/providers/shipping_address_provider.dart';
+import '/routes/routes_manage.dart';
+import '/widgets/appbar_widget.dart';
+import '/widgets/loading_page.dart';
+import '/widgets/shipping_address/shipping_address_item.dart';
 
 class ShippingAddressScreen extends StatefulWidget {
   const ShippingAddressScreen({Key? key}) : super(key: key);
 
   @override
-  State<ShippingAddressScreen> createState() => _ShippingAddressScreenState();
+  State<ShippingAddressScreen> createState() =>
+      new _ShippingAddressScreenState();
 }
 
-class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
+class _ShippingAddressScreenState extends State<ShippingAddressScreen>
+    with AutomaticKeepAliveClientMixin<ShippingAddressScreen> {
+  @override
+  bool get wantKeepAlive => true;
+
   late Future _addressesFuture;
   @override
   void initState() {
+    super.initState();
     _addressesFuture =
         Provider.of<ShippingAddressProvider>(context, listen: false)
             .fetchAllAddresses();
-    print('Call');
-    super.initState();
+    print('??');
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: _buildAppBar(context),
       body: _buildBody(),
@@ -43,7 +49,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
       title: 'Địa chỉ giao hàng',
       childAction: [
         IconButton(
-          icon: Icon(CupertinoIcons.add, color: kTextDark),
+          icon: Icon(CupertinoIcons.add, color: kPrimaryColor),
           onPressed: () {
             Navigator.pushNamed(context, RouteManage.add_shipping_address);
           },

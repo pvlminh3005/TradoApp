@@ -11,33 +11,51 @@ class AuthController {
 
   Future<dynamic> register(String username, String password) async {
     try {
-      var _user = UserModel(username: username, email: '', password: password);
-      var response = await _dio.post(MainURL.registerURL, data: _user.toJson());
+      var response = await _dio.post(MainURL.registerURL, data: {
+        'username': username,
+        'password': password,
+      });
       if (response.statusCode == 200) {
         return response.data;
       }
-      return null;
     } catch (e) {
-      return null;
+      print(e);
     }
   }
 
   Future<dynamic> signIn(String username, String password) async {
     try {
-      print('signIn');
-      var _user = UserModel(username: username, email: '', password: password);
-      var response = await _dio.post(MainURL.loginURL, data: _user.toJson());
+      var response = await _dio.post(MainURL.loginURL, data: {
+        'username': username,
+        'password': password,
+      });
 
       if (response.statusCode == 200) {
         return response.data;
       }
-      return null;
     } catch (e) {
-      return null;
+      print(e);
     }
   }
 
   Future<void> signOut() async {
     await AuthPreferences.removeToken();
+  }
+
+  Future getCurrentUser() async {
+    try {
+      String? token = AuthPreferences.getToken();
+      if (token!.isEmpty) return;
+      var response = await _dio.get(
+        MainURL.loginURL,
+        options: Options(
+          headers: {MainURL.headerToken: token},
+        ),
+      );
+
+      return UserModel.fromJson(response.data);
+    } catch (e) {
+      print(e);
+    }
   }
 }

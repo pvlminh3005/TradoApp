@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/providers/auth_provider.dart';
 import '/constants/dimen.dart';
 import '/components/custom_button.dart';
 import '/components/custom_input.dart';
 
 import '/routes/routes_manage.dart';
-import '/providers/login/signin_provider.dart';
 import '/providers/google/google_signin_controller.dart';
 import '../../components/or_divider.dart';
 import '../../components/form_question_text.dart';
@@ -51,7 +51,7 @@ class SigninScreen extends StatelessWidget {
                 prefixIcon: Icons.lock,
               ),
               SizedBox(height: size.width * .03),
-              Consumer<SignInProvider>(
+              Consumer<AuthProvider>(
                 builder: (ctx, controller, _) => CustomButton(
                   'Đăng nhập',
                   onTap: () async {
@@ -77,8 +77,8 @@ class SigninScreen extends StatelessWidget {
                   OrDivider(),
                   SizedBox(height: size.width * .1),
                   GestureDetector(
-                    onTap: () {
-                      // provider.signin();
+                    onTap: () async {
+                      await provider.signin();
                     },
                     child: Image.asset(
                       'assets/images/google.png',
