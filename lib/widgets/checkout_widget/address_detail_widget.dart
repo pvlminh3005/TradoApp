@@ -23,7 +23,7 @@ class AddressDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardShadow(
-      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_16),
+      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_10),
       padding: const EdgeInsets.all(0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

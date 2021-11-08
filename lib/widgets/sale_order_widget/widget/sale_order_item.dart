@@ -1,14 +1,15 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/components/card_shadow.dart';
-import 'package:trado_app_uit/components/config_price.dart';
-import 'package:trado_app_uit/components/custom_button.dart';
-import 'package:trado_app_uit/components/custom_icon.dart';
-import 'package:trado_app_uit/components/custom_text.dart';
-import 'package:trado_app_uit/constants/constants.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
+import 'package:trado_app_uit/widgets/category_order_item.dart';
+import '/components/card_shadow.dart';
+import '/components/config_price.dart';
+import '/components/custom_button.dart';
+import '/components/custom_icon.dart';
+import '/components/custom_text.dart';
+import '/constants/constants.dart';
+import '/constants/dimen.dart';
+import '/constants/sizes.dart';
 
 class SaleOrderItem extends StatelessWidget {
   const SaleOrderItem({Key? key}) : super(key: key);
@@ -58,43 +59,7 @@ class SaleOrderItem extends StatelessWidget {
   }
 
   Widget _buildInfoCategory() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-      child: DottedBorder(
-        color: kTextColorGrey,
-        borderType: BorderType.RRect,
-        radius: Radius.circular(AppDimen.radiusNormal),
-        padding: const EdgeInsets.all(AppDimen.spacing_1 - 3),
-        child: Row(
-          children: [
-            Container(
-              width: 100.0,
-              height: 100.0,
-              margin: const EdgeInsets.only(right: AppDimen.spacing_1),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
-                image: DecorationImage(
-                  image: NetworkImage(
-                    'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextSaleOrder('Sony-Canon', fontWeight: FontWeight.w700),
-                  TextSaleOrder('Số lượng: 1'),
-                  TextSaleOrder('${FormatPrice(price)} đ'),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return CategoryOrderItem();
   }
 
   Widget _buildTotalPrice() {

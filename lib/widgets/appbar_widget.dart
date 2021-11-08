@@ -15,7 +15,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final PreferredSize? bottom;
 
   AppBarWidget({
-    this.background = Colors.transparent,
+    this.background = kBackgroundColorWhite,
     this.color = kPrimaryColor,
     this.title = '',
     this.showLeading = true,

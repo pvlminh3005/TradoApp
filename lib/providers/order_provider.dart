@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class OrderProvider with ChangeNotifier {
-  //status 0 => cancel, 1 => in processing, 2 => delivered
+  //status 0 => cancel, 1 => in processing, 2 => delivering, 3 => delivered
   List<Map<String, dynamic>> _listOrders = [
     {
       'idOrder': '12312312',

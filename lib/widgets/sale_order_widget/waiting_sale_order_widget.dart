@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/widgets/sale_order_widget/sale_order_item.dart';
+import 'package:trado_app_uit/widgets/sale_order_widget/widget/sale_order_item.dart';
 
 class WaitingSaleOrderWidget extends StatelessWidget {
   const WaitingSaleOrderWidget({Key? key}) : super(key: key);

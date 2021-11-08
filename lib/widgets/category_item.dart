@@ -84,6 +84,7 @@ class CategoryItem extends StatelessWidget {
                       CustomText(
                         category.title,
                         fontSize: FontSize.SMALL,
+                        maxLines: 2,
                       ),
 
                       //Widget Price & Sale

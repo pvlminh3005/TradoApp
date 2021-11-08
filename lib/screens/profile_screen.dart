@@ -93,14 +93,14 @@ class ProfileScreen extends StatelessWidget {
             },
           ),
           CardInfoProfileWidget(
-            title: 'Quản lý đơn bán hàng',
+            title: 'Quản lý đơn bán',
             subtitle: '2 đơn hàng chờ xác nhận',
             onTap: (context) {
               Navigator.of(context).pushNamed(RouteManage.sale_order);
             },
           ),
           CardInfoProfileWidget(
-            title: 'Quản lý đơn đặt hàng',
+            title: 'Quản lý đơn đặt',
             subtitle: '4 đơn hàng sẵn có',
             onTap: (context) {
               Navigator.of(context).pushNamed(RouteManage.order);

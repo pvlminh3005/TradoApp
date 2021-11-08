@@ -30,6 +30,7 @@ class _OrderScreenState extends State<OrderScreen>
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: _listWidgets.length,
+      initialIndex: 1,
       child: Scaffold(
         appBar: AppBarWidget(
           title: 'Đơn hàng của tôi',

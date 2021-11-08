@@ -307,6 +307,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBarWidget(
         color: kBackgroundColorWhite,
+        background: Colors.transparent,
         childAction: [
           Consumer<CartProvider>(
             builder: (ctx, cartData, ch) => Badge(

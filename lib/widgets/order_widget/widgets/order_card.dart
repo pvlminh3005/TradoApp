@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
+import 'package:trado_app_uit/screens/order_detail_screen.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
 import '/components/custom_text.dart';
@@ -26,6 +28,10 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardShadow(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => OrderDetailScreen()),
+      ),
       margin: const EdgeInsets.symmetric(
         horizontal: AppDimen.horizontalSpacing_16,
         vertical: AppDimen.spacing_1,
