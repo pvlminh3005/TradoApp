@@ -1,6 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trado_app_uit/providers/shipping_address_provider.dart';
 import 'package:trado_app_uit/widgets/category_order_item.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
@@ -27,7 +29,7 @@ class SaleOrderItem extends StatelessWidget {
           _buildInfoCategory(),
           _buildTotalPrice(),
           _buildDivider(),
-          _buildDetailOrder(),
+          _buildDetailOrder(context),
           _buildDivider(),
           _buildFooter(),
         ],
@@ -86,34 +88,42 @@ class SaleOrderItem extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailOrder() {
-    return ExpansionTile(
-      tilePadding: const EdgeInsets.all(0.0),
-      childrenPadding: const EdgeInsets.all(0.0),
-      title: TextSaleOrder(
-        'Chi tiết đơn hàng',
-        fontWeight: FontWeight.w700,
-        margin: const EdgeInsets.all(0.0),
-      ),
-      expandedAlignment: Alignment.topLeft,
-      expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(width: 5.0),
-        TextSaleOrder('LeMinh'),
-        TextSaleOrder('(+84) 0911222333'),
-        TextSaleOrder('Nha xx, Duong xx, Quan XX, Tp XX, Tinh XX'),
-        Row(
-          children: [
-            CustomText(
-              'Ghi chú: ',
-              fontSize: FontSize.SMALL + 1,
-              fontWeight: FontWeight.bold,
-              color: kErrorColor.withOpacity(.7),
+  Widget _buildDetailOrder(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: Consumer<ShippingAddressProvider>(
+        builder: (context, provider, _) {
+          var address = provider.getDefaultAddress();
+          return ExpansionTile(
+            tilePadding: const EdgeInsets.all(0.0),
+            childrenPadding: const EdgeInsets.all(0.0),
+            title: TextSaleOrder(
+              'Chi tiết đơn hàng',
+              fontWeight: FontWeight.w700,
+              margin: const EdgeInsets.all(0.0),
             ),
-            TextSaleOrder('Duong vao tim em sao oi bang gia'),
-          ],
-        ),
-      ],
+            expandedAlignment: Alignment.topLeft,
+            expandedCrossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(width: 5.0),
+              TextSaleOrder(address.name),
+              TextSaleOrder(address.phoneNumber),
+              TextSaleOrder(address.address),
+              Row(
+                children: [
+                  CustomText(
+                    'Ghi chú: ',
+                    fontSize: FontSize.SMALL + 1,
+                    fontWeight: FontWeight.bold,
+                    color: kErrorColor.withOpacity(.7),
+                  ),
+                  TextSaleOrder(address.note),
+                ],
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 

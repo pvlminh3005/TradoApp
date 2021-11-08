@@ -13,6 +13,7 @@ class CustomInput extends StatefulWidget {
   final IconData? prefixIcon;
   final double? fontSize;
   final double? radius;
+  final double? height;
   final Color colorIcon;
   final Color textColor;
   final EdgeInsets margin;
@@ -23,6 +24,7 @@ class CustomInput extends StatefulWidget {
   final String labelText;
   final TextInputType keyboardType;
   final FontWeight fontWeight;
+  final int maxLines;
 
   const CustomInput({
     this.controller,
@@ -34,7 +36,8 @@ class CustomInput extends StatefulWidget {
     this.iconColor = kPrimaryColor,
     this.fontSize = FontSize.SMALL,
     this.radius = AppDimen.radiusNormal,
-    this.backgroundColor = kPrimaryColorLight,
+    this.height = 1,
+    this.backgroundColor = kBackgroundColorWhite,
     this.colorIcon = kPrimaryColor,
     this.textColor = kTextColorGrey,
     this.margin = const EdgeInsets.all(0.0),
@@ -47,6 +50,7 @@ class CustomInput extends StatefulWidget {
     this.borderColor = Colors.transparent,
     this.keyboardType = TextInputType.text,
     this.fontWeight = FontWeight.w500,
+    this.maxLines = 1,
     Key? key,
   }) : super(key: key);
 
@@ -67,12 +71,14 @@ class _CustomInputState extends State<CustomInput> {
             child: TextField(
               controller: widget.controller,
               obscureText: widget.showSuffixIcon ? obscureText : false,
-              maxLines: widget.showSuffixIcon ? 1 : null,
+              maxLines: widget.showSuffixIcon ? 1 : widget.maxLines,
               maxLength: widget.maxLength,
+              textAlignVertical: TextAlignVertical.top,
               keyboardType: widget.keyboardType,
               style: TextStyle(
                 fontSize: FontSize.MEDIUM,
                 fontWeight: widget.fontWeight,
+                height: widget.height,
               ),
               decoration: InputDecoration(
                 counterText: '',
@@ -96,21 +102,7 @@ class _CustomInputState extends State<CustomInput> {
                 prefixIcon: widget.showPrefixIcon
                     ? Icon(widget.prefixIcon, color: widget.iconColor)
                     : null,
-                suffixIcon: widget.showSuffixIcon
-                    ? GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            obscureText = !obscureText;
-                          });
-                        },
-                        child: Icon(
-                          !obscureText
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: widget.colorIcon,
-                        ),
-                      )
-                    : null,
+                suffixIcon: widget.showSuffixIcon ? _buildObscure() : null,
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     width: widget.borderWidth,
@@ -129,6 +121,20 @@ class _CustomInputState extends State<CustomInput> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildObscure() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          obscureText = !obscureText;
+        });
+      },
+      child: Icon(
+        !obscureText ? Icons.visibility : Icons.visibility_off,
+        color: widget.colorIcon,
       ),
     );
   }

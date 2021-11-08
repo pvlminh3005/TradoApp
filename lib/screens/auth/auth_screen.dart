@@ -30,7 +30,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Future<void> fetchCurrentUser() async {
     await AuthProvider().getCurrentUser();
-    print(AuthProvider.currentUser.name);
+    print(AuthProvider.currentUser.auth!.id);
   }
 
   String getTokenUser() {

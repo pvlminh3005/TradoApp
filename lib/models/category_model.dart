@@ -1,5 +1,6 @@
 class CategoryModel {
   late String id;
+  late String idUser;
   late String title;
   late String description;
   late double price;
@@ -9,6 +10,7 @@ class CategoryModel {
 
   CategoryModel({
     required this.id,
+    required this.idUser,
     required this.title,
     required this.description,
     this.price = 0,
@@ -19,6 +21,7 @@ class CategoryModel {
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['_id'] ?? '';
+    idUser = json['idUser'] ?? '';
     title = json['title'] ?? '';
     description = json['description'] ?? '';
     price = json['price'] ?? '';
@@ -30,6 +33,7 @@ class CategoryModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.id;
+    data['idUser'] = this.idUser;
     data['title'] = this.title;
     data['description'] = this.description;
     data['price'] = this.price;

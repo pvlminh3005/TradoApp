@@ -5,6 +5,7 @@ class CategoryProvider with ChangeNotifier {
   List<CategoryModel> _listCategories = [
     CategoryModel(
       id: 'c1',
+      idUser: 'user1',
       title: 'Sony-Canon',
       description:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere! Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere!   Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere! Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere!',
@@ -19,6 +20,7 @@ class CategoryProvider with ChangeNotifier {
     ),
     CategoryModel(
       id: 'c2',
+      idUser: 'user1',
       title: 'Áo dài',
       description:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere!',
@@ -31,6 +33,7 @@ class CategoryProvider with ChangeNotifier {
     ),
     CategoryModel(
       id: 'c3',
+      idUser: 'user2',
       title:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem',
       description:
@@ -46,5 +49,11 @@ class CategoryProvider with ChangeNotifier {
 
   CategoryModel findCategoryById(String id) {
     return _listCategories.firstWhere((category) => category.id == id);
+  }
+
+  List<CategoryModel> fetchAllCategoriesByUser(String? idUser) {
+    return _listCategories
+        .where((category) => category.idUser == idUser)
+        .toList();
   }
 }

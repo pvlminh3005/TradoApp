@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trado_app_uit/models/shipping_address_model.dart';
 import 'package:trado_app_uit/providers/shipping_address_provider.dart';
+import 'package:trado_app_uit/widgets/loading_page.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
 import '/components/primary_button.dart';
@@ -43,7 +44,7 @@ class CheckOutScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildDetailList(),
-          _buildFooterInfo(),
+          _buildButton(),
         ],
       ),
     );
@@ -59,6 +60,8 @@ class CheckOutScreen extends StatelessWidget {
             _buildDetailShippingAddress(),
             _buildTitle('Payment'),
             _buildDetailPaymentMethod(),
+            _buildInfoPrice(),
+            _buildTotalPrice(),
             // __buildDetailPayment(),
           ],
         ),
@@ -93,16 +96,6 @@ class CheckOutScreen extends StatelessWidget {
 
   Widget _buildDetailPaymentMethod() {
     return PaymentMethodWidget();
-  }
-
-  Widget _buildFooterInfo() {
-    return Column(
-      children: [
-        _buildInfoPrice(),
-        _buildTotalPrice(),
-        _buildButton(),
-      ],
-    );
   }
 
   Widget _buildInfoPrice() {
