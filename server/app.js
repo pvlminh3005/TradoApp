@@ -25,6 +25,7 @@ app.use('/api/account',require('./router/account'));
 app.use('/api/product',require('./router/product'));
 app.use('/api/review',require('./router/review'));
 app.use('/api/cart',require('./router/cart'));
+app.use('/api/tagshipping',require('./router/tagshipping'));
 
 app.get('/', (req, res) => {
     res.send("Welcome to Trado App")

@@ -47,7 +47,7 @@ const createAccount = async (req, res) => {
             throw new Error("Cant create profile")
         })
 
-        const token = jwt.sign({ id: account._id }, process.env.secret, { expiresIn: 3600 })
+        const token = jwt.sign({ id: account._id }, process.env.secret, { expiresIn: "7d" })
         
         await session.commitTransaction()
         session.endSession()
@@ -93,11 +93,13 @@ const loginAccountGmail = async (req, res) => {
             })
 
             const account = await newAccount.save(opts).catch(err=>{
+                console.log(err)
                 throw new Error("Cant create account")
             })
 
             const newProfile = new Profile({
                 _id: account._id,
+                email:email,
                 name:name,
                 image:image,
             })
@@ -106,7 +108,7 @@ const loginAccountGmail = async (req, res) => {
                 throw new Error("Cant create profile")
             })
 
-            const token = jwt.sign({ id: account._id }, process.env.secret, { expiresIn: 3600 })
+            const token = jwt.sign({ id: account._id }, process.env.secret, { expiresIn: "7d" })
             
             await session.commitTransaction()
             session.endSession()
@@ -130,7 +132,7 @@ const loginAccountGmail = async (req, res) => {
     }
     else
     {
-        const token = jwt.sign({ id: Email._id }, process.env.secret, { expiresIn: 3600 })
+        const token = jwt.sign({ id: Email._id }, process.env.secret, { expiresIn: "7d" })
 
         return res.status(StatusCode.SuccessStatus).json({
             accessToken: token,
@@ -153,7 +155,7 @@ const logIn =async (req,res)=>{
         if (!isPasswordCorrect) 
             throw new Error("Invalid credentials")
 
-        const token = jwt.sign({ id: user._id }, process.env.secret, { expiresIn: 3600 })
+        const token = jwt.sign({ id: user._id }, process.env.secret, { expiresIn: "7d" })
 
         return res.status(StatusCode.SuccessStatus).json({
             accessToken: token,
