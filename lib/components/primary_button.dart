@@ -41,11 +41,11 @@ class PrimaryButton extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 5),
+              offset: Offset(0, 10),
               spreadRadius: 0,
-              blurRadius: 30,
+              blurRadius: 20,
               color: showShadow
-                  ? Color(0xFF8A959E).withOpacity(.25)
+                  ? Color(0xFF8A959E).withOpacity(.35)
                   : Colors.transparent,
             ),
           ],
