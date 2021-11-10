@@ -19,6 +19,9 @@ const TagShippingSchema = new Schema({
         type:String,
         required:true,
     },
+    note:{
+        type:String,
+    },
     select:{
         type:Boolean,
         default: false,

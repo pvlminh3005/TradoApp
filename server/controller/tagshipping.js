@@ -4,7 +4,7 @@ const StatusCode = require('../common/StatusCode');
 
 //#region Create tag
 const createTag = async (req, res) => {
-    const {idUser, name, phone, address} = req.body
+    const {idUser, name, phone, address, note} = req.body
 
     if(req.TradoUser.id != idUser || !req.TradoUser.id)
     {
@@ -20,6 +20,7 @@ const createTag = async (req, res) => {
             name:name,
             phone:phone,
             address:address,
+            note:note,
         })
 
         const tag = await newTag.save().catch(err=>{
@@ -59,7 +60,7 @@ const getAllTag = async (req, res) => {
 
 //#region Update tag
 const updateTag = async (req, res) => {
-    const {idTag, name, phone, address} = req.body
+    const {idTag, name, phone, address, note} = req.body
 
     try{
         if(!phone || !address)
@@ -71,6 +72,7 @@ const updateTag = async (req, res) => {
             name:name,
             phone:phone,
             address:address,
+            note: note,
         },{new:true}).catch(err=>{throw err})
         return res.status(StatusCode.SuccessStatus).json({tagshipping:editTag,msg: "Update success"}) 
     }
