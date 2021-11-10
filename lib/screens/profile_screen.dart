@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trado_app_uit/components/custom_text.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
+import 'package:trado_app_uit/providers/order_provider.dart';
 import 'package:trado_app_uit/providers/shipping_address_provider.dart';
 import '/controllers/auth_controller.dart';
 import '/constants/constants.dart';
@@ -94,17 +95,20 @@ class ProfileScreen extends StatelessWidget {
           ),
           CardInfoProfileWidget(
             title: 'Quản lý đơn bán',
-            subtitle: '2 đơn hàng chờ xác nhận',
+            subtitle: '2 đơn hàng đang chờ bạn xác nhận',
             onTap: (context) {
               Navigator.of(context).pushNamed(RouteManage.sale_order);
             },
           ),
-          CardInfoProfileWidget(
-            title: 'Quản lý đơn đặt',
-            subtitle: '4 đơn hàng sẵn có',
-            onTap: (context) {
-              Navigator.of(context).pushNamed(RouteManage.order);
-            },
+          Consumer<OrderProvider>(
+            builder: (context, provider, _) => CardInfoProfileWidget(
+              title: 'Quản lý đơn đặt',
+              subtitle:
+                  '${provider.inProcessingOrders().length} đơn hàng đang chờ xử lý',
+              onTap: (context) {
+                Navigator.of(context).pushNamed(RouteManage.order);
+              },
+            ),
           ),
           _buildTitle('Quản lý tài khoản'),
           Consumer<ShippingAddressProvider>(

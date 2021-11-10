@@ -9,7 +9,7 @@ class CategoryProvider with ChangeNotifier {
       title: 'Sony-Canon',
       description:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere! Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere!   Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere! Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere!',
-      price: 1555000,
+      price: 155000,
       imageUrl: [
         'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
         'https://images.unsplash.com/photo-1596756003714-9a02b585a1a6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2Fub258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',

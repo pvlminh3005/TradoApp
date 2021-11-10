@@ -151,13 +151,12 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               color: category.priceSale != 0 ? kErrorColor : kTextDark,
             ),
             category.priceSale != 0
-                ? SaleComponent(
-                    text: category.priceSale,
-                    // textStyle: kTextBoldDark_18,
-                  )
+                ? SaleComponent(text: category.priceSale)
                 : SizedBox.shrink(),
-            Spacer(),
-            ChangeQuantity(),
+            // Spacer(),
+            // ChangeQuantity(
+            //   quantity: quantityCategory,
+            // ),
           ],
         ),
       ],
@@ -365,7 +364,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
           category: category,
           priceDecreaseSale:
               priceDecreaseSale == 0 ? priceDecreaseSale : priceDecreaseSale,
-          quantity: quantityCategory,
+          // quantity: quantityCategory,
         ),
       ),
     );

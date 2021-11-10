@@ -24,7 +24,7 @@ class _AuthScreenState extends State<AuthScreen> {
     });
     print(tokenUser!);
     if (tokenUser!.isEmpty) return;
-    fetchCurrentUser();
+    // fetchCurrentUser();
     super.initState();
   }
 

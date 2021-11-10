@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '/providers/cart_provider.dart';
 import '/constants/dimen.dart';
 import '/components/custom_text.dart';
 import '/constants/sizes.dart';
 
 import '/constants/constants.dart';
 
+enum ChangeQuantityType { detailCategory, cartCategory }
+
 class ChangeQuantity extends StatefulWidget {
+  final String? idCategory;
   late int quantity;
+  final ChangeQuantityType type;
 
   ChangeQuantity({
+    this.idCategory = '',
     this.quantity = 1,
+    this.type = ChangeQuantityType.detailCategory,
     Key? key,
   }) : super(key: key);
 
@@ -20,15 +28,25 @@ class ChangeQuantity extends StatefulWidget {
 class _ChangeQuantityState extends State<ChangeQuantity> {
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of(context);
     return Row(
       children: [
         ButtonCount(
           icon: Icons.remove,
           onPressed: () {
-            setState(() {
-              if (widget.quantity <= 1) return;
-              widget.quantity--;
-            });
+            switch (widget.type) {
+              case ChangeQuantityType.cartCategory:
+                setState(() {
+                  widget.quantity--;
+                });
+                break;
+              default:
+                cartProvider.changeQuantityCategory(
+                  widget.idCategory!,
+                  CartQuantityType.decrease,
+                );
+                break;
+            }
           },
         ),
         Padding(
@@ -40,9 +58,21 @@ class _ChangeQuantityState extends State<ChangeQuantity> {
         ),
         ButtonCount(
           icon: Icons.add,
-          onPressed: () => setState(() {
-            widget.quantity++;
-          }),
+          onPressed: () {
+            switch (widget.type) {
+              case ChangeQuantityType.detailCategory:
+                setState(() {
+                  widget.quantity++;
+                });
+                break;
+              default:
+                cartProvider.changeQuantityCategory(
+                  widget.idCategory!,
+                  CartQuantityType.increase,
+                );
+                break;
+            }
+          },
         ),
       ],
     );
@@ -64,9 +94,9 @@ class ButtonCount extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: const EdgeInsets.all(7),
+        padding: const EdgeInsets.all(AppDimen.spacing_1 - 1),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppDimen.radiusBig),
+          borderRadius: BorderRadius.circular(AppDimen.radiusNormal + 2),
           color: kColorItemGrey,
         ),
         child: Icon(icon),

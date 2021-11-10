@@ -28,9 +28,7 @@ class SaleOrderItem extends StatelessWidget {
           _buildHeader(),
           _buildInfoCategory(),
           _buildTotalPrice(),
-          _buildDivider(),
           _buildDetailOrder(context),
-          _buildDivider(),
           _buildFooter(),
         ],
       ),
@@ -89,40 +87,50 @@ class SaleOrderItem extends StatelessWidget {
   }
 
   Widget _buildDetailOrder(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-      child: Consumer<ShippingAddressProvider>(
-        builder: (context, provider, _) {
-          var address = provider.getDefaultAddress();
-          return ExpansionTile(
-            tilePadding: const EdgeInsets.all(0.0),
-            childrenPadding: const EdgeInsets.all(0.0),
-            title: TextSaleOrder(
-              'Chi tiết đơn hàng',
-              fontWeight: FontWeight.w700,
-              margin: const EdgeInsets.all(0.0),
-            ),
-            expandedAlignment: Alignment.topLeft,
-            expandedCrossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(width: 5.0),
-              TextSaleOrder(address.name),
-              TextSaleOrder(address.phoneNumber),
-              TextSaleOrder(address.address),
-              Row(
-                children: [
-                  CustomText(
-                    'Ghi chú: ',
-                    fontSize: FontSize.SMALL + 1,
-                    fontWeight: FontWeight.bold,
-                    color: kErrorColor.withOpacity(.7),
-                  ),
-                  TextSaleOrder(address.note),
-                ],
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_10),
+      decoration: const BoxDecoration(
+        border: Border.symmetric(
+          horizontal: BorderSide(
+            color: Color(0xFFD9D9D9),
+          ),
+        ),
+      ),
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: Consumer<ShippingAddressProvider>(
+          builder: (context, provider, _) {
+            var address = provider.getDefaultAddress();
+            return ExpansionTile(
+              tilePadding: const EdgeInsets.all(0.0),
+              childrenPadding: const EdgeInsets.all(0.0),
+              title: TextSaleOrder(
+                'Chi tiết đơn hàng',
+                fontWeight: FontWeight.w700,
+                margin: const EdgeInsets.all(0.0),
               ),
-            ],
-          );
-        },
+              expandedAlignment: Alignment.topLeft,
+              expandedCrossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(width: 5.0),
+                TextSaleOrder(address.name),
+                TextSaleOrder(address.phoneNumber),
+                TextSaleOrder(address.address),
+                Row(
+                  children: [
+                    CustomText(
+                      'Ghi chú: ',
+                      fontSize: FontSize.SMALL + 1,
+                      fontWeight: FontWeight.bold,
+                      color: kErrorColor.withOpacity(.7),
+                    ),
+                    TextSaleOrder(address.note),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -144,19 +152,9 @@ class SaleOrderItem extends StatelessWidget {
           padding: const EdgeInsets.all(AppDimen.spacing_2 - 3),
           fontSize: FontSize.MEDIUM,
           fontWeight: FontWeight.w500,
+          onTap: () {},
         ),
       ],
-    );
-  }
-
-  Widget _buildDivider() {
-    return Padding(
-      padding:
-          const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_10),
-      child: Divider(
-        thickness: 1,
-        height: 0,
-      ),
     );
   }
 }

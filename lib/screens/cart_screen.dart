@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/config_price.dart';
 import 'package:trado_app_uit/components/primary_button.dart';
 import '/components/custom_text.dart';
 import '/constants/dimen.dart';
@@ -16,7 +17,8 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<CartProvider>(context);
+    final provider = Provider.of<CartProvider>(context, listen: false);
+    provider.reloadCheckCart();
     Map<String, CartModel> listCart = provider.listCart;
     return Scaffold(
       appBar: AppBarWidget(
@@ -49,9 +51,9 @@ class CartScreen extends StatelessWidget {
             _buildVoucher(),
             const SizedBox(height: AppDimen.verticalSpacing_16),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildTotal(),
-                const SizedBox(width: AppDimen.spacing_3),
                 _buildButton(),
               ],
             ),
@@ -103,28 +105,37 @@ class CartScreen extends StatelessWidget {
   }
 
   Widget _buildTotal() {
-    return Text.rich(
-      TextSpan(
-        text: 'Tổng cộng: \n',
-        style: TextStyle(
-          color: kTextColorGrey,
-          fontSize: FontSize.MEDIUM,
-        ),
-        children: [
+    return Consumer<CartProvider>(
+      builder: (context, provider, _) => Flexible(
+        flex: 1,
+        child: Text.rich(
           TextSpan(
-            text: '100.000 đ',
+            text: 'Tổng cộng: \n',
             style: TextStyle(
-              color: kTextDark,
-              fontWeight: FontWeight.w700,
+              color: kTextColorGrey,
+              fontSize: FontSize.MEDIUM,
             ),
+            children: [
+              TextSpan(
+                text: '${FormatPrice(provider.totalAmount)} đ',
+                style: TextStyle(
+                  color: kTextDark,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
           ),
-        ],
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
 
   Widget _buildButton() {
-    return Expanded(
+    return Flexible(
+      flex: 2,
       child: PrimaryButton(
         title: 'Tiếp tục',
         onPressed: () {
