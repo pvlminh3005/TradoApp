@@ -22,7 +22,8 @@ class AuthProvider extends ChangeNotifier {
       BuildContext context, String username, String password) async {
     await AuthController().signIn(username, password).then((tokenUser) async {
       if (tokenUser == null) {
-        dialogMessenger(context, 'Tài khoản hoặc mật khẩu không đúng');
+        CustomSnackBar.dialogMessenger(
+            context, 'Tài khoản hoặc mật khẩu không đúng');
         notifyListeners();
         return;
       }

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:trado_app_uit/models/category_model.dart';
 
 class CategoryProvider with ChangeNotifier {
+  List<CategoryModel> _listFavoriteCategories = [];
+  List<CategoryModel> get listFavoriteCategories => _listFavoriteCategories;
+
   List<CategoryModel> _listCategories = [
     CategoryModel(
       id: 'c1',
@@ -30,6 +33,7 @@ class CategoryProvider with ChangeNotifier {
       ],
       amountView: 120,
       priceSale: 10,
+      status: false,
     ),
     CategoryModel(
       id: 'c3',
@@ -55,5 +59,18 @@ class CategoryProvider with ChangeNotifier {
     return _listCategories
         .where((category) => category.idUser == idUser)
         .toList();
+  }
+
+  Future<void> addCategoryToFavorite(CategoryModel category) async {
+    var data =
+        await _listFavoriteCategories.where((data) => data.id == category.id);
+    if (data.isNotEmpty) {
+      return;
+    } else {
+      _listFavoriteCategories.add(category);
+    }
+    notifyListeners();
+
+    print(_listFavoriteCategories.length);
   }
 }

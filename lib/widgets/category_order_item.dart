@@ -12,7 +12,7 @@ class CategoryOrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+      padding: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_5),
       child: DottedBorder(
         color: kTextColorGrey,
         borderType: BorderType.RRect,

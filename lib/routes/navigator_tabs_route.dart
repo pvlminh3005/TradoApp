@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/widgets/dotted_widget.dart';
 import '/screens/success_screen.dart';
 import '/screens/checkout_screen.dart';
 
@@ -41,27 +43,33 @@ class _NavigatorTabState extends State<NavigatorTab> {
         onTap: (index) {
           setState(() {
             _pages = index;
-            color = Colors.red;
           });
         },
         items: [
           Icon(
-            Icons.home,
+            _pages == 0 ? CupertinoIcons.house_fill : CupertinoIcons.house,
             size: size,
             color: color,
           ),
           Icon(
-            Icons.verified,
+            _pages == 1
+                ? CupertinoIcons.bookmark_fill
+                : CupertinoIcons.bookmark,
             size: size,
             color: color,
           ),
-          Icon(
-            Icons.notifications,
-            size: size,
-            color: color,
+          DottedWidget(
+            dottedColor: _pages == 2 ? Colors.white : null,
+            child: Icon(
+              _pages == 2 ? CupertinoIcons.bell_fill : CupertinoIcons.bell,
+              size: size,
+              color: color,
+            ),
           ),
           Icon(
-            Icons.question_answer,
+            _pages == 3
+                ? CupertinoIcons.chat_bubble_2_fill
+                : CupertinoIcons.chat_bubble_2,
             size: size,
             color: color,
           ),

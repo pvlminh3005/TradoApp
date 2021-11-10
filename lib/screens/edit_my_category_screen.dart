@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/components/custom_input.dart';
 import 'package:trado_app_uit/components/custom_text.dart';
 import 'package:trado_app_uit/components/primary_button.dart';
+import 'package:trado_app_uit/constants/sizes.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/controllers/choose_image_controller.dart';
@@ -21,6 +20,7 @@ class EditMyCategoryScreen extends StatefulWidget {
 }
 
 class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
+  bool status = true;
   List<Widget> listImages = [];
   late TextEditingController nameProductController;
   late TextEditingController priceProductController;
@@ -171,6 +171,7 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
           margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
           keyboardType: TextInputType.number,
         ),
+        _buildSwitch(),
       ],
     );
   }
@@ -181,5 +182,40 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
       margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
       onPressed: () {},
     );
+  }
+
+  Widget _buildSwitch() {
+    return Container(
+      margin: const EdgeInsets.only(top: AppDimen.spacing_1),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: kColorItemGrey,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          CustomText(
+            'Trạng thái (Còn hàng): ',
+            color: kTextColorGrey,
+            fontSize: FontSize.MEDIUM - 1,
+          ),
+          const SizedBox(width: 6.0),
+          _buildStatusCategory(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusCategory() {
+    return Switch.adaptive(
+        value: status,
+        activeColor: kPrimaryColor,
+        onChanged: (value) {
+          setState(() {
+            status = value;
+          });
+        });
   }
 }

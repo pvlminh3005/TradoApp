@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/custom_icon.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
+import '/providers/category_provider.dart';
+import '/components/custom_icon.dart';
+import '/constants/sizes.dart';
 import '/constants/dimen.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
@@ -29,98 +30,108 @@ class _CartItemState extends State<CartItem> {
     Size size = MediaQuery.of(context).size;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimen.horizontalSpacing_10,
+        vertical: AppDimen.verticalSpacing_5,
+      ),
       child: Dismissible(
         key: Key(widget.cart.id),
         onDismissed: (direction) => provider.removeToCart(widget.cart.id),
         background: Container(
           decoration: BoxDecoration(
             color: const Color(0xFFFFE6E6),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(AppDimen.radiusBig),
           ),
           child: Row(
             children: [
               Spacer(),
               Icon(
-                Icons.delete,
+                CupertinoIcons.delete_solid,
                 size: AppDimen.icon_size_big,
-                color: kErrorColor.withOpacity(.8),
+                color: kErrorColor.withOpacity(.7),
               ),
             ],
           ),
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
-              child: Image.network(
-                widget.cart.imageUrl,
-                width: size.width * .25,
-                height: size.width * .25,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Container(
-                height: size.width * .3,
-                padding: const EdgeInsets.symmetric(
-                    vertical: AppDimen.verticalSpacing_10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      widget.cart.title,
-                      fontWeight: FontWeight.w700,
-                      fontSize: FontSize.BIG,
-                      maxLines: 1,
-                    ),
-                    CustomText(
-                      '${FormatPrice(widget.cart.price)} đ',
-                      fontSize: FontSize.BIG,
-                      fontWeight: FontWeight.w700,
-                      color: kErrorColor,
-                    ),
-                    ChangeQuantity(
-                      idCategory: widget.cart.id,
-                      quantity: widget.cart.quantity,
-                      type: ChangeQuantityType.cartCategory,
-                    ),
-                  ],
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: AppDimen.spacing_1),
+          decoration: BoxDecoration(
+            color: kBackgroundColorWhite,
+            borderRadius: BorderRadius.circular(AppDimen.radiusBig),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+                child: Image.network(
+                  widget.cart.imageUrl,
+                  width: size.width * .25,
+                  height: size.width * .25,
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-            _buildCheckbox(),
-          ],
+              const SizedBox(width: 10),
+              Expanded(
+                child: Container(
+                  height: size.width * .3,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: AppDimen.verticalSpacing_10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        widget.cart.title,
+                        fontWeight: FontWeight.w700,
+                        fontSize: FontSize.BIG,
+                        maxLines: 1,
+                      ),
+                      CustomText(
+                        '${FormatPrice(widget.cart.price)} đ',
+                        fontSize: FontSize.BIG,
+                        fontWeight: FontWeight.w700,
+                        color: kErrorColor,
+                      ),
+                      ChangeQuantity(idCategory: widget.cart.id),
+                    ],
+                  ),
+                ),
+              ),
+              _buildCheckbox(provider),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildCheckbox() {
-    return Consumer<CartProvider>(
-      builder: (ctx, provider, _) {
-        return InkWell(
-          onTap: () {
-            setState(() {
-              isChecked = !isChecked;
-            });
-            if (isChecked == true) {
-              provider.addToCheckCart(widget.cart.id, widget.cart);
-            } else
-              provider.removeCheckCart(widget.cart.id);
-          },
-          child: CustomIcon(
-            icon: isChecked
-                ? CupertinoIcons.check_mark_circled_solid
-                : CupertinoIcons.checkmark_alt_circle,
-            size: AppDimen.icon_size_big,
-            color: isChecked ? kPrimaryColor : Color(0xFF909090),
-          ),
-        );
-      },
+  Widget _buildCheckbox(CartProvider cartProvider) {
+    return Consumer<CategoryProvider>(
+      builder: (ctx, categoryProvider, _) => InkWell(
+        onTap: () {
+          var infoCategory = categoryProvider.listCategories.firstWhere(
+            (category) => category.id == widget.cart.id,
+          );
+          if (infoCategory.status == false) return;
+
+          setState(() {
+            isChecked = !isChecked;
+          });
+
+          if (isChecked == true) {
+            cartProvider.addToCheckCart(infoCategory.id);
+          } else
+            cartProvider.removeCheckCart(infoCategory.id);
+        },
+        child: CustomIcon(
+          icon: isChecked
+              ? CupertinoIcons.check_mark_circled_solid
+              : CupertinoIcons.checkmark_alt_circle,
+          size: AppDimen.icon_size_big,
+          color: isChecked ? kPrimaryColor : kColorItemGrey,
+        ),
+      ),
     );
   }
 }

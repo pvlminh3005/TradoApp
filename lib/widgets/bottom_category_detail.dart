@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/utils/conver_scaffold_messenger.dart';
 import '/components/custom_button.dart';
 import '/constants/dimen.dart';
 import '/routes/routes_manage.dart';
@@ -52,19 +53,6 @@ class BottomCategoryDetail extends StatelessWidget {
                 priceDecreaseSale,
                 quantity!,
               );
-
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content: Text('Add to cart!'),
-              //     duration: Duration(seconds: 1),
-              //     action: SnackBarAction(
-              //       label: 'UNDO',
-              //       onPressed: () {
-              //         providerCart.removeSingleCategory(category.id);
-              //       },
-              //     ),
-              //   ),
-              // );
             },
           ),
           SizedBox(width: size.width * .04),
@@ -73,8 +61,14 @@ class BottomCategoryDetail extends StatelessWidget {
               'Mua ngay',
               radius: AppDimen.radiusNormal,
               textColor: kTextLight,
-              backgroundColor: kPrimaryColor,
-              onTap: () {},
+              backgroundColor: category.status
+                  ? kPrimaryColor
+                  : kTextColorGrey.withOpacity(.3),
+              onTap: !category.status
+                  ? () {}
+                  : () {
+                      print('OK');
+                    },
             ),
           ),
         ],

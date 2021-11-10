@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/cart_model.dart';
 
-enum CartQuantityType { increase, decrease }
-
 class CartProvider with ChangeNotifier {
   late Map<String, CartModel> _listCart = {};
   Map<String, CartModel> get listCart => _listCart;
@@ -65,71 +63,32 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addToCheckCart(String idCategory, CartModel cart) {
-    if (_listCheckCart.containsKey(idCategory)) {
-      //change quantity
-      _listCart.update(
-        idCategory,
-        (category) => CartModel(
-          id: idCategory,
-          title: category.title,
-          price: category.price,
-          imageUrl: category.imageUrl,
-          quantity: category.quantity,
-        ),
-      );
-    } else {
-      //add new to cart
-      _listCheckCart.putIfAbsent(
-        idCategory,
-        () => CartModel(
-          id: cart.id,
-          title: cart.title,
-          imageUrl: cart.imageUrl,
-          price: cart.price,
-          quantity: cart.quantity,
-        ),
-      );
-    }
+  void addToCheckCart(String idCategory) {
+    _listCheckCart.putIfAbsent(idCategory, () => _listCart[idCategory]!);
     notifyListeners();
   }
 
   void removeCheckCart(String idCategory) {
-    _listCheckCart.removeWhere((key, category) => category.id == idCategory);
+    _listCheckCart.removeWhere((key, category) => key == idCategory);
     notifyListeners();
   }
 
-  void changeQuantityCategory(String idCategory, CartQuantityType type) {
-    print(idCategory);
-    if (_listCart.containsKey(idCategory)) {
-      switch (type) {
-        case CartQuantityType.increase:
-          _listCart.update(
-            idCategory,
-            (category) => CartModel(
-              id: category.id,
-              title: category.title,
-              price: category.price,
-              imageUrl: category.imageUrl,
-              quantity: category.quantity + 1,
-            ),
-          );
-          break;
-        default:
-          _listCart.update(
-            idCategory,
-            (category) => CartModel(
-              id: category.id,
-              title: category.title,
-              price: category.price,
-              imageUrl: category.imageUrl,
-              quantity: category.quantity - 1,
-            ),
-          );
-          break;
-      }
-    }
+  void changeQuantityCategory({
+    String? idCategory,
+    int? quantity,
+  }) {
+    _listCart.update(
+      idCategory!,
+      (category) => CartModel(
+        id: category.id,
+        title: category.title,
+        price: category.price,
+        imageUrl: category.imageUrl,
+        quantity: quantity!,
+      ),
+    );
 
+    print(_listCart[idCategory]!.quantity);
     notifyListeners();
   }
 }

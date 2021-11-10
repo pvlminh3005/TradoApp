@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import '/utils/conver_scaffold_messenger.dart';
 import '/components/custom_text.dart';
 import '/constants/dimen.dart';
 import '/routes/routes_manage.dart';
@@ -14,7 +15,6 @@ import '/components/config_price.dart';
 import '/components/sale_component.dart';
 import '/constants/constants.dart';
 import '/providers/rate_review_provider.dart';
-import '/widgets/change_quantity.dart';
 
 import '/providers/cart_provider.dart';
 import '/widgets/bage.dart';
@@ -35,46 +35,69 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
   int activeIndex = 0; //page indicator image
   int quantityCategory = 1;
   bool isReadMore = false;
-  bool isFavorited = false;
   late ScrollController _scrollController;
 
   Widget _buildImagesSlide(Size size, CategoryModel category) {
     return Hero(
       transitionOnUserGestures: true,
       tag: '${category.id}',
-      child: Container(
-        height: Platform.isIOS ? size.height * .55 : size.height * .45,
-        width: size.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            height: Platform.isIOS ? size.height * .55 : size.height * .45,
+            width: size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+              color: Colors.transparent,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black54,
+                  offset: Offset(2, 2),
+                  blurRadius: 5,
+                )
+              ],
+            ),
+            child: CarouselSlider.builder(
+              itemCount: category.imageUrl.length,
+              itemBuilder: (ctx, index, realIndex) {
+                return _buildImageSlide(category: category, index: index);
+              },
+              options: CarouselOptions(
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    activeIndex = index;
+                  });
+                },
+                enlargeCenterPage: true,
+                viewportFraction: 1,
+                disableCenter: true,
+              ),
+            ),
           ),
-          color: Colors.transparent,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black54,
-              offset: Offset(2, 2),
-              blurRadius: 5,
-            )
-          ],
+          !category.status ? _buildSoldOut() : const SizedBox.shrink(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSoldOut() {
+    return Container(
+      padding: const EdgeInsets.all(AppDimen.spacing_1),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: kErrorColor,
+          width: 1.5,
         ),
-        child: CarouselSlider.builder(
-          itemCount: category.imageUrl.length,
-          itemBuilder: (ctx, index, realIndex) {
-            return _buildImageSlide(category: category, index: index);
-          },
-          options: CarouselOptions(
-            onPageChanged: (index, reason) {
-              setState(() {
-                activeIndex = index;
-              });
-            },
-            enlargeCenterPage: true,
-            viewportFraction: 1,
-            disableCenter: true,
-          ),
-        ),
+      ),
+      child: CustomText(
+        'Hết hàng',
+        color: kErrorColor,
+        fontWeight: FontWeight.w700,
+        fontSize: FontSize.BIG_1,
       ),
     );
   }
@@ -86,14 +109,14 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       effect: ExpandingDotsEffect(
         dotWidth: 12,
         dotHeight: 5,
-        activeDotColor: kPrimaryColor,
+        activeDotColor: kPrimaryColorLight,
       ),
     );
   }
 
   Widget _buildInfoTitle(CategoryModel category) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -104,27 +127,39 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               fontSize: FontSize.BIG_1,
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isFavorited = !isFavorited;
-              });
-            },
-            child: Icon(
-              isFavorited ? Icons.favorite : Icons.favorite_border_outlined,
-              size: 35,
-              color: isFavorited ? kErrorColor : kTextColorGrey,
+          Consumer<CategoryProvider>(
+            builder: (context, provider, _) => GestureDetector(
+              onTap: () async {
+                await provider.addCategoryToFavorite(category);
+                CustomSnackBar.dialogMessenger(context,
+                    'Thêm sản phẩm vào danh mục yêu thích thành công!');
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: AppDimen.verticalSpacing_10,
+                  horizontal: AppDimen.horizontalSpacing_5 + 1,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+                  color: kColorItemGrey.withOpacity(.4),
+                ),
+                child: Icon(
+                  CupertinoIcons.bookmark,
+                  size: AppDimen.icon_size + 2,
+                  color: kTextColorGrey,
+                ),
+              ),
             ),
           ),
-          SizedBox(width: 5),
-          GestureDetector(
-            onTap: () {},
-            child: Icon(
-              Icons.share,
-              size: 35,
-              color: kTextColorGrey,
-            ),
-          )
+          // SizedBox(width: 5),
+          // GestureDetector(
+          //   onTap: () {},
+          //   child: Icon(
+          //     Icons.share,
+          //     size: 35,
+          //     color: kTextColorGrey,
+          //   ),
+          // )
         ],
       ),
     );
@@ -137,7 +172,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         category.priceSale != 0
             ? CustomText(
                 '${FormatPrice(category.price)} đ',
-                fontSize: FontSize.SMALL,
+                fontSize: FontSize.SMALL + 1,
                 decoration: TextDecoration.lineThrough,
                 // style: TextStyle(decoration: ),
               )
@@ -153,10 +188,6 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
             category.priceSale != 0
                 ? SaleComponent(text: category.priceSale)
                 : SizedBox.shrink(),
-            // Spacer(),
-            // ChangeQuantity(
-            //   quantity: quantityCategory,
-            // ),
           ],
         ),
       ],
@@ -223,7 +254,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 7),
+          padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
           child: _buildText(category.description),
         ),
         GestureDetector(

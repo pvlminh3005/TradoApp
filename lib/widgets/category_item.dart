@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/config_price.dart';
-import 'package:trado_app_uit/components/custom_text.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
+import '/components/config_price.dart';
+import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/constants/sizes.dart';
 import '/routes/routes_manage.dart';
@@ -165,18 +165,26 @@ class CategoryItem extends StatelessWidget {
                 children: [
                   Hero(
                     tag: '${category.id}',
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.2), BlendMode.srcATop),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image(
-                          width: size.width * .42,
-                          height: 180,
-                          fit: BoxFit.cover,
-                          image: NetworkImage(category.imageUrl[0]),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(0.2), BlendMode.srcATop),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image(
+                              width: size.width * .42,
+                              height: 180,
+                              fit: BoxFit.cover,
+                              image: NetworkImage(category.imageUrl[0]),
+                            ),
+                          ),
                         ),
-                      ),
+                        !category.status
+                            ? _buildSoldOut()
+                            : const SizedBox.shrink()
+                      ],
                     ),
                   ),
                 ],
@@ -184,6 +192,23 @@ class CategoryItem extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildSoldOut() {
+    return Container(
+      padding: const EdgeInsets.all(AppDimen.spacing_1 - 3),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: kErrorColor,
+          width: 1.5,
+        ),
+      ),
+      child: CustomText(
+        'Hết hàng',
+        color: kErrorColor,
+        fontWeight: FontWeight.w700,
       ),
     );
   }

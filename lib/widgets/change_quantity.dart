@@ -7,74 +7,52 @@ import '/constants/sizes.dart';
 
 import '/constants/constants.dart';
 
-enum ChangeQuantityType { detailCategory, cartCategory }
-
-class ChangeQuantity extends StatefulWidget {
+class ChangeQuantity extends StatelessWidget {
   final String? idCategory;
-  late int quantity;
-  final ChangeQuantityType type;
 
   ChangeQuantity({
     this.idCategory = '',
-    this.quantity = 1,
-    this.type = ChangeQuantityType.detailCategory,
     Key? key,
   }) : super(key: key);
 
   @override
-  _ChangeQuantityState createState() => _ChangeQuantityState();
-}
-
-class _ChangeQuantityState extends State<ChangeQuantity> {
-  @override
   Widget build(BuildContext context) {
-    CartProvider cartProvider = Provider.of(context);
-    return Row(
-      children: [
-        ButtonCount(
-          icon: Icons.remove,
-          onPressed: () {
-            switch (widget.type) {
-              case ChangeQuantityType.cartCategory:
-                setState(() {
-                  widget.quantity--;
-                });
-                break;
-              default:
-                cartProvider.changeQuantityCategory(
-                  widget.idCategory!,
-                  CartQuantityType.decrease,
-                );
-                break;
-            }
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: CustomText(
-            '${widget.quantity.toString().padLeft(2, "0")}',
-            fontSize: FontSize.BIG,
+    CartProvider cartProvider =
+        Provider.of<CartProvider>(context, listen: false);
+    var category = cartProvider.listCart[idCategory];
+    int quantity = category!.quantity;
+    return Consumer<CartProvider>(
+      builder: (context, cartProvider, _) => Row(
+        children: [
+          ButtonCount(
+            icon: Icons.remove,
+            onPressed: () {
+              if (quantity < 2) return;
+
+              cartProvider.changeQuantityCategory(
+                idCategory: idCategory!,
+                quantity: --quantity,
+              );
+            },
           ),
-        ),
-        ButtonCount(
-          icon: Icons.add,
-          onPressed: () {
-            switch (widget.type) {
-              case ChangeQuantityType.detailCategory:
-                setState(() {
-                  widget.quantity++;
-                });
-                break;
-              default:
-                cartProvider.changeQuantityCategory(
-                  widget.idCategory!,
-                  CartQuantityType.increase,
-                );
-                break;
-            }
-          },
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppDimen.spacing_1),
+            child: CustomText(
+              '${quantity.toString().padLeft(2, "0")}',
+              fontSize: FontSize.BIG,
+            ),
+          ),
+          ButtonCount(
+            icon: Icons.add,
+            onPressed: () {
+              cartProvider.changeQuantityCategory(
+                idCategory: idCategory!,
+                quantity: ++quantity,
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

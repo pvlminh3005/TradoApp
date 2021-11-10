@@ -7,6 +7,7 @@ class CategoryModel {
   late List<String> imageUrl;
   late int amountView;
   late int priceSale;
+  late bool status;
 
   CategoryModel({
     required this.id,
@@ -17,6 +18,7 @@ class CategoryModel {
     required this.imageUrl,
     this.amountView = 0,
     this.priceSale = 0,
+    this.status = true,
   });
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class CategoryModel {
     imageUrl = json['imageUrl'] ?? [];
     amountView = json['amountView'] ?? 0;
     priceSale = json['priceSale'] ?? 0;
+    status = json['status'] ?? true;
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +43,7 @@ class CategoryModel {
     data['imageUrl'] = this.imageUrl;
     data['amountView'] = this.amountView;
     data['priceSale'] = this.priceSale;
+    data['status'] = this.status;
     return data;
   }
 }

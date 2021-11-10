@@ -46,15 +46,18 @@ class PaymentMethodWidget extends StatelessWidget {
 
   Widget _buildCard({Widget? child}) {
     return CardShadow(
-      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_16),
-      padding: const EdgeInsets.all(0),
+      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_10),
+      padding: const EdgeInsets.all(0.0),
       child: child!,
     );
   }
 
   Widget _buildIconPayment(String url) {
     return Container(
-      child: Image.asset(url),
+      child: Image.asset(
+        url,
+        width: 100,
+      ),
     );
   }
 
