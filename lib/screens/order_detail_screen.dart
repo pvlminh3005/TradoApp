@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/card_shadow.dart';
 import 'package:trado_app_uit/components/config_price.dart';
 import 'package:trado_app_uit/widgets/category_order_item.dart';
-import 'package:trado_app_uit/widgets/sale_order_widget/widget/sale_order_item.dart';
 import '/providers/cart_provider.dart';
 import '/routes/routes_manage.dart';
 import '/widgets/bage.dart';
@@ -80,6 +80,7 @@ class OrderDetailScreen extends StatelessWidget {
               title: 'Phương thức thanh toán',
             ),
             _buildPaymentMethod(),
+            _buildOrderTime(),
             _buildButton(),
           ],
         ),
@@ -93,7 +94,7 @@ class OrderDetailScreen extends StatelessWidget {
 
   Widget _buildHeader({IconData? icon, String? title}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+      padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1 - 2),
       child: Row(
         children: [
           CustomIcon(
@@ -104,7 +105,9 @@ class OrderDetailScreen extends StatelessWidget {
           const SizedBox(width: 6.0),
           CustomText(
             title!,
-            fontSize: FontSize.MEDIUM + 1,
+            fontSize: FontSize.MEDIUM,
+            color: kTextDark.withOpacity(.5),
+            fontWeight: FontWeight.w700,
           ),
         ],
       ),
@@ -127,6 +130,10 @@ class OrderDetailScreen extends StatelessWidget {
 
   Widget _buildListCategories() {
     return Container(
+      padding: const EdgeInsets.only(
+        top: AppDimen.verticalSpacing_5,
+        bottom: AppDimen.verticalSpacing_10,
+      ),
       constraints: BoxConstraints(
         maxHeight: 350,
       ),
@@ -134,7 +141,7 @@ class OrderDetailScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              for (int i = 0; i < 2; i++) CategoryOrderItem(),
+              for (int i = 0; i < 3; i++) CategoryOrderItem(),
             ],
           ),
         ),
@@ -143,8 +150,16 @@ class OrderDetailScreen extends StatelessWidget {
   }
 
   Widget _buildTotalPrice() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+    return Container(
+      padding:
+          const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_10),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: kColorItemGrey,
+          ),
+        ),
+      ),
       child: Row(
         children: [
           CustomText(
@@ -157,6 +172,83 @@ class OrderDetailScreen extends StatelessWidget {
             fontWeight: FontWeight.w700,
             fontSize: FontSize.MEDIUM + 1,
             color: kPrimaryColor,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOrderTime() {
+    return CardShadow(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppDimen.spacing_1 + 2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  flex: 2,
+                  child: CustomText(
+                    'Mã đơn hàng',
+                    fontWeight: FontWeight.w700,
+                    fontSize: FontSize.MEDIUM + 1,
+                  ),
+                ),
+                Flexible(
+                  flex: 3,
+                  child: CustomText(
+                    '#123456789',
+                    fontWeight: FontWeight.w700,
+                    fontSize: FontSize.MEDIUM + 1,
+                    maxLines: 1,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          _buildTitleOrderTime(
+            title: 'Thời gian đặt hàng',
+            date: '27/10/2021 14:50',
+          ),
+          _buildTitleOrderTime(
+            title: 'Thời gian thanh toán',
+            date: '27/10/2021 14:50',
+          ),
+          _buildTitleOrderTime(
+            title: 'Thời gian giao hàng cho vận chuyển',
+            date: '27/10/2021 14:50',
+          ),
+          _buildTitleOrderTime(
+            title: 'Thời gian hoàn thành',
+            date: '27/10/2021 14:50',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTitleOrderTime({String? title, String? date}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            flex: 1,
+            child: CustomText(
+              title!,
+              maxLines: 2,
+              color: kTextColorGrey,
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: CustomText(
+              date!,
+              maxLines: 1,
+              color: kTextColorGrey,
+            ),
           ),
         ],
       ),
