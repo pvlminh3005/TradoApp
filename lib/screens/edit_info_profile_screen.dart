@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/controllers/choose_image_controller.dart';
+import 'package:trado_app_uit/models/user_model.dart';
+import 'package:trado_app_uit/providers/auth_provider.dart';
 import 'package:trado_app_uit/routes/routes_manage.dart';
-import 'package:trado_app_uit/widgets/custom_image_bottom_sheet_widget.dart';
 import '/components/primary_button.dart';
 import '/components/custom_input.dart';
 import '/constants/constants.dart';
@@ -26,7 +27,36 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  File? imageUser;
+  File? chooseImage;
+  late UserModel infoUser;
+  late TextEditingController nameController;
+  late TextEditingController verifyController;
+  late TextEditingController phoneController;
+  late TextEditingController addressController;
+  late TextEditingController emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    infoUser = AuthProvider.currentUser;
+
+    nameController = TextEditingController(text: infoUser.name);
+    verifyController = TextEditingController(text: infoUser.verify);
+    phoneController = TextEditingController(text: infoUser.phoneNumber);
+    addressController = TextEditingController(text: infoUser.address);
+    emailController = TextEditingController(text: infoUser.email);
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    verifyController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
+    emailController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,22 +74,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 children: [
                   _buildAvatar(),
                   _buildInputField(
+                    controller: nameController,
                     title: 'Họ và tên',
                     icon: CupertinoIcons.person_circle,
                   ),
                   _buildInputField(
+                    controller: verifyController,
                     title: 'CMND / CCCD',
                     icon: CupertinoIcons.doc_text_viewfinder,
                   ),
                   _buildInputField(
+                    controller: phoneController,
                     title: 'Số điện thoại',
                     icon: CupertinoIcons.phone,
                   ),
                   _buildInputField(
+                    controller: addressController,
                     title: 'Địa chỉ',
                     icon: Icons.location_on_outlined,
                   ),
                   _buildInputField(
+                    controller: emailController,
                     title: 'Email',
                     icon: CupertinoIcons.at,
                   ),
@@ -83,24 +118,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Widget _buildAvatar() {
-    void showProfileBottomSheet() {
-      ImageController.showBottomSheetManageImage(context);
-    }
-
     return InkWell(
       onTap: () async {
-        // final image = await ImageController.openImageFromGallery();
-        // setState(() {
-        //   imageUser = image;
-        // });
-        showProfileBottomSheet();
+        final image = await ImageController.openImageFromGallery();
+        setState(() {
+          chooseImage = image;
+        });
       },
       child: Stack(
         alignment: Alignment.topRight,
         children: [
           CircleAvatar(
-            backgroundColor: imageUser == null ? Colors.lightBlueAccent : null,
-            backgroundImage: imageUser == null ? null : FileImage(imageUser!),
+            backgroundImage: chooseImage == null
+                ? infoUser.imageUrl == null
+                    ? null
+                    : NetworkImage(infoUser.imageUrl!) as ImageProvider
+                : FileImage(chooseImage!),
             radius: 50,
           ),
           CircleAvatar(
@@ -114,10 +147,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Widget _buildInputField({
+    TextEditingController? controller,
     String? title = '',
     IconData? icon,
   }) {
     return CustomInput(
+      controller: controller,
       hintText: title!,
       margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
       backgroundColor: kBackgroundColorWhite,

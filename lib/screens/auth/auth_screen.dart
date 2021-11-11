@@ -24,13 +24,13 @@ class _AuthScreenState extends State<AuthScreen> {
     });
     print(tokenUser!);
     if (tokenUser!.isEmpty) return;
-    // fetchCurrentUser();
+    fetchCurrentUser();
     super.initState();
   }
 
   Future<void> fetchCurrentUser() async {
     await AuthProvider().getCurrentUser();
-    print(AuthProvider.currentUser.auth!.id);
+    print(AuthProvider.currentUser);
   }
 
   String getTokenUser() {

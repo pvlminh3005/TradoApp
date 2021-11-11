@@ -1,29 +1,50 @@
 class UserModel {
   AuthModel? auth;
   String? name;
-  int? countStar;
+  String? verify;
+  String? phoneNumber;
+  String? address;
+  String? email;
+  String? imageUrl;
+  late double countPerStars;
+  late int countRating;
   int? feedBack;
-  int? countSell;
-  int? countBuy;
+  late int countSell;
+  late int countBuy;
+  late int follow;
   String? registrationData;
 
   UserModel({
     this.auth,
     this.name,
-    this.countStar,
+    this.verify,
+    this.phoneNumber,
+    this.address,
+    this.email,
+    this.imageUrl,
+    this.countPerStars = 0,
+    this.countRating = 0,
     this.feedBack,
-    this.countSell,
-    this.countBuy,
+    this.countSell = 0,
+    this.countBuy = 0,
+    this.follow = 0,
     this.registrationData,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     auth = json['_id'] != null ? new AuthModel.fromJson(json['_id']) : null;
     name = json['name'] ?? '';
-    countStar = json['count_star'] ?? '';
+    verify = json['verify'] ?? '';
+    phoneNumber = json['phone_umber'] ?? '';
+    address = json['address'] ?? '';
+    email = json['email'] ?? '';
+    imageUrl = json['image'];
+    countPerStars = json['count_per_star'] ?? 0;
+    countRating = json['count_rating'] ?? 0;
     feedBack = json['feed_back'] ?? '';
-    countSell = json['count_sell'] ?? '';
-    countBuy = json['count_buy'] ?? '';
+    countSell = json['count_sell'] ?? 0;
+    countBuy = json['count_buy'] ?? 0;
+    follow = json['follow'] ?? 0;
     registrationData = json['registration_data'] ?? '';
   }
 
@@ -33,10 +54,17 @@ class UserModel {
       data['_id'] = this.auth!.toJson();
     }
     data['name'] = this.name;
-    data['count_star'] = this.countStar;
+    data['verify'] = this.verify;
+    data['phone_number'] = this.phoneNumber;
+    data['address'] = this.address;
+    data['email'] = this.email;
+    data['image'] = this.imageUrl;
+    data['count_per_star'] = this.countPerStars;
+    data['count_rating'] = this.countRating;
     data['feed_back'] = this.feedBack;
     data['count_sell'] = this.countSell;
     data['count_buy'] = this.countBuy;
+    data['follow'] = this.follow;
     data['registration_data'] = this.registrationData;
     return data;
   }

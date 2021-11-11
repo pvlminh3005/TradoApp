@@ -17,7 +17,7 @@ class DiffProfileScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          HeaderInfoProfile(),
+          // HeaderInfoProfile(),
           Expanded(
             child: Container(
               alignment: Alignment.topCenter,

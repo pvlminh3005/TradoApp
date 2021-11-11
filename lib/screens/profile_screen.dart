@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/custom_text.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
-import 'package:trado_app_uit/providers/order_provider.dart';
-import 'package:trado_app_uit/providers/shipping_address_provider.dart';
+import 'package:trado_app_uit/providers/auth_provider.dart';
+import '/components/custom_text.dart';
+import '/constants/sizes.dart';
+import '/providers/order_provider.dart';
+import '/providers/shipping_address_provider.dart';
 import '/controllers/auth_controller.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
@@ -19,7 +20,6 @@ import '/widgets/profile_widget.dart/card_profile.dart';
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('PROFILE');
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: _buildAppBar(context),
@@ -74,7 +74,10 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildHeaderInfo() {
-    return HeaderInfoProfile(isMyProfile: true);
+    return HeaderInfoProfile(
+      profile: AuthProvider.currentUser,
+      isMyProfile: true,
+    );
   }
 
   Widget _buildCardProfile() {

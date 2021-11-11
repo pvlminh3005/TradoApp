@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/models/user_model.dart';
 
 import '/components/custom_button.dart';
 import '/constants/dimen.dart';
@@ -10,17 +11,11 @@ import '/constants/constants.dart';
 import '/constants/sizes.dart';
 
 class HeaderInfoProfile extends StatelessWidget {
-  final String? name;
-  final int follow;
-  final double countPerStars;
-  final int amountReviews;
+  final UserModel? profile;
   final bool isMyProfile;
 
   const HeaderInfoProfile({
-    this.name = 'Le Minh',
-    this.follow = 0,
-    this.countPerStars = 0.0,
-    this.amountReviews = 0,
+    this.profile,
     this.isMyProfile = false,
     Key? key,
   }) : super(key: key);
@@ -68,8 +63,9 @@ class HeaderInfoProfile extends StatelessWidget {
                   },
                   child: CircleAvatar(
                     radius: size.width * .1,
-                    backgroundImage:
-                        AssetImage('assets/images/background_blue.jpeg'),
+                    backgroundImage: profile!.imageUrl == null
+                        ? null
+                        : NetworkImage(profile!.imageUrl!),
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -77,11 +73,11 @@ class HeaderInfoProfile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildInfoAccount(
-                      name: name!,
-                      countPerStars: countPerStars,
-                      countRating: amountReviews,
+                      name: profile!.name!,
+                      countPerStars: profile!.countPerStars,
+                      countRating: profile!.countRating,
                     ),
-                    _buildAmountFollow(follow, 'quan tâm'),
+                    _buildAmountFollow(profile!.follow, 'quan tâm'),
                   ],
                 ),
               ],

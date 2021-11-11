@@ -16,7 +16,7 @@ class ImageController {
       if (image == null) return;
       final imageTemporary = File(image.path);
       // return imageTemporary;
-      file = imageTemporary;
+      return imageTemporary;
     } on PlatformException catch (e) {
       print('Có lỗi xảy ra khi chọn ảnh: $e');
     }
