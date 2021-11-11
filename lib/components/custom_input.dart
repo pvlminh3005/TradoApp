@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
 
 class CustomInput extends StatefulWidget {
-  final String hintText;
+  final String hintText, labelText;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
+
   final bool showPrefixIcon;
   final bool showSuffixIcon;
+  final bool readOnly;
   final Color iconColor;
   final Color backgroundColor;
   final IconData? prefixIcon;
@@ -21,17 +25,21 @@ class CustomInput extends StatefulWidget {
   final double borderWidth;
   final int maxLength;
   final Color borderColor;
-  final String labelText;
   final TextInputType keyboardType;
+  final TextInputAction inputAction;
   final FontWeight fontWeight;
   final int maxLines;
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomInput({
     this.controller,
+    this.focusNode,
     this.hintText = '',
     this.labelText = '',
     this.showPrefixIcon = false,
     this.showSuffixIcon = false,
+    this.readOnly = false,
     this.prefixIcon = null,
     this.iconColor = kPrimaryColor,
     this.fontSize = FontSize.SMALL,
@@ -49,8 +57,11 @@ class CustomInput extends StatefulWidget {
     this.maxLength = 100,
     this.borderColor = Colors.transparent,
     this.keyboardType = TextInputType.text,
+    this.inputAction = TextInputAction.next,
     this.fontWeight = FontWeight.w500,
     this.maxLines = 1,
+    this.validator,
+    this.inputFormatters,
     Key? key,
   }) : super(key: key);
 
@@ -68,13 +79,22 @@ class _CustomInputState extends State<CustomInput> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: TextField(
+            child: TextFormField(
+              focusNode: widget.focusNode,
               controller: widget.controller,
               obscureText: widget.showSuffixIcon ? obscureText : false,
               maxLines: widget.showSuffixIcon ? 1 : widget.maxLines,
               maxLength: widget.maxLength,
+              readOnly: widget.readOnly,
               textAlignVertical: TextAlignVertical.top,
               keyboardType: widget.keyboardType,
+              textInputAction: widget.inputAction,
+              validator: widget.validator,
+              inputFormatters: widget.keyboardType == TextInputType.phone
+                  ? <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp('[0-9+]'))
+                    ]
+                  : widget.inputFormatters,
               style: TextStyle(
                 fontSize: FontSize.MEDIUM,
                 fontWeight: widget.fontWeight,
@@ -114,6 +134,20 @@ class _CustomInputState extends State<CustomInput> {
                   borderSide: BorderSide(
                     width: widget.borderWidth,
                     color: widget.borderColor,
+                  ),
+                  borderRadius: BorderRadius.circular(widget.radius!),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: widget.borderWidth,
+                    color: kErrorColor,
+                  ),
+                  borderRadius: BorderRadius.circular(widget.radius!),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: widget.borderWidth,
+                    color: kErrorColor,
                   ),
                   borderRadius: BorderRadius.circular(widget.radius!),
                 ),
