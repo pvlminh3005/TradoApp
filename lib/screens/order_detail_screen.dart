@@ -98,7 +98,7 @@ class OrderDetailScreen extends StatelessWidget {
       child: Row(
         children: [
           CustomIcon(
-            icon: icon,
+            icon,
             size: AppDimen.icon_size_big,
             color: kTextDark.withOpacity(.5),
           ),

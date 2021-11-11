@@ -125,7 +125,7 @@ class _CartItemState extends State<CartItem> {
             cartProvider.removeCheckCart(infoCategory.id);
         },
         child: CustomIcon(
-          icon: isChecked
+          isChecked
               ? CupertinoIcons.check_mark_circled_solid
               : CupertinoIcons.checkmark_alt_circle,
           size: AppDimen.icon_size_big,

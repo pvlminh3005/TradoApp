@@ -8,8 +8,8 @@ class CustomIcon extends StatelessWidget {
   final Color color;
   final EdgeInsets margin;
 
-  const CustomIcon({
-    this.icon,
+  const CustomIcon(
+    this.icon, {
     this.size = AppDimen.icon_size,
     this.color = kTextColorGrey,
     this.margin = const EdgeInsets.all(0.0),

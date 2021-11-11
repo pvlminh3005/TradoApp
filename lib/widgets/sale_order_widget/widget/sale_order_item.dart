@@ -1,9 +1,8 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/shipping_address_provider.dart';
-import 'package:trado_app_uit/widgets/category_order_item.dart';
+import '/providers/shipping_address_provider.dart';
+import '/widgets/category_order_item.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
 import '/components/custom_button.dart';
@@ -39,7 +38,7 @@ class SaleOrderItem extends StatelessWidget {
     return Row(
       children: [
         CustomIcon(
-          icon: CupertinoIcons.profile_circled,
+          CupertinoIcons.profile_circled,
           color: kPrimaryColor,
           margin: const EdgeInsets.only(right: AppDimen.horizontalSpacing_5),
         ),
@@ -66,7 +65,7 @@ class SaleOrderItem extends StatelessWidget {
     return Row(
       children: [
         CustomIcon(
-          icon: Icons.payments_outlined,
+          Icons.payments_outlined,
           color: kHighlightColor,
           size: AppDimen.icon_size_big - 2,
           margin: const EdgeInsets.symmetric(

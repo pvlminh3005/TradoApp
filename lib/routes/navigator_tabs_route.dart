@@ -1,8 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/widgets/dotted_widget.dart';
-import '/screens/success_screen.dart';
+import '/screens/favorite_screen.dart';
+import '/widgets/dotted_widget.dart';
 import '/screens/checkout_screen.dart';
 
 import '/constants/constants.dart';
@@ -21,8 +21,8 @@ class _NavigatorTabState extends State<NavigatorTab> {
   int _pages = 0;
   final _screens = [
     HomeScreen(),
-    SuccessScreen(),
-    // HighlightScreen(),
+    // SuccessScreen(),
+    FavoriteScreen(),
     NotificationScreen(),
     // MessageScreen(),
     CheckOutScreen(),

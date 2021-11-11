@@ -12,12 +12,14 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final List<Widget>? childAction;
   final bool? showLeading;
+  final Widget? leading;
   final PreferredSize? bottom;
 
   AppBarWidget({
     this.background = kBackgroundColorWhite,
     this.color = kPrimaryColor,
     this.title = '',
+    this.leading = null,
     this.showLeading = true,
     this.childAction = const [const SizedBox.shrink()],
     this.bottom,
@@ -41,13 +43,15 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       ),
       backgroundColor: background,
       leading: showLeading!
-          ? IconButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              icon: Icon(
-                CupertinoIcons.back,
-                size: AppDimen.icon_size_small,
-                color: color,
-              ))
+          ? leading ??
+              IconButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                icon: Icon(
+                  CupertinoIcons.back,
+                  size: AppDimen.icon_size_small,
+                  color: color,
+                ),
+              )
           : SizedBox.shrink(),
       actions: childAction!,
       bottom: bottom ??

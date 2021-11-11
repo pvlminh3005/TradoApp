@@ -32,7 +32,6 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen>
     _addressesFuture =
         Provider.of<ShippingAddressProvider>(context, listen: false)
             .fetchAllAddresses();
-    print('??');
   }
 
   @override

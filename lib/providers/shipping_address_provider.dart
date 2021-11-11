@@ -22,7 +22,6 @@ class ShippingAddressProvider with ChangeNotifier {
   Future<void> addNewAddress(
       {String? name, String? phone, String? address, String? note = ''}) async {
     await Future.delayed(Duration(seconds: 2));
-    print(name);
     _listAddresses.add(
       ShippingAddressModel(
         name: name,
@@ -48,9 +47,7 @@ class ShippingAddressProvider with ChangeNotifier {
       }
       address.defaultAddress = false;
     });
-    _listAddresses.forEach((address) {
-      print(address.defaultAddress);
-    });
+
     notifyListeners();
   }
 }
