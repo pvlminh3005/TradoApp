@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/models/user_model.dart';
+import 'package:trado_app_uit/widgets/custom_avatar.dart';
+import '/models/user_model.dart';
 
 import '/components/custom_button.dart';
 import '/constants/dimen.dart';
@@ -61,11 +62,9 @@ class HeaderInfoProfile extends StatelessWidget {
                       (Route<dynamic> route) => false,
                     );
                   },
-                  child: CircleAvatar(
-                    radius: size.width * .1,
-                    backgroundImage: profile!.imageUrl == null
-                        ? null
-                        : NetworkImage(profile!.imageUrl!),
+                  child: CustomAvatar(
+                    imageUrl: profile!.imageUrl!,
+                    radius: 40,
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -77,7 +76,7 @@ class HeaderInfoProfile extends StatelessWidget {
                       countPerStars: profile!.countPerStars,
                       countRating: profile!.countRating,
                     ),
-                    _buildAmountFollow(profile!.follow, 'quan tâm'),
+                    _buildAmountFollow(profile!.fame, 'quan tâm'),
                   ],
                 ),
               ],

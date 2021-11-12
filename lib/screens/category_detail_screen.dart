@@ -102,7 +102,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     );
   }
 
-  Widget _buildIndicator(List<String> image) {
+  Widget _buildIndicator(List<dynamic> image) {
     return AnimatedSmoothIndicator(
       activeIndex: activeIndex,
       count: image.length,

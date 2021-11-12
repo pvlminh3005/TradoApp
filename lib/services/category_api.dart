@@ -1,7 +1,53 @@
-import 'package:trado_app_uit/models/category_model.dart';
+import 'package:dio/dio.dart';
+import '/models/category_model.dart';
+import '/services/url.dart';
+import '/utils/auth_preferences.dart';
 
 class CategoryApi {
-  CategoryApi._();
+  static final Dio dio = Dio();
+  factory CategoryApi() {
+    return _instance;
+  }
+
+  CategoryApi._internal();
+  static final CategoryApi _instance = CategoryApi._internal();
+
+  static Future<dynamic> createNewCategory(CategoryModel category) async {
+    try {
+      String? token = AuthPreferences.getToken();
+      if (token!.isEmpty) return;
+      var response = await dio.post(
+        MainURL.productURl,
+        data: category.toJson(),
+        options: Options(
+          headers: {MainURL.headerToken: token},
+        ),
+      );
+      if (response.statusCode == 200) {
+        return response.data;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future fetchCateogriesById(String id) async {
+    try {
+      var response = await dio.get(
+        MainURL.productUserURL,
+        queryParameters: {
+          "idUser": id,
+        },
+      );
+      if (response.statusCode == 200) {
+        return (response.data['product'] as List<dynamic>)
+            .map((data) => CategoryModel.fromJson(data))
+            .toList();
+      }
+    } on DioError catch (e) {
+      print(e);
+    }
+  }
 
   static Future<List<CategoryModel>> fetchCategories() async {
     List<CategoryModel> data = [

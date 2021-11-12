@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trado_app_uit/controllers/auth_controller.dart';
 import 'package:trado_app_uit/providers/auth_provider.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
 import '/routes/navigator_tabs_route.dart';
 import '/screens/splash/splash_screen.dart';
 import '/utils/auth_preferences.dart';
@@ -15,26 +17,31 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   String? tokenUser = '';
-  bool isLoading = false;
+  bool isLoading = true;
 
   @override
   void initState() {
     setState(() {
+      isLoading = true;
       tokenUser = getTokenUser();
     });
-    print(tokenUser!);
+    print(tokenUser);
     if (tokenUser!.isEmpty) return;
     fetchCurrentUser();
-    super.initState();
-  }
 
-  Future<void> fetchCurrentUser() async {
-    await AuthProvider().getCurrentUser();
-    print(AuthProvider.currentUser);
+    setState(() {
+      isLoading = false;
+    });
+
+    super.initState();
   }
 
   String getTokenUser() {
     return AuthPreferences.getToken() ?? '';
+  }
+
+  Future<void> fetchCurrentUser() async {
+    await Provider.of<AuthProvider>(context, listen: false).getCurrentUser();
   }
 
   @override

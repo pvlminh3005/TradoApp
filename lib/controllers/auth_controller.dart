@@ -53,7 +53,7 @@ class AuthController {
         ),
       );
 
-      return UserModel.fromJson(response.data);
+      if (response.statusCode == 200) return UserModel.fromJson(response.data);
     } catch (e) {
       print(e);
     }

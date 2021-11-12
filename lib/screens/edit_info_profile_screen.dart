@@ -6,6 +6,7 @@ import 'package:trado_app_uit/controllers/choose_image_controller.dart';
 import 'package:trado_app_uit/models/user_model.dart';
 import 'package:trado_app_uit/providers/auth_provider.dart';
 import 'package:trado_app_uit/routes/routes_manage.dart';
+import 'package:trado_app_uit/widgets/custom_avatar.dart';
 import '/components/primary_button.dart';
 import '/components/custom_input.dart';
 import '/constants/constants.dart';
@@ -41,7 +42,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     infoUser = AuthProvider.currentUser;
 
     nameController = TextEditingController(text: infoUser.name);
-    verifyController = TextEditingController(text: infoUser.verify);
+    verifyController = TextEditingController(text: infoUser.idCard);
     phoneController = TextEditingController(text: infoUser.phoneNumber);
     addressController = TextEditingController(text: infoUser.address);
     emailController = TextEditingController(text: infoUser.email);
@@ -65,8 +66,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-              vertical: AppDimen.verticalSpacing_10,
-              horizontal: AppDimen.horizontalSpacing_16),
+            vertical: AppDimen.verticalSpacing_10,
+            horizontal: AppDimen.horizontalSpacing_16,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -118,31 +120,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Widget _buildAvatar() {
-    return InkWell(
-      onTap: () async {
-        final image = await ImageController.openImageFromGallery();
-        setState(() {
-          chooseImage = image;
-        });
-      },
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          CircleAvatar(
-            backgroundImage: chooseImage == null
-                ? infoUser.imageUrl == null
-                    ? null
-                    : NetworkImage(infoUser.imageUrl!) as ImageProvider
-                : FileImage(chooseImage!),
-            radius: 50,
-          ),
-          CircleAvatar(
-            backgroundColor: kBackgroundColorWhite,
-            radius: 13,
-            child: Icon(Icons.edit, color: kPrimaryColor, size: 15),
-          ),
-        ],
-      ),
+    return CustomAvatar(
+      imageUrl: infoUser.imageUrl!,
+      type: AvatarType.editAvatar,
     );
   }
 

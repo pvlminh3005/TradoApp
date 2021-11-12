@@ -68,7 +68,7 @@ class CategoryItem extends StatelessWidget {
                 ),
                 width: size.width * .45,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
                   color: kCardColor,
                 ),
                 child: Padding(
@@ -156,7 +156,7 @@ class CategoryItem extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black26,
-                    offset: Offset(-1, 2.0),
+                    offset: Offset(0, 1.0),
                     blurRadius: 8,
                   ),
                 ],
@@ -177,7 +177,10 @@ class CategoryItem extends StatelessWidget {
                               width: size.width * .42,
                               height: 180,
                               fit: BoxFit.cover,
-                              image: NetworkImage(category.imageUrl[0]),
+                              image: category.imageUrl.isEmpty
+                                  ? AssetImage('assets/images/empty_image.png')
+                                      as ImageProvider
+                                  : NetworkImage(category.imageUrl[0]),
                             ),
                           ),
                         ),

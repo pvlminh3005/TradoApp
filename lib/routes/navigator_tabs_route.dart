@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/constants/dimen.dart';
 import '/screens/favorite_screen.dart';
 import '/widgets/dotted_widget.dart';
 import '/screens/checkout_screen.dart';
@@ -17,7 +18,7 @@ class NavigatorTab extends StatefulWidget {
 }
 
 class _NavigatorTabState extends State<NavigatorTab> {
-  double size = 27;
+  double size = AppDimen.icon_size_big - 2;
   int _pages = 0;
   final _screens = [
     HomeScreen(),
@@ -73,11 +74,12 @@ class _NavigatorTabState extends State<NavigatorTab> {
             size: size,
             color: color,
           ),
-          CircleAvatar(
-            radius: 20,
-            backgroundImage: AssetImage(
-              'assets/images/background_blue.jpeg',
-            ),
+          Icon(
+            _pages == 4
+                ? CupertinoIcons.person_alt_circle_fill
+                : CupertinoIcons.person_alt_circle,
+            size: size + 5,
+            color: color,
           ),
         ],
       ),

@@ -13,6 +13,10 @@ class AuthProvider extends ChangeNotifier {
   static late UserModel _currentUser;
   static UserModel get currentUser => _currentUser;
 
+  AuthProvider() {
+    getCurrentUser();
+  }
+
   Future getCurrentUser() async {
     _currentUser = await AuthController().getCurrentUser();
     notifyListeners();

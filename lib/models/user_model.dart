@@ -1,7 +1,7 @@
 class UserModel {
   AuthModel? auth;
   String? name;
-  String? verify;
+  String? idCard;
   String? phoneNumber;
   String? address;
   String? email;
@@ -11,13 +11,13 @@ class UserModel {
   int? feedBack;
   late int countSell;
   late int countBuy;
-  late int follow;
+  late int fame;
   String? registrationData;
 
   UserModel({
     this.auth,
     this.name,
-    this.verify,
+    this.idCard,
     this.phoneNumber,
     this.address,
     this.email,
@@ -27,14 +27,14 @@ class UserModel {
     this.feedBack,
     this.countSell = 0,
     this.countBuy = 0,
-    this.follow = 0,
+    this.fame = 0,
     this.registrationData,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     auth = json['_id'] != null ? new AuthModel.fromJson(json['_id']) : null;
     name = json['name'] ?? '';
-    verify = json['verify'] ?? '';
+    idCard = json['id_card'] ?? '';
     phoneNumber = json['phone_umber'] ?? '';
     address = json['address'] ?? '';
     email = json['email'] ?? '';
@@ -44,7 +44,7 @@ class UserModel {
     feedBack = json['feed_back'] ?? '';
     countSell = json['count_sell'] ?? 0;
     countBuy = json['count_buy'] ?? 0;
-    follow = json['follow'] ?? 0;
+    fame = json['fame'] ?? 0;
     registrationData = json['registration_data'] ?? '';
   }
 
@@ -54,7 +54,7 @@ class UserModel {
       data['_id'] = this.auth!.toJson();
     }
     data['name'] = this.name;
-    data['verify'] = this.verify;
+    data['verify'] = this.idCard;
     data['phone_number'] = this.phoneNumber;
     data['address'] = this.address;
     data['email'] = this.email;
@@ -64,7 +64,7 @@ class UserModel {
     data['feed_back'] = this.feedBack;
     data['count_sell'] = this.countSell;
     data['count_buy'] = this.countBuy;
-    data['follow'] = this.follow;
+    data['fame'] = this.fame;
     data['registration_data'] = this.registrationData;
     return data;
   }

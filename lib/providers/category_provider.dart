@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/models/category_model.dart';
 import '/services/category_api.dart';
+import 'auth_provider.dart';
 
 class CategoryProvider with ChangeNotifier {
   CategoryProvider() {
@@ -13,6 +14,9 @@ class CategoryProvider with ChangeNotifier {
   List<CategoryModel> _listCategories = [];
   List<CategoryModel> get listCategories => _listCategories;
 
+  int _totalCategories = 0;
+  int get totalCategories => _totalCategories;
+
   Future<void> fetchAllCategories() async {
     _listCategories = await CategoryApi.fetchCategories();
     notifyListeners();
@@ -22,10 +26,12 @@ class CategoryProvider with ChangeNotifier {
     return _listCategories.firstWhere((category) => category.id == id);
   }
 
-  List<CategoryModel> fetchAllCategoriesByUser(String? idUser) {
-    return _listCategories
-        .where((category) => category.idUser == idUser)
-        .toList();
+  Future<List<CategoryModel>> fetchAllCategoriesMyUser() async {
+    String? idUser = AuthProvider.currentUser.auth!.id;
+    var data = await CategoryApi.fetchCateogriesById(idUser!);
+    _totalCategories = data.length;
+    notifyListeners();
+    return data;
   }
 
   Future<void> fetchAllFavoriteCategories() async {

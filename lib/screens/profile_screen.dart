@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/auth_provider.dart';
+import 'package:trado_app_uit/providers/category_provider.dart';
+import '/providers/auth_provider.dart';
 import '/components/custom_text.dart';
 import '/constants/sizes.dart';
 import '/providers/order_provider.dart';
@@ -89,11 +90,15 @@ class ProfileScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildTitle('Danh mục sản phẩm'),
-          CardInfoProfileWidget(
-            title: 'Danh mục sản phẩm',
-            subtitle: '10 sản phẩm',
-            onTap: (context) {
-              Navigator.pushNamed(context, RouteManage.my_category);
+          Consumer<CategoryProvider>(
+            builder: (context, provider, _) {
+              return CardInfoProfileWidget(
+                title: 'Danh mục sản phẩm',
+                subtitle: '${provider.totalCategories} sản phẩm',
+                onTap: (context) {
+                  Navigator.pushNamed(context, RouteManage.my_category);
+                },
+              );
             },
           ),
           CardInfoProfileWidget(

@@ -3,41 +3,42 @@ const Schema = mongoose.Schema
 const { ObjectID } = mongoose.Schema.Types
 
 const ProductSchema = new Schema({
-    idUserSell:{
-        type:ObjectID,
+    idUserSell: {
+        type: ObjectID,
         ref: "account",
         required: true
     },
-    tag:{
-        type:String,
+    tag: {
+        type: String,
     },
-    imageUrl:[
+    imageUrl: [
         {
-            type:String,
+            type: String,
+            default: '',
         },
     ],
-    title:{
+    title: {
         type: String,
         required: true
     },
-    description:{
-        type:String,
+    description: {
+        type: String,
     },
-    quantity:{
-        type:Number,
-        default:1,
+    quantity: {
+        type: Number,
+        default: 1,
     },
-    price:{
-        type:Number,
-        default:0
+    price: {
+        type: Number,
+        default: 0.0,
     },
-    priceSale:{
-        type:String,   
-        default:0
+    priceSale: {
+        type: Number,
+        default: 0
     },
-    amountView:{
-        type:Number,
-        default:0
+    amountView: {
+        type: Number,
+        default: 0
     }
 })
 
