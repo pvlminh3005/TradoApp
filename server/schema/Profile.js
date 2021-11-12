@@ -9,18 +9,23 @@ const ProfileSchema = new Schema({
     },
     image:{
         type: String,
+        default: "",
     },
     name: {
         type: String,
+        default: "",
     },
     email: {
         type: String,
+        default: "",
     },
     fame:{
         type:Number,
+        default: 0,
     },
     star: {
         type:Number,
+        default: 0,
     },
     count_star:{
         type:Number,
@@ -36,15 +41,19 @@ const ProfileSchema = new Schema({
     },
     address:{
         type:String,
+        default: "",
     },
     phone_number:{
         type:String,
+        default: "",
     },
     id_card:{
         type:String,
+        default: "",
     },
     description:{
         type:String,
+        default: "",
     },
     count_buy:{
         type:Number,

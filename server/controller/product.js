@@ -5,7 +5,7 @@ const StatusCode = require('../common/StatusCode');
 
 //#region Create product
 const createProduct = async (req, res) => {
-    const {idUserSell, tag, imageUrl, title, description, quantity, price, priceSale, amountView} = req.body
+    const {idUserSell, tag, imageUrl, title, description, quantity, price, priceSale, amountView, status} = req.body
 
     if(req.TradoUser.id != idUserSell || !req.TradoUser.id)
     {
@@ -36,6 +36,7 @@ const createProduct = async (req, res) => {
             quantity:quantity,
             price:price,
             priceSale:priceSale,
+            status:status,
             amountView:amountView,
         })
 
