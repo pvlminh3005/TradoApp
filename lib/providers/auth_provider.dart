@@ -14,39 +14,39 @@ class AuthProvider extends ChangeNotifier {
   static UserModel get currentUser => _currentUser;
 
   AuthProvider() {
-    getCurrentUser();
+    // getCurrentUser();
   }
 
-  Future getCurrentUser() async {
-    _currentUser = await AuthController().getCurrentUser();
-    notifyListeners();
-  }
+  // Future getCurrentUser() async {
+  //   _currentUser = await AuthController().getCurrentUser();
+  //   notifyListeners();
+  // }
 
-  Future<void> signInApp(
-      BuildContext context, String username, String password) async {
-    await AuthController().signIn(username, password).then((tokenUser) async {
-      if (tokenUser == null) {
-        CustomSnackBar.dialogMessenger(
-            context, 'Tài khoản hoặc mật khẩu không đúng');
-        notifyListeners();
-        return;
-      }
-      await AuthPreferences.setToken(tokenUser['accessToken']);
-      // await getCurrentUser();
-      await AuthController().getCurrentUser();
-      await Timer(
-        Duration(seconds: 2),
-        () {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RouteManage.navigator_tab,
-            (Route<dynamic> route) => false,
-          );
-        },
-      );
-      notifyListeners();
-    });
-  }
+  // Future<void> signInApp(
+  //     BuildContext context, String username, String password) async {
+  //   await AuthController().signIn(username, password).then((tokenUser) async {
+  //     if (tokenUser == null) {
+  //       CustomSnackBar.dialogMessenger(
+  //           context, 'Tài khoản hoặc mật khẩu không đúng');
+  //       notifyListeners();
+  //       return;
+  //     }
+  //     await AuthPreferences.setToken(tokenUser['accessToken']);
+  //     // await getCurrentUser();
+  //     await AuthController().getCurrentUser();
+  //     await Timer(
+  //       Duration(seconds: 2),
+  //       () {
+  //         Navigator.pushNamedAndRemoveUntil(
+  //           context,
+  //           RouteManage.navigator_tab,
+  //           (Route<dynamic> route) => false,
+  //         );
+  //       },
+  //     );
+  //     notifyListeners();
+  //   });
+  // }
 
   Future<void> registerApp(
       BuildContext context, String username, String password) async {

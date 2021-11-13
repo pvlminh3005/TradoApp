@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/constants/constants.dart';
-import 'package:trado_app_uit/utils/validator.dart';
+import 'package:trado_app_uit/controllers/auth_controller.dart';
+import '/constants/constants.dart';
+import '/utils/validator.dart';
 import '/providers/auth_provider.dart';
 import '/constants/dimen.dart';
 import '/components/custom_button.dart';
@@ -83,20 +84,18 @@ class _SigninScreenState extends State<SigninScreen> {
                       validator: Validator.validatePassword,
                     ),
                     SizedBox(height: size.width * .03),
-                    Consumer<AuthProvider>(
-                      builder: (ctx, controller, _) => CustomButton(
-                        'Đăng nhập',
-                        onTap: () async {
-                          FocusScope.of(context).unfocus();
-                          if (loginKey.currentState!.validate()) {
-                            await controller.signInApp(
-                              context,
-                              userController.text,
-                              passController.text,
-                            );
-                          }
-                        },
-                      ),
+                    CustomButton(
+                      'Đăng nhập',
+                      onTap: () async {
+                        FocusScope.of(context).unfocus();
+                        if (loginKey.currentState!.validate()) {
+                          await AuthController.signIn(
+                            context,
+                            userController.text,
+                            passController.text,
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

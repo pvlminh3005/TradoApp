@@ -76,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildHeaderInfo() {
     return HeaderInfoProfile(
-      profile: AuthProvider.currentUser,
+      profile: AuthController.currentUser,
       isMyProfile: true,
     );
   }
@@ -160,7 +160,7 @@ class ProfileScreen extends StatelessWidget {
       indicatorColor: kBackgroundColorWhite,
       onPressed: () async {
         await Future.delayed(Duration(seconds: 1));
-        await AuthController().signOut();
+        await AuthController.signOut();
         Navigator.of(context)
             .pushNamedAndRemoveUntil(RouteManage.splash, (route) => false);
       },

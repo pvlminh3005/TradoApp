@@ -17,21 +17,15 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   String? tokenUser = '';
-  bool isLoading = true;
 
   @override
   void initState() {
     setState(() {
-      isLoading = true;
       tokenUser = getTokenUser();
     });
-    print(tokenUser);
+
     if (tokenUser!.isEmpty) return;
     fetchCurrentUser();
-
-    setState(() {
-      isLoading = false;
-    });
 
     super.initState();
   }
@@ -41,15 +35,13 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<void> fetchCurrentUser() async {
-    await Provider.of<AuthProvider>(context, listen: false).getCurrentUser();
+    await AuthController.getCurrentUser();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoading
-          ? LoadingPage()
-          : (tokenUser != '' ? NavigatorTab() : SplashScreen()),
+      body: (tokenUser != '' ? NavigatorTab() : SplashScreen()),
     );
   }
 }
