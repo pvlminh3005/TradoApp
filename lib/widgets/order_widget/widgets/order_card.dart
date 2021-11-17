@@ -30,7 +30,9 @@ class OrderCard extends StatelessWidget {
     return CardShadow(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => OrderDetailScreen()),
+        MaterialPageRoute(
+          builder: (context) => OrderDetailScreen(processing: status),
+        ),
       ),
       margin: const EdgeInsets.symmetric(
         horizontal: AppDimen.horizontalSpacing_16,

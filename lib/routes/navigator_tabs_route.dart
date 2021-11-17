@@ -1,10 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
+import '/constants/dimen.dart';
+import '/screens/message_screen.dart';
 import '/screens/favorite_screen.dart';
 import '/widgets/dotted_widget.dart';
-import '/screens/checkout_screen.dart';
 
 import '/constants/constants.dart';
 import './navigator_key.dart';
@@ -25,8 +25,7 @@ class _NavigatorTabState extends State<NavigatorTab> {
     // SuccessScreen(),
     FavoriteScreen(),
     NotificationScreen(),
-    // MessageScreen(),
-    CheckOutScreen(),
+    MessageScreen(),
     ProfileScreen(),
   ];
 

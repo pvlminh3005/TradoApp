@@ -4,6 +4,7 @@ import 'package:trado_app_uit/components/primary_button.dart';
 import 'package:trado_app_uit/constants/constants.dart';
 import 'package:trado_app_uit/constants/dimen.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
 import 'package:trado_app_uit/screens/splash/background_success.dart';
 import 'package:trado_app_uit/widgets/icon_success.dart';
 
@@ -13,27 +14,23 @@ class SuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    return BackgroundSuccess(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildTitle(),
-                _buildIconSuccess(),
-                _buildSubTitle(),
-              ],
+      body: BackgroundSuccess(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildTitle(),
+                  _buildIconSuccess(),
+                  _buildSubTitle(),
+                ],
+              ),
             ),
-          ),
-          _buildButton(),
-        ],
+            _buildButton(context),
+          ],
+        ),
       ),
     );
   }
@@ -71,7 +68,7 @@ class SuccessScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildButton(BuildContext context) {
     return Column(
       children: [
         PrimaryButton(
@@ -84,6 +81,9 @@ class SuccessScreen extends StatelessWidget {
           borderWidth: 1,
           backgroundColor: Colors.white60,
           textColor: kTextColorGrey,
+          onPressed: () {
+            Navigator.pushNamed(context, RouteManage.navigator_tab);
+          },
         ),
       ],
     );

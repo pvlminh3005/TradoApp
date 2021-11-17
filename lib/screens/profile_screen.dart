@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/category_provider.dart';
-import '/providers/auth_provider.dart';
+import '/providers/category_provider.dart';
+import '/widgets/loading_page.dart';
 import '/components/custom_text.dart';
 import '/constants/sizes.dart';
 import '/providers/order_provider.dart';

@@ -51,6 +51,7 @@ class AuthController {
         RouteManage.navigator_tab,
         (Route<dynamic> route) => false,
       );
+      await AuthController.getCurrentUser();
     } on DioError catch (e) {
       CustomSnackBar.dialogMessenger(
           context, 'Tài khoản hoặc mật khẩu không đúng');

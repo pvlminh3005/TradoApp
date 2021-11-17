@@ -20,16 +20,16 @@ class TimeLineWidget extends StatelessWidget {
         children: [
           ProcessWidget(
             title: 'Đang xử lý',
-            isProcessed: processing == 1 ? true : false,
+            isProcessed: processing! >= 1,
+            theFirst: true,
           ),
           ProcessWidget(
             title: 'Đang vận chuyển',
-            isProcessed: processing == 2 ? true : false,
+            isProcessed: processing! >= 2,
           ),
           ProcessWidget(
             title: 'Đã giao',
-            isProcessed: processing == 3 ? true : false,
-            theLast: true,
+            isProcessed: processing! >= 3,
           ),
         ],
       ),
@@ -39,12 +39,12 @@ class TimeLineWidget extends StatelessWidget {
 
 class ProcessWidget extends StatelessWidget {
   final String? title;
-  final bool theLast;
+  final bool theFirst;
   final bool isProcessed;
 
   const ProcessWidget({
     this.title,
-    this.theLast = false,
+    this.theFirst = false,
     this.isProcessed = false,
     Key? key,
   }) : super(key: key);
@@ -52,27 +52,27 @@ class ProcessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         // Circle Status
         Column(
           children: [
             // build circle container
-            Container(
-              width: 24.0,
-              height: 24.0,
-              decoration: BoxDecoration(
-                color: isProcessed ? kPrimaryColor : kColorItemGrey,
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-            ),
-            !theLast
+            !theFirst
                 ? Container(
-                    width: 1.0,
+                    width: 1.5,
                     height: 48.0,
-                    color: kColorItemGrey,
+                    color: isProcessed ? kPrimaryColor : kColorItemGrey,
                   )
                 : SizedBox.shrink(),
+            Container(
+              width: 27.0,
+              height: 27.0,
+              decoration: BoxDecoration(
+                color: isProcessed ? kPrimaryColor : kColorItemGrey,
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
           ],
         ),
         const SizedBox(width: 8.0),
@@ -85,11 +85,11 @@ class ProcessWidget extends StatelessWidget {
               fontSize: FontSize.MEDIUM - 1,
               color: isProcessed ? kTextDark : kTextColorGrey,
             ),
-            SizedBox(height: 16.0),
+            SizedBox(height: 8.0),
             isProcessed
                 ? CustomText(
                     '09-09-2021 21:15',
-                    fontSize: FontSize.SMALL,
+                    fontSize: FontSize.SMALL - 1,
                     color: Color(0xFF909090),
                   )
                 : const SizedBox.shrink(),

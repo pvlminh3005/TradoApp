@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/screens/home_screen.dart';
 import '/screens/edit_my_category_screen.dart';
 import '/screens/manage_my_category_screen.dart';
 import '/screens/order_detail_screen.dart';
@@ -27,6 +28,7 @@ class RouteManage {
   static const register = '/register';
   static const signin = '/signin';
   static const navigator_tab = '/navigator_tab';
+  static const home = '/home';
   static const category_detail = '/category_detail';
   static const cart = '/cart';
   static const diff_profile = '/diff_profile';
@@ -50,6 +52,7 @@ class RouteManage {
     register: (_) => SignupScreen(),
     signin: (_) => SigninScreen(),
     navigator_tab: (_) => NavigatorTab(),
+    home: (_) => HomeScreen(),
     category_detail: (_) => CategoryDetailScreen(),
     cart: (_) => CartScreen(),
     diff_profile: (_) => DiffProfileScreen(),

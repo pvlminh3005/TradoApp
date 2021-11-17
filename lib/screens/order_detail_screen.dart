@@ -67,7 +67,7 @@ class OrderDetailScreen extends StatelessWidget {
               icon: Icons.local_shipping_outlined,
               title: 'Trạng thái đơn hàng',
             ),
-            TimeLineWidget(),
+            TimeLineWidget(processing: processing),
             _buildHeader(
               icon: Icons.location_on_outlined,
               title: 'Địa chỉ giao hàng',

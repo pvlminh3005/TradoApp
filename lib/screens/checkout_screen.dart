@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/models/shipping_address_model.dart';
-import 'package:trado_app_uit/providers/shipping_address_provider.dart';
-import 'package:trado_app_uit/widgets/loading_page.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
+import '/models/shipping_address_model.dart';
+import '/providers/shipping_address_provider.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
 import '/components/primary_button.dart';
@@ -15,57 +15,57 @@ import '/constants/dimen.dart';
 import '/widgets/appbar_widget.dart';
 
 class CheckOutScreen extends StatelessWidget {
-  const CheckOutScreen({Key? key}) : super(key: key);
+  final double totalPrice;
+
+  CheckOutScreen({
+    this.totalPrice = 0,
+    Key? key,
+  }) : super(key: key);
+
+  late double deliveryPrice = 20000;
+  late double voucherPrice = 10000;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _buildBody(),
+      body: Padding(
+        padding: const EdgeInsets.only(
+          top: 0,
+          left: AppDimen.horizontalSpacing_16,
+          right: AppDimen.horizontalSpacing_16,
+          bottom: AppDimen.spacing_2,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTitle('Địa chỉ giao hàng'),
+                    _buildDetailShippingAddress(),
+                    _buildTitle('Payment'),
+                    _buildDetailPaymentMethod(),
+                    _buildInfoPrice(),
+                    _buildTotalPrice(),
+                    // __buildDetailPayment(),
+                  ],
+                ),
+              ),
+            ),
+            _buildButton(context),
+          ],
+        ),
+      ),
     );
   }
 
   AppBarWidget _buildAppBar() {
     return AppBarWidget(
       title: 'Xác nhận đơn hàng',
-    );
-  }
-
-  Widget _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 0,
-        left: AppDimen.horizontalSpacing_16,
-        right: AppDimen.horizontalSpacing_16,
-        bottom: AppDimen.spacing_2,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildDetailList(),
-          _buildButton(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDetailList() {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTitle('Địa chỉ giao hàng'),
-            _buildDetailShippingAddress(),
-            _buildTitle('Payment'),
-            _buildDetailPaymentMethod(),
-            _buildInfoPrice(),
-            _buildTotalPrice(),
-            // __buildDetailPayment(),
-          ],
-        ),
-      ),
     );
   }
 
@@ -101,11 +101,11 @@ class CheckOutScreen extends StatelessWidget {
   Widget _buildInfoPrice() {
     return CardShadow(
       child: Column(children: [
-        _buildDetailInfoPrice(title: 'Tiền hàng', price: 100000),
-        _buildDetailInfoPrice(title: 'Vận chuyển', price: 20000),
+        _buildDetailInfoPrice(title: 'Tiền hàng', price: totalPrice),
+        _buildDetailInfoPrice(title: 'Vận chuyển', price: deliveryPrice),
         _buildDetailInfoPrice(
           title: 'Giảm giá',
-          price: 0,
+          price: voucherPrice,
           colorPrice: kErrorColor,
         ),
       ]),
@@ -115,14 +115,19 @@ class CheckOutScreen extends StatelessWidget {
   Widget _buildTotalPrice() {
     return CardShadow(
       margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-      child: _buildDetailInfoPrice(title: 'Tổng cộng', price: 120000),
+      child: _buildDetailInfoPrice(
+        title: 'Tổng cộng',
+        price: (totalPrice + deliveryPrice - voucherPrice),
+      ),
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildButton(BuildContext context) {
     return PrimaryButton(
       title: 'Đặt hàng',
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, RouteManage.success);
+      },
     );
   }
 

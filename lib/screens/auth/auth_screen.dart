@@ -39,6 +39,11 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: (tokenUser != '' ? NavigatorTab() : SplashScreen()),
