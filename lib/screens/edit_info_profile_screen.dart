@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/controllers/auth_controller.dart';
 import 'package:trado_app_uit/controllers/choose_image_controller.dart';
 import 'package:trado_app_uit/models/user_model.dart';
-import 'package:trado_app_uit/providers/auth_provider.dart';
 import 'package:trado_app_uit/routes/routes_manage.dart';
 import 'package:trado_app_uit/widgets/custom_avatar.dart';
 import '/components/primary_button.dart';
@@ -39,7 +39,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    infoUser = AuthProvider.currentUser;
+    setState(() {
+      infoUser = AuthController.currentUser;
+    });
 
     nameController = TextEditingController(text: infoUser.name);
     verifyController = TextEditingController(text: infoUser.idCard);
@@ -134,6 +136,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return CustomInput(
       controller: controller,
       hintText: title!,
+      fontWeight: FontWeight.w700,
       margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
       backgroundColor: kBackgroundColorWhite,
       showPrefixIcon: true,

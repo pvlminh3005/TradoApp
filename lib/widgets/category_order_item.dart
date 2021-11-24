@@ -10,12 +10,12 @@ import '/constants/dimen.dart';
 import 'sale_order_widget/widget/sale_order_item.dart';
 
 class CategoryOrderItem extends StatelessWidget {
-  final CategoryModel? cagetogry;
+  final CategoryModel? category;
   final Color colorBorder;
   final bool showMore;
 
   const CategoryOrderItem({
-    this.cagetogry,
+    this.category,
     this.colorBorder = kTextColorGrey,
     this.showMore = false,
     Key? key,
@@ -39,9 +39,7 @@ class CategoryOrderItem extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
                 image: DecorationImage(
-                  image: NetworkImage(
-                    'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-                  ),
+                  image: NetworkImage(category!.imageUrl[0]),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -50,15 +48,21 @@ class CategoryOrderItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextSaleOrder('Sony-Canon', fontWeight: FontWeight.w700),
-                      !showMore
-                          ? TextSaleOrder('Số lượng: 1')
-                          : const SizedBox(height: AppDimen.spacing_1 + 2),
-                      TextSaleOrder('${FormatPrice(123123123)} đ'),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextSaleOrder(
+                          category!.title,
+                          fontWeight: FontWeight.w700,
+                          maxLines: 1,
+                        ),
+                        !showMore
+                            ? TextSaleOrder('Số lượng: ${category!.quantity}')
+                            : const SizedBox(height: AppDimen.spacing_1 + 2),
+                        TextSaleOrder('${FormatPrice(category!.price)} đ'),
+                      ],
+                    ),
                   ),
                   showMore
                       ? CustomIcon(

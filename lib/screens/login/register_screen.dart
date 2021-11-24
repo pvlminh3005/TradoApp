@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/constants/constants.dart';
-import 'package:trado_app_uit/providers/auth_provider.dart';
-import 'package:trado_app_uit/utils/validator.dart';
+import '/constants/constants.dart';
+import '/utils/validator.dart';
 import '/constants/dimen.dart';
 import '/components/custom_button.dart';
 import '/components/custom_input.dart';
@@ -85,21 +84,19 @@ class _SignupScreenState extends State<SignupScreen> {
                       validator: Validator.validatePassword,
                     ),
                     SizedBox(height: size.width * .03),
-                    Consumer<AuthProvider>(
-                      builder: (ctx, controller, _) => CustomButton(
-                        'Đăng ký',
-                        onTap: () async {
-                          FocusScope.of(context).unfocus();
-                          if (registerKey.currentState!.validate()) {
-                            await controller.registerApp(
-                              context,
-                              userController.text,
-                              passController.text,
-                            );
-                          }
-                        },
-                        // isLoading: controller.isLoading,
-                      ),
+                    CustomButton(
+                      'Đăng ký',
+                      onTap: () async {
+                        FocusScope.of(context).unfocus();
+                        if (registerKey.currentState!.validate()) {
+                          // await controller.registerApp(
+                          //   context,
+                          //   userController.text,
+                          //   passController.text,
+                          // );
+                        }
+                      },
+                      // isLoading: controller.isLoading,
                     ),
                   ],
                 ),

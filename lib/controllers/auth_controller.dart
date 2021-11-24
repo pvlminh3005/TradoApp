@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '/providers/shipping_address_provider.dart';
 import '/utils/conver_scaffold_messenger.dart';
 import '/routes/routes_manage.dart';
 import '/models/user_model.dart';
@@ -52,6 +54,8 @@ class AuthController {
         (Route<dynamic> route) => false,
       );
       await AuthController.getCurrentUser();
+      await Provider.of<ShippingAddressProvider>(context, listen: false)
+          .fetchAllAddresses();
     } on DioError catch (e) {
       CustomSnackBar.dialogMessenger(
           context, 'Tài khoản hoặc mật khẩu không đúng');

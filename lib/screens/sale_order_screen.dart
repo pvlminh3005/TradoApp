@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trado_app_uit/constants/dimen.dart';
+import 'package:trado_app_uit/providers/sale_order_provider.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/providers/cart_provider.dart';
@@ -18,8 +19,19 @@ List<Widget> _listWidgets = [
   DeliveringSaleOrderWidget(),
 ];
 
-class SaleOrderScreen extends StatelessWidget {
+class SaleOrderScreen extends StatefulWidget {
   const SaleOrderScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SaleOrderScreen> createState() => _SaleOrderScreenState();
+}
+
+class _SaleOrderScreenState extends State<SaleOrderScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provider.of<SaleOrderProvider>(context, listen: false).fetchAllSaleOrders();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +85,7 @@ class SaleOrderScreen extends StatelessWidget {
         tabs: [
           // _buildTabText('Tất cả'),
           _buildTabText('Chờ xác nhận'),
-          _buildTabText('Đang giao'),
+          _buildTabText('Đang vận chuyển'),
         ],
       ),
     );

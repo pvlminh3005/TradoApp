@@ -11,6 +11,7 @@ const kBackgroundColorWhite = Colors.white;
 const kCardColor = Color(0xFFFFFFFF);
 const kTextColorGrey = Color(0xFF808080);
 const kColorItemGrey = Color(0xFFE0E0E0);
+const kColorGreen = Colors.green;
 const kTextLight = Colors.white;
 const kTextDark = Colors.black;
 const kBlack = Colors.black;

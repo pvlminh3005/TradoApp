@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/providers/sale_order_provider.dart';
 import '/providers/category_provider.dart';
 import '/widgets/loading_page.dart';
 import '/components/custom_text.dart';
@@ -101,12 +102,15 @@ class ProfileScreen extends StatelessWidget {
               );
             },
           ),
-          CardInfoProfileWidget(
-            title: 'Quản lý đơn bán',
-            subtitle: '2 đơn hàng đang chờ bạn xác nhận',
-            onTap: (context) {
-              Navigator.of(context).pushNamed(RouteManage.sale_order);
-            },
+          Consumer<SaleOrderProvider>(
+            builder: (context, provider, _) => CardInfoProfileWidget(
+              title: 'Quản lý đơn bán',
+              subtitle:
+                  '${provider.fetchDeliveringSaleOrders().length} đơn hàng đang chờ bạn xác nhận',
+              onTap: (context) {
+                Navigator.of(context).pushNamed(RouteManage.sale_order);
+              },
+            ),
           ),
           Consumer<OrderProvider>(
             builder: (context, provider, _) => CardInfoProfileWidget(

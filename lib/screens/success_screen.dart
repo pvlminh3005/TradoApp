@@ -82,7 +82,7 @@ class SuccessScreen extends StatelessWidget {
           backgroundColor: Colors.white60,
           textColor: kTextColorGrey,
           onPressed: () {
-            Navigator.pushNamed(context, RouteManage.navigator_tab);
+            Navigator.pushReplacementNamed(context, RouteManage.navigator_tab);
           },
         ),
       ],

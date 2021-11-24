@@ -57,6 +57,7 @@ class ShippingAddressItem extends StatelessWidget {
 
   Widget _buildInfo() {
     return AddressDetailWidget(
+      id: shippingAddress!.id,
       name: shippingAddress!.name,
       phoneNumber: shippingAddress!.phoneNumber,
       address: shippingAddress!.address,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:trado_app_uit/components/custom_icon.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
@@ -120,7 +121,11 @@ class _CustomInputState extends State<CustomInput> {
                   color: kTextColorGrey,
                 ),
                 prefixIcon: widget.showPrefixIcon
-                    ? Icon(widget.prefixIcon, color: widget.iconColor)
+                    ? CustomIcon(
+                        widget.prefixIcon,
+                        color: widget.iconColor,
+                        size: AppDimen.icon_size + 2,
+                      )
                     : null,
                 suffixIcon: widget.showSuffixIcon ? _buildObscure() : null,
                 focusedBorder: OutlineInputBorder(
@@ -170,6 +175,17 @@ class _CustomInputState extends State<CustomInput> {
         !obscureText ? Icons.visibility : Icons.visibility_off,
         color: widget.colorIcon,
       ),
+    );
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
     );
   }
 }

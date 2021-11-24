@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/providers/sale_order_provider.dart';
+import '/models/order_model.dart';
 import '/providers/shipping_address_provider.dart';
 import '/widgets/category_order_item.dart';
 import '/components/card_shadow.dart';
@@ -13,7 +15,14 @@ import '/constants/dimen.dart';
 import '/constants/sizes.dart';
 
 class SaleOrderItem extends StatelessWidget {
-  const SaleOrderItem({Key? key}) : super(key: key);
+  final OrderModel orders;
+  final OrderType typeOrder;
+
+  const SaleOrderItem({
+    required this.orders,
+    this.typeOrder = OrderType.WAITING,
+    Key? key,
+  }) : super(key: key);
   final double price = 250000;
 
   @override
@@ -43,22 +52,30 @@ class SaleOrderItem extends StatelessWidget {
           margin: const EdgeInsets.only(right: AppDimen.horizontalSpacing_5),
         ),
         TextSaleOrder(
-          'Lê Minh',
+          orders.name,
           fontWeight: FontWeight.w700,
           color: kTextDark,
         ),
         const Spacer(),
         TextSaleOrder(
-          'Chờ xác nhận',
+          typeOrder == OrderType.WAITING ? 'Chờ xác nhận' : '',
           fontWeight: FontWeight.w700,
-          color: kHighlightColor,
+          color: typeOrder == OrderType.WAITING ? kHighlightColor : kColorGreen,
         ),
       ],
     );
   }
 
   Widget _buildInfoCategory() {
-    return CategoryOrderItem();
+    return Container(
+      height: 150,
+      child: ListView.builder(
+        itemCount: orders.categories.length,
+        itemBuilder: (BuildContext context, int index) {
+          return CategoryOrderItem(category: orders.categories[index]);
+        },
+      ),
+    );
   }
 
   Widget _buildTotalPrice() {
@@ -76,7 +93,7 @@ class SaleOrderItem extends StatelessWidget {
           fontSize: FontSize.MEDIUM + 1,
         ),
         TextSaleOrder(
-          '${FormatPrice(price + 10300)} đ',
+          '${FormatPrice(orders.totalPrice)} đ',
           fontWeight: FontWeight.w700,
           fontSize: FontSize.MEDIUM + 1,
           color: kPrimaryColor,
@@ -97,38 +114,33 @@ class SaleOrderItem extends StatelessWidget {
       ),
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: Consumer<ShippingAddressProvider>(
-          builder: (context, provider, _) {
-            var address = provider.getDefaultAddress();
-            return ExpansionTile(
-              tilePadding: const EdgeInsets.all(0.0),
-              childrenPadding: const EdgeInsets.all(0.0),
-              title: TextSaleOrder(
-                'Chi tiết đơn hàng',
-                fontWeight: FontWeight.w700,
-                margin: const EdgeInsets.all(0.0),
-              ),
-              expandedAlignment: Alignment.topLeft,
-              expandedCrossAxisAlignment: CrossAxisAlignment.start,
+        child: ExpansionTile(
+          tilePadding: const EdgeInsets.all(0.0),
+          childrenPadding: const EdgeInsets.all(0.0),
+          title: TextSaleOrder(
+            'Chi tiết đơn hàng',
+            fontWeight: FontWeight.w700,
+            margin: const EdgeInsets.all(0.0),
+          ),
+          expandedAlignment: Alignment.topLeft,
+          expandedCrossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(width: 5.0),
+            TextSaleOrder(orders.address.name),
+            TextSaleOrder(orders.address.phoneNumber),
+            TextSaleOrder(orders.address.address),
+            Row(
               children: [
-                const SizedBox(width: 5.0),
-                TextSaleOrder(address.name),
-                TextSaleOrder(address.phoneNumber),
-                TextSaleOrder(address.address),
-                Row(
-                  children: [
-                    CustomText(
-                      'Ghi chú: ',
-                      fontSize: FontSize.SMALL + 1,
-                      fontWeight: FontWeight.bold,
-                      color: kErrorColor.withOpacity(.7),
-                    ),
-                    TextSaleOrder(address.note),
-                  ],
+                CustomText(
+                  'Ghi chú: ',
+                  fontSize: FontSize.SMALL + 1,
+                  fontWeight: FontWeight.bold,
+                  color: kErrorColor.withOpacity(.7),
                 ),
+                TextSaleOrder(orders.address.note),
               ],
-            );
-          },
+            ),
+          ],
         ),
       ),
     );
@@ -140,18 +152,28 @@ class SaleOrderItem extends StatelessWidget {
       children: [
         Flexible(
           child: TextSaleOrder(
-            'Mã đơn hàng: #123456789',
+            'Mã đơn hàng: #${orders.id}',
             fontSize: FontSize.SMALL,
           ),
         ),
-        CustomButton(
-          'Xác nhận đơn hàng',
-          radius: 0,
-          sizeStyle: CustomBottomSizeStyle.WRAP_CONTENT,
-          padding: const EdgeInsets.all(AppDimen.spacing_2 - 3),
-          fontSize: FontSize.MEDIUM,
-          fontWeight: FontWeight.w500,
-          onTap: () {},
+        Consumer<SaleOrderProvider>(
+          builder: (context, provider, _) => CustomButton(
+            typeOrder == OrderType.WAITING
+                ? 'Xác nhận đơn hàng'
+                : 'Đang vận chuyển',
+            radius: 0,
+            sizeStyle: CustomBottomSizeStyle.WRAP_CONTENT,
+            padding: const EdgeInsets.all(AppDimen.spacing_2 - 3),
+            fontSize: FontSize.MEDIUM,
+            fontWeight: FontWeight.w500,
+            backgroundColor:
+                typeOrder == OrderType.WAITING ? kPrimaryColor : kColorGreen,
+            onTap: typeOrder == OrderType.WAITING
+                ? () {
+                    provider.changeStatusOrder(orders.id);
+                  }
+                : () {},
+          ),
         ),
       ],
     );

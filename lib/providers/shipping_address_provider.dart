@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/models/shipping_address_model.dart';
-import 'package:trado_app_uit/services/address_api.dart';
+import '/models/shipping_address_model.dart';
+import '/services/address_api.dart';
 
 class ShippingAddressProvider with ChangeNotifier {
   ShippingAddressProvider() {
@@ -15,10 +15,6 @@ class ShippingAddressProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // void changeDefaultAddress(String id) {
-  //   _listAddresses.
-  // }
-
   Future<void> addNewAddress(
       {String? name, String? phone, String? address, String? note = ''}) async {
     await Future.delayed(Duration(seconds: 2));
@@ -30,6 +26,12 @@ class ShippingAddressProvider with ChangeNotifier {
         note: note,
       ),
     );
+    notifyListeners();
+  }
+
+  Future<void> removeAddress(String id) async {
+    await Future.delayed(Duration(seconds: 2));
+    _listAddresses.removeWhere((address) => address.id == id);
     notifyListeners();
   }
 

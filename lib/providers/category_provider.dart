@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/controllers/auth_controller.dart';
 import '/models/category_model.dart';
 import '/services/category_api.dart';
-import 'auth_provider.dart';
 
 class CategoryProvider with ChangeNotifier {
   CategoryProvider() {
@@ -26,12 +26,12 @@ class CategoryProvider with ChangeNotifier {
     return _listCategories.firstWhere((category) => category.id == id);
   }
 
-  Future<List<CategoryModel>> fetchAllCategoriesMyUser() async {
-    String? idUser = AuthProvider.currentUser.auth!.id;
+  Future<void> fetchAllCategoriesMyUser() async {
+    String? idUser = AuthController.currentUser.auth!.id;
     var data = await CategoryApi.fetchCateogriesById(idUser!);
+    _listCategories.addAll(data);
     _totalCategories = data.length;
     notifyListeners();
-    return data;
   }
 
   Future<void> fetchAllFavoriteCategories() async {

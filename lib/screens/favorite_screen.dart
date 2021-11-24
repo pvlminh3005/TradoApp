@@ -88,7 +88,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
               CategoryModel category = provider.listFavoriteCategories[index];
               return CategoryOrderItem(
                 showMore: true,
-                cagetogry: category,
+                category: category,
               );
             },
           ),
