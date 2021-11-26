@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/order_provider.dart';
+import '/providers/order_provider.dart';
 
 import 'widgets/order_card.dart';
 
@@ -22,11 +22,11 @@ class AllOrderWidget extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         var order = provider.listOrders[index];
         return OrderCard(
-          idOrder: order['idOrder'],
-          date: order['date'],
-          quantity: order['quantity'],
-          total: order['total'],
-          status: order['status'],
+          idOrder: order.idOrder,
+          date: order.date,
+          quantity: order.quantity,
+          total: order.totalPrice,
+          status: order.statusOrder,
         );
       },
     );

@@ -1,13 +1,21 @@
 import 'shipping_address_model.dart';
 import 'category_model.dart';
 
-enum OrderType {
+enum OrderDetailType {
   WAITING,
   DELIVERING,
 }
 
-class OrderModel {
+enum StatusOrderType {
+  PROCESSING, //0
+  DELIVERING, //1
+  SUCCESS, //2
+  CANCEL, //3
+}
+
+class OrderDetailModel {
   final String id;
+  final String idUser;
   final String name;
   late int statusOrder;
   final double totalPrice;
@@ -16,8 +24,9 @@ class OrderModel {
   final List<CategoryModel> categories;
   late TimeOrderModel time;
 
-  OrderModel({
+  OrderDetailModel({
     this.id = '',
+    required this.idUser,
     this.name = 'Unknown',
     this.statusOrder = 0, // 1, 2
     this.totalPrice = 0.0,
@@ -37,5 +46,23 @@ class TimeOrderModel {
     required this.timeOrder,
     required this.timeDelivery,
     required this.timeFinish,
+  });
+}
+
+class OrderModel {
+  final String? idOrder;
+  final String? idUser;
+  final DateTime? date;
+  final int quantity;
+  final double totalPrice;
+  final int statusOrder;
+
+  OrderModel({
+    this.idOrder,
+    required this.idUser,
+    this.date,
+    this.quantity = 0,
+    this.totalPrice = 0.0,
+    this.statusOrder = 0,
   });
 }

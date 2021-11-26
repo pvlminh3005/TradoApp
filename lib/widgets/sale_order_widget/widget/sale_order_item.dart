@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/sale_order_provider.dart';
-import '/models/order_model.dart';
+import '/providers/sale_order_provider.dart';
+import '../../../models/order_detail_model.dart';
 import '/providers/shipping_address_provider.dart';
 import '/widgets/category_order_item.dart';
 import '/components/card_shadow.dart';
@@ -15,12 +15,12 @@ import '/constants/dimen.dart';
 import '/constants/sizes.dart';
 
 class SaleOrderItem extends StatelessWidget {
-  final OrderModel orders;
-  final OrderType typeOrder;
+  final OrderDetailModel orders;
+  final OrderDetailType typeOrder;
 
   const SaleOrderItem({
     required this.orders,
-    this.typeOrder = OrderType.WAITING,
+    this.typeOrder = OrderDetailType.WAITING,
     Key? key,
   }) : super(key: key);
   final double price = 250000;
@@ -58,9 +58,11 @@ class SaleOrderItem extends StatelessWidget {
         ),
         const Spacer(),
         TextSaleOrder(
-          typeOrder == OrderType.WAITING ? 'Chờ xác nhận' : '',
+          typeOrder == OrderDetailType.WAITING ? 'Chờ xác nhận' : '',
           fontWeight: FontWeight.w700,
-          color: typeOrder == OrderType.WAITING ? kHighlightColor : kColorGreen,
+          color: typeOrder == OrderDetailType.WAITING
+              ? kHighlightColor
+              : kColorGreen,
         ),
       ],
     );
@@ -158,7 +160,7 @@ class SaleOrderItem extends StatelessWidget {
         ),
         Consumer<SaleOrderProvider>(
           builder: (context, provider, _) => CustomButton(
-            typeOrder == OrderType.WAITING
+            typeOrder == OrderDetailType.WAITING
                 ? 'Xác nhận đơn hàng'
                 : 'Đang vận chuyển',
             radius: 0,
@@ -166,9 +168,10 @@ class SaleOrderItem extends StatelessWidget {
             padding: const EdgeInsets.all(AppDimen.spacing_2 - 3),
             fontSize: FontSize.MEDIUM,
             fontWeight: FontWeight.w500,
-            backgroundColor:
-                typeOrder == OrderType.WAITING ? kPrimaryColor : kColorGreen,
-            onTap: typeOrder == OrderType.WAITING
+            backgroundColor: typeOrder == OrderDetailType.WAITING
+                ? kPrimaryColor
+                : kColorGreen,
+            onTap: typeOrder == OrderDetailType.WAITING
                 ? () {
                     provider.changeStatusOrder(orders.id);
                   }

@@ -17,11 +17,11 @@ class InprocessingOrderWidget extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         var order = _listInprocessingOrders[index];
         return OrderCard(
-          idOrder: order['idOrder'],
-          date: order['date'],
-          quantity: order['quantity'],
-          total: order['total'],
-          status: order['status'],
+          idOrder: order.idOrder,
+          date: order.date,
+          quantity: order.quantity,
+          total: order.totalPrice,
+          status: order.statusOrder,
         );
       },
     );

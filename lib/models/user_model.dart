@@ -38,7 +38,7 @@ class UserModel {
     phoneNumber = json['phone_umber'] ?? '';
     address = json['address'] ?? '';
     email = json['email'] ?? '';
-    imageUrl = json['image'];
+    imageUrl = json['image'] ?? '';
     countPerStars = json['count_per_star'] ?? 0;
     countRating = json['count_rating'] ?? 0;
     feedBack = json['feed_back'] ?? '';

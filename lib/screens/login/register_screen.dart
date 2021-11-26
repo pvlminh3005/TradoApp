@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/controllers/auth_controller.dart';
 import '/constants/constants.dart';
 import '/utils/validator.dart';
 import '/constants/dimen.dart';
@@ -89,11 +90,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       onTap: () async {
                         FocusScope.of(context).unfocus();
                         if (registerKey.currentState!.validate()) {
-                          // await controller.registerApp(
-                          //   context,
-                          //   userController.text,
-                          //   passController.text,
-                          // );
+                          await AuthController.register(
+                            context,
+                            userController.text,
+                            passController.text,
+                          );
                         }
                       },
                       // isLoading: controller.isLoading,

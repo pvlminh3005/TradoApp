@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/models/order_model.dart';
-import 'package:trado_app_uit/services/order_api.dart';
+import '../models/order_detail_model.dart';
+import '/services/order_api.dart';
 
 class SaleOrderProvider with ChangeNotifier {
   SaleOrderProvider() {
     fetchAllSaleOrders();
   }
 
-  List<OrderModel> _listSaleOrders = [];
-  List<OrderModel> get listSaleOrders => _listSaleOrders;
+  List<OrderDetailModel> _listSaleOrders = [];
+  List<OrderDetailModel> get listSaleOrders => _listSaleOrders;
 
   Future<void> fetchAllSaleOrders() async {
     var data = await OrderApi.fetchAllSaleOrders();
@@ -16,22 +16,30 @@ class SaleOrderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<OrderModel> fetchWaitingSaleOrders() {
+  List<OrderDetailModel> fetchWaitingSaleOrders() {
     return _listSaleOrders
         .where(
-          (order) => OrderType.values[order.statusOrder] == OrderType.WAITING,
+          (order) =>
+              OrderDetailType.values[order.statusOrder] ==
+              OrderDetailType.WAITING,
         )
         .toList();
   }
 
-  List<OrderModel> fetchDeliveringSaleOrders() {
+  List<OrderDetailModel> fetchDeliveringSaleOrders() {
     return _listSaleOrders
         .where(
           (order) =>
-              OrderType.values[order.statusOrder] == OrderType.DELIVERING,
+              OrderDetailType.values[order.statusOrder] ==
+              OrderDetailType.DELIVERING,
         )
         .toList();
   }
+
+  // Future<OrderDetailModel> fetchDetailOrderById(String id) async {
+  //   await Future.delayed(Duration(seconds: 2));
+  //   return _listSaleOrders.firstWhere((order) => order.id == id);
+  // }
 
   Future<void> changeStatusOrder(String id) async {
     int index = _listSaleOrders.indexWhere((order) => order.id == id);

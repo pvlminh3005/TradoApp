@@ -19,7 +19,7 @@ class AuthController {
     getCurrentUser();
   }
 
-  static Future<dynamic> register(
+  static Future<void> register(
       BuildContext context, String username, String password) async {
     try {
       var response = await _dio.post(MainURL.registerURL, data: {
@@ -27,14 +27,25 @@ class AuthController {
         'password': password,
       });
       if (response.statusCode == 200) {
-        return response.data;
+        String tokenUser = response.data['token'];
+        await AuthPreferences.setToken(tokenUser);
+
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RouteManage.edit_profile,
+          (Route<dynamic> route) => false,
+        );
       }
     } on DioError catch (e) {
-      print(e);
+      CustomSnackBar.dialogMessenger(
+        context,
+        'Tài khoản này đã có người sử dụng',
+      );
+      return;
     }
   }
 
-  static Future<dynamic> signIn(
+  static Future<void> signIn(
       BuildContext context, String username, String password) async {
     try {
       var response = await _dio.post(
@@ -54,8 +65,6 @@ class AuthController {
         (Route<dynamic> route) => false,
       );
       await AuthController.getCurrentUser();
-      await Provider.of<ShippingAddressProvider>(context, listen: false)
-          .fetchAllAddresses();
     } on DioError catch (e) {
       CustomSnackBar.dialogMessenger(
           context, 'Tài khoản hoặc mật khẩu không đúng');
@@ -80,7 +89,6 @@ class AuthController {
 
       if (response.statusCode == 200) {
         _currentUser = await UserModel.fromJson(response.data);
-        print(_currentUser);
         return;
       }
     } on DioError catch (e) {

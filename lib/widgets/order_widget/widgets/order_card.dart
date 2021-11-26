@@ -11,13 +11,13 @@ import '/constants/sizes.dart';
 
 class OrderCard extends StatelessWidget {
   final String? idOrder;
-  final String? date;
+  final DateTime? date;
   final int? quantity;
   final double? total;
   final int? status; //0,1,2,3
 
   const OrderCard({
-    this.idOrder = '123456789',
+    this.idOrder = 'order2',
     this.date,
     this.total = 0,
     this.quantity = 1,
@@ -31,7 +31,10 @@ class OrderCard extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => OrderDetailScreen(processing: status),
+          builder: (context) => OrderDetailScreen(
+            processing: status!,
+            idOrder: idOrder,
+          ),
         ),
       ),
       margin: const EdgeInsets.symmetric(
@@ -109,29 +112,30 @@ class OrderCard extends StatelessWidget {
 
   Widget _buildStatusOrder() {
     switch (status) {
-      case 0: // cancelled
-        return _buildStatusStyle(
-          icon: CupertinoIcons.clear_circled,
-          title: 'Đã huỷ',
-          color: Colors.red,
-        );
-      case 1: //in processing
+      case 0: //in processing
         return _buildStatusStyle(
           icon: CupertinoIcons.clock,
           title: 'Đang xử lý',
           color: kTextColorGrey,
         );
-      case 2:
+      case 1: //delivering
         return _buildStatusStyle(
           icon: Icons.local_shipping_outlined,
           title: 'Đang giao',
           color: kBlack,
         );
-      default: //delivered
+      case 2: // success
         return _buildStatusStyle(
           icon: CupertinoIcons.checkmark_circle,
           title: 'Đã giao thành công',
           color: Colors.green,
+        );
+
+      default: //cancel
+        return _buildStatusStyle(
+          icon: CupertinoIcons.clear_circled,
+          title: 'Đã huỷ',
+          color: Colors.red,
         );
     }
   }

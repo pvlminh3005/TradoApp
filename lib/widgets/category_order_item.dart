@@ -23,8 +23,12 @@ class CategoryOrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_5),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_5),
+      decoration: BoxDecoration(
+        color: kBackgroundColorWhite,
+        borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+      ),
       child: DottedBorder(
         color: colorBorder,
         borderType: BorderType.RRect,

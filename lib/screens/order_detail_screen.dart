@@ -1,9 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/card_shadow.dart';
-import 'package:trado_app_uit/components/config_price.dart';
-import 'package:trado_app_uit/widgets/category_order_item.dart';
+import 'package:trado_app_uit/models/category_model.dart';
+import 'package:trado_app_uit/models/order_detail_model.dart';
+import 'package:trado_app_uit/providers/order_provider.dart';
+import 'package:trado_app_uit/services/order_api.dart';
+import 'package:trado_app_uit/widgets/loading_page.dart';
+import '/components/card_shadow.dart';
+import '/components/config_price.dart';
+import '/providers/sale_order_provider.dart';
+import '/widgets/category_order_item.dart';
 import '/providers/cart_provider.dart';
 import '/routes/routes_manage.dart';
 import '/widgets/bage.dart';
@@ -21,10 +27,12 @@ import '/widgets/payment_method_widget.dart';
 import '/widgets/time_line_widget.dart';
 
 class OrderDetailScreen extends StatelessWidget {
-  final int? processing;
+  final int processing;
+  final String? idOrder;
 
   const OrderDetailScreen({
     this.processing = 0,
+    this.idOrder,
     Key? key,
   }) : super(key: key);
 
@@ -51,39 +59,47 @@ class OrderDetailScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppDimen.horizontalSpacing_16,
-        ),
-        child: Column(
-          children: [
-            _buildHeader(
-              icon: Icons.local_shipping_outlined,
-              title: 'Trạng thái đơn hàng',
-            ),
-            TimeLineWidget(processing: processing),
-            _buildHeader(
-              icon: Icons.location_on_outlined,
-              title: 'Địa chỉ giao hàng',
-            ),
-            _buildShippingAddress(),
-            _buildListCategories(),
-            _buildTotalPrice(),
-            _buildHeader(
-              icon: Icons.payments_outlined,
-              title: 'Phương thức thanh toán',
-            ),
-            _buildPaymentMethod(),
-            _buildOrderTime(),
-            _buildButton(),
-          ],
-        ),
+      body: FutureBuilder<dynamic>(
+        future: OrderApi.fetchOrderDetailById(idOrder!),
+        builder: (ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return LoadingPage();
+          } else {
+            if (snapshot.hasError) {
+              return Center(child: CustomText('Có lỗi xảy ra'));
+            }
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppDimen.horizontalSpacing_16,
+                ),
+                child: Column(
+                  children: [
+                    _buildHeader(
+                      icon: Icons.local_shipping_outlined,
+                      title: 'Trạng thái đơn hàng',
+                    ),
+                    TimeLineWidget(processing: processing),
+                    _buildHeader(
+                      icon: Icons.location_on_outlined,
+                      title: 'Địa chỉ giao hàng',
+                    ),
+                    _buildShippingAddress(context),
+                    _buildListCategories(snapshot.data!.categories),
+                    _buildTotalPrice(),
+                    _buildHeader(
+                      icon: Icons.payments_outlined,
+                      title: 'Phương thức thanh toán',
+                    ),
+                    _buildPaymentMethod(),
+                    _buildOrderTime(),
+                    _buildButton(),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
       ),
     );
   }
@@ -114,10 +130,10 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildShippingAddress() {
+  Widget _buildShippingAddress(BuildContext context) {
     return Consumer<ShippingAddressProvider>(
       builder: (ctx, provider, _) {
-        ShippingAddressModel data = provider.getDefaultAddress();
+        var data = provider.defaultAddress;
         return AddressDetailWidget(
           name: data.name,
           phoneNumber: data.phoneNumber,
@@ -128,7 +144,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListCategories() {
+  Widget _buildListCategories(List<CategoryModel> categories) {
     return Container(
       padding: const EdgeInsets.only(
         top: AppDimen.verticalSpacing_5,
@@ -137,14 +153,10 @@ class OrderDetailScreen extends StatelessWidget {
       constraints: BoxConstraints(
         maxHeight: 350,
       ),
-      child: Scrollbar(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              for (int i = 0; i < 3; i++) CategoryOrderItem(),
-            ],
-          ),
-        ),
+      child: Column(
+        children: categories.map((category) {
+          return CategoryOrderItem(category: category);
+        }).toList(),
       ),
     );
   }

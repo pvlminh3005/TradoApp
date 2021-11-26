@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/models/order_model.dart';
+import 'package:trado_app_uit/models/order_detail_model.dart';
 import '/components/custom_text.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
@@ -38,7 +38,7 @@ class DeliveringSaleOrderWidget extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return SaleOrderItem(
                 orders: data[index],
-                typeOrder: OrderType.DELIVERING,
+                typeOrder: OrderDetailType.DELIVERING,
               );
             },
           );

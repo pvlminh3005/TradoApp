@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:trado_app_uit/controllers/auth_controller.dart';
 import 'package:trado_app_uit/controllers/choose_image_controller.dart';
 import 'package:trado_app_uit/models/user_model.dart';
+import 'package:trado_app_uit/routes/navigator_tabs_route.dart';
 import 'package:trado_app_uit/routes/routes_manage.dart';
 import 'package:trado_app_uit/widgets/custom_avatar.dart';
 import '/components/primary_button.dart';
@@ -16,7 +17,7 @@ import '/widgets/appbar_widget.dart';
 enum EditProfileType { register, profile }
 
 class EditProfileScreen extends StatefulWidget {
-  final editType;
+  final EditProfileType? editType;
 
   const EditProfileScreen({
     this.editType = EditProfileType.profile,
@@ -151,10 +152,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       onPressed: () {
         switch (widget.editType) {
           case EditProfileType.register:
-            Navigator.pushReplacementNamed(context, RouteManage.diff_profile);
+            Navigator.pushReplacementNamed(context, RouteManage.navigator_tab);
             break;
           default:
-            Navigator.pushReplacementNamed(context, RouteManage.my_profile);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NavigatorTab(pages: 4),
+              ),
+            );
             break;
         }
       },

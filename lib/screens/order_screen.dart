@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trado_app_uit/providers/order_provider.dart';
 import '/components/custom_text.dart';
 
 import '../widgets/order_widget/in_processing_order.dart';
@@ -26,6 +28,13 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen>
     with TickerProviderStateMixin {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Provider.of<OrderProvider>(context, listen: false).fetchAllOrders();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -55,7 +64,7 @@ class _OrderScreenState extends State<OrderScreen>
           tabs: [
             _buildTabText('Tất cả'),
             _buildTabText('Đang xử lý'),
-            _buildTabText('Đang giao'),
+            _buildTabText('Đang vận chuyển'),
             _buildTabText('Đã giao'),
             _buildTabText('Đã huỷ'),
           ],

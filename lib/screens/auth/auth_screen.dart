@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/controllers/auth_controller.dart';
+import 'package:provider/provider.dart';
+import '/controllers/auth_controller.dart';
+import '/providers/shipping_address_provider.dart';
 import '/routes/navigator_tabs_route.dart';
 import '/screens/splash/splash_screen.dart';
 import '/utils/auth_preferences.dart';
@@ -32,6 +34,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Future<void> fetchCurrentUser() async {
     await AuthController.getCurrentUser();
+    await Provider.of<ShippingAddressProvider>(context, listen: false)
+        .fetchAllAddresses();
   }
 
   @override

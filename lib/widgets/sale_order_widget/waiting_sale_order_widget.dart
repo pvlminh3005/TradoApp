@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trado_app_uit/constants/dimen.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
-import 'package:trado_app_uit/models/order_model.dart';
+import 'package:trado_app_uit/models/order_detail_model.dart';
 import '/components/custom_text.dart';
 import '/providers/sale_order_provider.dart';
 import '/widgets/sale_order_widget/widget/sale_order_item.dart';

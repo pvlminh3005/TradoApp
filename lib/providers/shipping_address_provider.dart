@@ -10,8 +10,18 @@ class ShippingAddressProvider with ChangeNotifier {
   List<ShippingAddressModel> _listAddresses = [];
   List<ShippingAddressModel> get listAddresses => _listAddresses;
 
+  late ShippingAddressModel _defaultAddress;
+  ShippingAddressModel get defaultAddress => _defaultAddress;
+
   Future<void> fetchAllAddresses() async {
     _listAddresses = await AddressApi.fetchAddresses();
+    fetchDefaultAddress();
+    notifyListeners();
+  }
+
+  void fetchDefaultAddress() {
+    _defaultAddress =
+        _listAddresses.firstWhere((address) => address.defaultAddress == true);
     notifyListeners();
   }
 
@@ -33,12 +43,6 @@ class ShippingAddressProvider with ChangeNotifier {
     await Future.delayed(Duration(seconds: 2));
     _listAddresses.removeWhere((address) => address.id == id);
     notifyListeners();
-  }
-
-  ShippingAddressModel getDefaultAddress() {
-    int index =
-        _listAddresses.indexWhere((address) => address.defaultAddress == true);
-    return _listAddresses[index];
   }
 
   void setDefaultAddress(String? idAddress) {

@@ -31,7 +31,15 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
+
     voucherController = TextEditingController();
+  }
+
+  @override
+  void didChangeDependencies() {
+    Provider.of<CartProvider>(context, listen: false).reloadCheckCart();
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -43,14 +51,13 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CartProvider>(context, listen: false);
-    provider.reloadCheckCart();
-    Map<String, CartModel> listCart = provider.listCart;
+
     return Scaffold(
       appBar: AppBarWidget(
         color: kPrimaryColor,
         title: 'Giỏ hàng',
       ),
-      body: _buildBody(listCart),
+      body: _buildBody(provider.listCart),
     );
   }
 
@@ -206,8 +213,10 @@ class _CartScreenState extends State<CartScreen> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    CheckOutScreen(totalPrice: provider.totalAmount),
+                builder: (context) => CheckOutScreen(
+                  totalPrice: provider.totalAmount,
+                  quantity: provider.listCheckCart.length,
+                ),
               ),
             ),
           ),

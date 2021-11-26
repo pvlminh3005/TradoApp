@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/routes/routes_manage.dart';
+import 'package:trado_app_uit/providers/cart_provider.dart';
+import 'package:trado_app_uit/widgets/loading_page.dart';
+import '/providers/order_provider.dart';
+import '/routes/routes_manage.dart';
 import '/models/shipping_address_model.dart';
 import '/providers/shipping_address_provider.dart';
 import '/components/card_shadow.dart';
@@ -16,9 +19,11 @@ import '/widgets/appbar_widget.dart';
 
 class CheckOutScreen extends StatelessWidget {
   final double totalPrice;
+  final int quantity;
 
   CheckOutScreen({
-    this.totalPrice = 0,
+    this.totalPrice = 0.0,
+    this.quantity = 0,
     Key? key,
   }) : super(key: key);
 
@@ -46,7 +51,7 @@ class CheckOutScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildTitle('Địa chỉ giao hàng'),
-                    _buildDetailShippingAddress(),
+                    _buildDetailShippingAddress(context),
                     _buildTitle('Payment'),
                     _buildDetailPaymentMethod(),
                     _buildInfoPrice(),
@@ -80,10 +85,10 @@ class CheckOutScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailShippingAddress() {
+  Widget _buildDetailShippingAddress(BuildContext context) {
     return Consumer<ShippingAddressProvider>(
       builder: (ctx, provider, _) {
-        ShippingAddressModel data = provider.getDefaultAddress();
+        var data = provider.defaultAddress;
         return AddressDetailWidget(
           name: data.name,
           phoneNumber: data.phoneNumber,
@@ -123,10 +128,20 @@ class CheckOutScreen extends StatelessWidget {
   }
 
   Widget _buildButton(BuildContext context) {
-    return PrimaryButton(
-      title: 'Đặt hàng',
-      onPressed: () {
-        Navigator.pushNamed(context, RouteManage.success);
+    return Consumer<OrderProvider>(
+      builder: (ctx, provider, _) {
+        return PrimaryButton(
+          title: 'Đặt hàng',
+          onPressed: () async {
+            await provider.addToOrder(
+              totalPrice: (totalPrice + deliveryPrice - voucherPrice),
+              quantity: quantity,
+            );
+            Provider.of<CartProvider>(context, listen: false)
+                .removeCategoriesInCartWhenCheckOut();
+            Navigator.pushNamed(context, RouteManage.success);
+          },
+        );
       },
     );
   }

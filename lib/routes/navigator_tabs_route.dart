@@ -13,13 +13,15 @@ import '../screens/home_screen.dart';
 import '../screens/profile_screen.dart';
 
 class NavigatorTab extends StatefulWidget {
+  late int pages;
+
+  NavigatorTab({this.pages = 0});
   @override
   _NavigatorTabState createState() => _NavigatorTabState();
 }
 
 class _NavigatorTabState extends State<NavigatorTab> {
   double size = AppDimen.icon_size_big - 2;
-  int _pages = 0;
   final _screens = [
     HomeScreen(),
     // SuccessScreen(),
@@ -36,45 +38,49 @@ class _NavigatorTabState extends State<NavigatorTab> {
       backgroundColor: kBackgroundColor,
       bottomNavigationBar: CurvedNavigationBar(
         key: NavBarKey.getKey,
-        index: 0,
+        index: widget.pages,
         height: 65,
         backgroundColor: Colors.transparent,
         // buttonBackgroundColor: Theme.of(context).primaryColor,
         onTap: (index) {
           setState(() {
-            _pages = index;
+            widget.pages = index;
           });
         },
         items: [
           Icon(
-            _pages == 0 ? CupertinoIcons.house_fill : CupertinoIcons.house,
+            widget.pages == 0
+                ? CupertinoIcons.house_fill
+                : CupertinoIcons.house,
             size: size,
             color: color,
           ),
           Icon(
-            _pages == 1
+            widget.pages == 1
                 ? CupertinoIcons.bookmark_fill
                 : CupertinoIcons.bookmark,
             size: size,
             color: color,
           ),
           DottedWidget(
-            dottedColor: _pages == 2 ? Colors.white : null,
+            dottedColor: widget.pages == 2 ? Colors.white : null,
             child: Icon(
-              _pages == 2 ? CupertinoIcons.bell_fill : CupertinoIcons.bell,
+              widget.pages == 2
+                  ? CupertinoIcons.bell_fill
+                  : CupertinoIcons.bell,
               size: size,
               color: color,
             ),
           ),
           Icon(
-            _pages == 3
+            widget.pages == 3
                 ? CupertinoIcons.chat_bubble_2_fill
                 : CupertinoIcons.chat_bubble_2,
             size: size,
             color: color,
           ),
           Icon(
-            _pages == 4
+            widget.pages == 4
                 ? CupertinoIcons.person_alt_circle_fill
                 : CupertinoIcons.person_alt_circle,
             size: size + 5,
@@ -82,7 +88,7 @@ class _NavigatorTabState extends State<NavigatorTab> {
           ),
         ],
       ),
-      body: _screens[_pages],
+      body: _screens[widget.pages],
     );
   }
 }

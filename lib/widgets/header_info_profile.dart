@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/widgets/custom_avatar.dart';
+import '/widgets/custom_avatar.dart';
 import '/models/user_model.dart';
 
 import '/components/custom_button.dart';

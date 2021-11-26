@@ -88,7 +88,15 @@ class CartProvider with ChangeNotifier {
       ),
     );
 
-    print(_listCart[idCategory]!.quantity);
+    notifyListeners();
+  }
+
+  void removeCategoriesInCartWhenCheckOut() {
+    _listCheckCart.forEach(
+      (keyCheckCart, value) =>
+          _listCart.removeWhere((key, value) => key == keyCheckCart),
+    );
+
     notifyListeners();
   }
 }

@@ -74,7 +74,9 @@ class SuccessScreen extends StatelessWidget {
         PrimaryButton(
           title: 'Tiếp tục mua sắm',
           margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, RouteManage.cart);
+          },
         ),
         PrimaryButton(
           title: 'Trở về trang chủ',

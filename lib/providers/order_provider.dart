@@ -1,53 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/models/order_detail_model.dart';
 
 class OrderProvider with ChangeNotifier {
   //status 0 => cancel, 1 => in processing, 2 => delivering, 3 => delivered
-  List<Map<String, dynamic>> _listOrders = [
-    {
-      'idOrder': '12312312',
-      'date': '24/09/2021',
-      'quantity': 04,
-      'total': 65.30,
-      'status': 0,
-    },
-    {
-      'idOrder': '541231234',
-      'date': '25/09/2021',
-      'quantity': 01,
-      'total': 80.00,
-      'status': 1,
-    },
-    {
-      'idOrder': '821371238',
-      'date': '26/09/2021',
-      'quantity': 03,
-      'total': 25.50,
-      'status': 2,
-    },
-    {
-      'idOrder': '4444444',
-      'date': '27/09/2021',
-      'quantity': 02,
-      'total': 100.50,
-      'status': 3,
-    }
+  List<OrderModel> _listOrders = [
+    OrderModel(
+      idOrder: '123123',
+      idUser: 'user1',
+      totalPrice: 100,
+      quantity: 3,
+      statusOrder: 0,
+      date: DateTime.now(),
+    ),
+    OrderModel(
+      idOrder: '541231234',
+      idUser: 'user1',
+      totalPrice: 120,
+      quantity: 5,
+      statusOrder: 1,
+      date: DateTime.now(),
+    ),
+    OrderModel(
+      idOrder: '821371238',
+      idUser: 'user1',
+      totalPrice: 200,
+      quantity: 1,
+      statusOrder: 2,
+      date: DateTime.now(),
+    ),
+    OrderModel(
+      idOrder: '4444444',
+      idUser: 'user1',
+      totalPrice: 300,
+      quantity: 2,
+      statusOrder: 3,
+      date: DateTime.now(),
+    ),
   ];
+  List<OrderModel> get listOrders => _listOrders;
 
-  List<Map<String, dynamic>> get listOrders => _listOrders;
+  Future<void> addToOrder({
+    double? totalPrice,
+    int? quantity,
+  }) async {
+    await Future.delayed(Duration(seconds: 2));
+    _listOrders.add(
+      OrderModel(
+        idOrder: 'order4',
+        idUser: 'user1',
+        totalPrice: totalPrice!,
+        quantity: quantity!,
+        date: DateTime.now(),
+      ),
+    );
 
-  List<Map<String, dynamic>> cancelledOrders() {
-    return _listOrders.where((order) => order['status'] == 0).toList();
+    notifyListeners();
   }
 
-  List<Map<String, dynamic>> inProcessingOrders() {
-    return _listOrders.where((order) => order['status'] == 1).toList();
+  Future<void> fetchAllOrders() async {
+    notifyListeners();
   }
 
-  List<Map<String, dynamic>> deliveringOrders() {
-    return _listOrders.where((order) => order['status'] == 2).toList();
+  List<OrderModel> inProcessingOrders() {
+    return _listOrders.where((order) => order.statusOrder == 0).toList();
   }
 
-  List<Map<String, dynamic>> deliveredOrders() {
-    return _listOrders.where((order) => order['status'] == 3).toList();
+  List<OrderModel> deliveringOrders() {
+    return _listOrders.where((order) => order.statusOrder == 1).toList();
+  }
+
+  List<OrderModel> deliveredOrders() {
+    return _listOrders.where((order) => order.statusOrder == 2).toList();
+  }
+
+  List<OrderModel> cancelledOrders() {
+    return _listOrders.where((order) => order.statusOrder == 3).toList();
   }
 }
