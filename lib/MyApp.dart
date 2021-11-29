@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import '/routes/providers_manage.dart';
 import '/routes/routes_manage.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
           primaryColor: kPrimaryColor,
           scaffoldBackgroundColor: kBackgroundColor,
         ),
+        builder: EasyLoading.init(),
         home: AuthScreen(),
         routes: RouteManage.routesApp,
       ),

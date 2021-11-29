@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/loading/loading_app.dart';
 import '/controllers/auth_controller.dart';
 import '/providers/shipping_address_provider.dart';
 import '/routes/navigator_tabs_route.dart';
@@ -32,9 +33,11 @@ class _AuthScreenState extends State<AuthScreen> {
     return AuthPreferences.getToken() ?? '';
   }
 
-  Future<void> fetchCurrentUser() async {
-    await AuthController.getCurrentUser();
-    await Provider.of<ShippingAddressProvider>(context, listen: false)
+  void fetchCurrentUser() {
+    LoadingApp.loadingPage(seconds: 3);
+
+    AuthController.getCurrentUser();
+    Provider.of<ShippingAddressProvider>(context, listen: false)
         .fetchAllAddresses();
   }
 

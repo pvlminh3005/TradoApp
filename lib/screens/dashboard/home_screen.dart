@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../components/loading/loading_app.dart';
 import '/components/custom_icon.dart';
 import '/components/data_search.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/models/category_model.dart';
-import '/providers/cart_provider.dart';
 import '/providers/category_provider.dart';
-import '/routes/routes_manage.dart';
-import '/widgets/bage.dart';
 import '/widgets/category_item.dart';
 import '/widgets/appbar_widget.dart';
 
@@ -27,8 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // List<CategoryModel> _listCategories =
-    //     Provider.of<CategoryProvider>(context, listen: false).listCategories;
     return Scaffold(
       appBar: AppBarWidget(
         leading: IconButton(

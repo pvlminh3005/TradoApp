@@ -22,10 +22,18 @@ class Validator {
   }
 
   static String? validateEmpty(String? value) {
-    return value != null && value.isEmpty ? "Can't be left blank" : null;
+    return value != null && value.isEmpty
+        ? "Trường này không được để trống"
+        : null;
   }
 
   static String? validateName(String? value) {
-    return value != null && value.isEmpty ? "Please enter a name" : null;
+    return value != null && value.isEmpty ? "Vui lòng nhập họ tên" : null;
+  }
+
+  static String? validatePrice(String? value) {
+    return value != null && value.isEmpty
+        ? "Vui lòng nhập giá sản phẩm (đ)"
+        : null;
   }
 }

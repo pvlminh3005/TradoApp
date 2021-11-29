@@ -5,6 +5,7 @@ import 'package:trado_app_uit/components/custom_input.dart';
 import 'package:trado_app_uit/components/custom_text.dart';
 import 'package:trado_app_uit/components/primary_button.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
+import 'package:trado_app_uit/utils/validator.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/controllers/choose_image_controller.dart';
@@ -22,6 +23,9 @@ class EditMyCategoryScreen extends StatefulWidget {
 class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
   bool status = true;
   List<Widget> listImages = [];
+  String validatorImage = '';
+  final categoryKey = GlobalKey<FormState>();
+
   late TextEditingController nameProductController;
   late TextEditingController priceProductController;
   late TextEditingController discountProductController;
@@ -34,7 +38,7 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
     priceProductController = TextEditingController();
     discountProductController = TextEditingController();
     descriptionProductController = TextEditingController();
-    quantityProductController = TextEditingController();
+    quantityProductController = TextEditingController(text: '1');
 
     super.initState();
   }
@@ -92,10 +96,26 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
       child: Padding(
         padding:
             const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_10),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildCustomImage(),
-            listImages.isEmpty ? SizedBox.shrink() : Row(children: listImages),
+            Row(
+              children: [
+                _buildCustomImage(),
+                listImages.isEmpty
+                    ? SizedBox.shrink()
+                    : Row(children: listImages),
+              ],
+            ),
+            validatorImage.isNotEmpty
+                ? CustomText(
+                    validatorImage,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: AppDimen.verticalSpacing_5),
+                    color: kErrorColor,
+                    fontSize: FontSize.SMALL,
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
       ),
@@ -138,41 +158,46 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
   }
 
   Widget _buildListInput() {
-    return Column(
-      children: [
-        CustomInput(
-          controller: nameProductController,
-          hintText: 'Tên sản phẩm',
-          margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-          maxLength: 70,
-        ),
-        CustomInput(
-          controller: priceProductController,
-          hintText: 'Giá (đ)',
-          margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-          keyboardType: TextInputType.number,
-        ),
-        CustomInput(
-          controller: discountProductController,
-          hintText: 'Giảm giá (%)',
-          margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-          keyboardType: TextInputType.number,
-          maxLength: 3,
-        ),
-        CustomInput(
-          controller: descriptionProductController,
-          hintText: 'Mô tả chi tiết sản phẩm',
-          margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-          maxLines: 10,
-        ),
-        CustomInput(
-          controller: quantityProductController,
-          hintText: 'Số lượng',
-          margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-          keyboardType: TextInputType.number,
-        ),
-        _buildSwitch(),
-      ],
+    return Form(
+      key: categoryKey,
+      child: Column(
+        children: [
+          CustomInput(
+            controller: nameProductController,
+            labelText: 'Tên sản phẩm',
+            margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+            maxLength: 70,
+            validator: Validator.validateEmpty,
+          ),
+          CustomInput(
+            controller: priceProductController,
+            labelText: 'Giá (đ)',
+            margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+            keyboardType: TextInputType.number,
+            validator: Validator.validatePrice,
+          ),
+          CustomInput(
+            controller: discountProductController,
+            labelText: 'Giảm giá (%)',
+            margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+            keyboardType: TextInputType.number,
+            maxLength: 3,
+          ),
+          CustomInput(
+            controller: descriptionProductController,
+            hintText: 'Mô tả chi tiết sản phẩm',
+            margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+            maxLines: 10,
+          ),
+          CustomInput(
+            controller: quantityProductController,
+            labelText: 'Số lượng',
+            margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+            keyboardType: TextInputType.number,
+          ),
+          _buildSwitch(),
+        ],
+      ),
     );
   }
 
@@ -180,7 +205,21 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
     return PrimaryButton(
       title: 'Thêm sản phẩm mới',
       margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
-      onPressed: () {},
+      onPressed: () {
+        if (categoryKey.currentState!.validate()) {
+          if (listImages.isEmpty) {
+            setState(() {
+              validatorImage = 'Vui lòng chọn ít nhất 1 ảnh';
+            });
+            return;
+          } else {
+            setState(() {
+              validatorImage = '';
+            });
+          }
+          print('OK');
+        }
+      },
     );
   }
 

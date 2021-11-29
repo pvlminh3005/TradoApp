@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/components/loading/config_loading.dart';
 import 'MyApp.dart';
 import 'package:flutter/services.dart';
 
@@ -12,4 +13,5 @@ Future<void> main() async {
   await AuthPreferences.init();
 
   runApp(MyApp());
+  configLoading();
 }

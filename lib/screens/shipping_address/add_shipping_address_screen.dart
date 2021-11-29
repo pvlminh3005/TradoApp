@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/loading/loading_app.dart';
+import 'package:trado_app_uit/utils/validator.dart';
 import '/components/custom_alert.dart';
 import '/components/custom_input.dart';
 import '/components/primary_button.dart';
@@ -34,6 +36,8 @@ class AddShippingAddressScreen extends StatefulWidget {
 }
 
 class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
+  final addressKey = GlobalKey<FormState>();
+
   late TextEditingController nameController;
   late TextEditingController phoneController;
   late TextEditingController addressController;
@@ -95,26 +99,33 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
   Widget _buildInput() {
     return Expanded(
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            InputAddressWidget(
-              title: 'Họ và tên',
-              controller: nameController,
-            ),
-            InputAddressWidget(
-              title: 'Số điện thoại',
-              controller: phoneController,
-              keyboardType: TextInputType.phone,
-            ),
-            InputAddressWidget(
-              title: 'Địa chỉ nhận hàng',
-              controller: addressController,
-            ),
-            InputAddressWidget(
-              title: 'Ghi chú thêm',
-              controller: noteController,
-            ),
-          ],
+        child: Form(
+          key: addressKey,
+          child: Column(
+            children: [
+              InputAddressWidget(
+                title: 'Họ và tên',
+                controller: nameController,
+                validator: Validator.validateName,
+              ),
+              InputAddressWidget(
+                title: 'Số điện thoại',
+                controller: phoneController,
+                keyboardType: TextInputType.phone,
+                validator: Validator.validateEmpty,
+              ),
+              InputAddressWidget(
+                title: 'Địa chỉ nhận hàng',
+                controller: addressController,
+                validator: Validator.validateEmpty,
+              ),
+              InputAddressWidget(
+                controller: noteController,
+                hintTitle: 'Ghi chú thêm',
+                maxLines: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -123,23 +134,17 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
   Widget _buildButtonAdd() {
     return Consumer<ShippingAddressProvider>(builder: (ctx, provider, _) {
       Future<void> onPressed() async {
-        await provider.addNewAddress(
-          name: nameController.text,
-          phone: phoneController.text,
-          address: addressController.text,
-          note: noteController.text,
-        );
-        showDialog(
-          context: context,
-          builder: (context) {
-            return CustomAlert(
-              alertContent: 'Thêm địa chỉ thành công!',
-              showButton: false,
-            );
-          },
-        );
-        await Future.delayed(Duration(milliseconds: 1500));
-        Navigator.of(context).popAndPushNamed(RouteManage.my_profile);
+        if (addressKey.currentState!.validate()) {
+          await provider.addNewAddress(
+            name: nameController.text,
+            phone: phoneController.text,
+            address: addressController.text,
+            note: noteController.text,
+          );
+          LoadingApp.LOADSUCCESS(title: 'Thêm địa chỉ thành công');
+          await Future.delayed(Duration(milliseconds: 1500));
+          Navigator.of(context).popAndPushNamed(RouteManage.my_profile);
+        }
       }
 
       return PrimaryButton(
@@ -184,13 +189,20 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
 }
 
 class InputAddressWidget extends StatelessWidget {
-  final String? title;
+  final String title;
+  final String hintTitle;
   final TextEditingController? controller;
   final TextInputType keyboardType;
+  final String? Function(String?)? validator;
+  final int maxLines;
+
   const InputAddressWidget({
-    this.title,
+    this.title = '',
+    this.hintTitle = '',
     this.controller,
     this.keyboardType = TextInputType.text,
+    this.validator,
+    this.maxLines = 1,
     Key? key,
   }) : super(key: key);
 
@@ -198,7 +210,8 @@ class InputAddressWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomInput(
       controller: controller,
-      labelText: title!,
+      labelText: title,
+      hintText: hintTitle,
       backgroundColor: kBackgroundColorWhite,
       borderWidth: 1,
       borderColor: kColorItemGrey,
@@ -206,6 +219,8 @@ class InputAddressWidget extends StatelessWidget {
       fontSize: FontSize.SMALL_1,
       fontWeight: FontWeight.w700,
       keyboardType: keyboardType,
+      validator: validator,
+      maxLines: maxLines,
     );
   }
 }
