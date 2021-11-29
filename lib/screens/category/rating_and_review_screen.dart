@@ -61,7 +61,6 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
     List<RateModel> listRates =
         Provider.of<RateReviewProvider>(context, listen: false)
             .findRateByIdCategory(idCategory);
-    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBarWidget(

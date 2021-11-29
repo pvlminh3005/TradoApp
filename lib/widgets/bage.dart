@@ -19,10 +19,10 @@ class Badge extends StatelessWidget {
       children: [
         child,
         Positioned(
-          right: 8,
-          top: 8,
+          right: 5.0,
+          top: 5.0,
           child: CircleAvatar(
-            radius: 9,
+            radius: 9.0,
             backgroundColor: kErrorColor,
             child: CustomText(
               value,

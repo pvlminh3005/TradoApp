@@ -18,14 +18,21 @@ import '/providers/rate_review_provider.dart';
 
 import '/providers/cart_provider.dart';
 import '/widgets/bage.dart';
-import '../widgets/appbar_widget.dart';
-import '../widgets/scroll_hide_widget.dart';
-import '../widgets/bottom_category_detail.dart';
-import '../models/category_model.dart';
-import '../providers/category_provider.dart';
+import '../../widgets/appbar_widget.dart';
+import '../../widgets/scroll_hide_widget.dart';
+import '../../widgets/bottom_category_detail.dart';
+import '../../models/category_model.dart';
+import '../../providers/category_provider.dart';
 
 class CategoryDetailScreen extends StatefulWidget {
-  CategoryDetailScreen({Key? key}) : super(key: key);
+  final String? idCategory;
+  final CategoryType typeCategory;
+
+  CategoryDetailScreen({
+    this.idCategory,
+    this.typeCategory = CategoryType.ANOTHER_CATEGORY,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CategoryDetailScreenState createState() => _CategoryDetailScreenState();
@@ -322,10 +329,9 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var idCategory = ModalRoute.of(context)?.settings.arguments as String;
     CategoryModel category =
         Provider.of<CategoryProvider>(context, listen: false)
-            .findCategoryById(idCategory);
+            .findCategoryById(widget.idCategory!);
     double priceDecreaseSale = category.priceSale != 0
         ? (category.price * (100 - category.priceSale) / 100)
         : category.price;
@@ -338,23 +344,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       appBar: AppBarWidget(
         color: kBackgroundColorWhite,
         background: Colors.transparent,
-        childAction: [
-          Consumer<CartProvider>(
-            builder: (ctx, cartData, ch) => Badge(
-              child: IconButton(
-                icon: Icon(
-                  CupertinoIcons.cart_fill,
-                  size: 25,
-                  color: kCardColor,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(RouteManage.cart);
-                },
-              ),
-              value: cartData.cartCount.toString(),
-            ),
-          ),
-        ],
+        showCart: true,
       ),
       body: Column(
         children: [
@@ -389,15 +379,18 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
-      floatingActionButton: ScrollToHideWidget(
-        controller: _scrollController,
-        child: BottomCategoryDetail(
-          category: category,
-          priceDecreaseSale:
-              priceDecreaseSale == 0 ? priceDecreaseSale : priceDecreaseSale,
-          // quantity: quantityCategory,
-        ),
-      ),
+      floatingActionButton: widget.typeCategory == CategoryType.ANOTHER_CATEGORY
+          ? ScrollToHideWidget(
+              controller: _scrollController,
+              child: BottomCategoryDetail(
+                category: category,
+                priceDecreaseSale: priceDecreaseSale == 0
+                    ? priceDecreaseSale
+                    : priceDecreaseSale,
+                // quantity: quantityCategory,
+              ),
+            )
+          : null,
     );
   }
 }

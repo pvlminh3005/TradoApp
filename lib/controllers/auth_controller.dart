@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '/providers/shipping_address_provider.dart';
 import '/utils/conver_scaffold_messenger.dart';
 import '/routes/routes_manage.dart';
 import '/models/user_model.dart';
@@ -95,4 +93,6 @@ class AuthController {
       print(e);
     }
   }
+
+  static Future<void> updateProfileUser() async {}
 }

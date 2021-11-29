@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/sale_order_provider.dart';
+import '/providers/sale_order_provider.dart';
 import '/providers/category_provider.dart';
-import '/widgets/loading_page.dart';
 import '/components/custom_text.dart';
 import '/constants/sizes.dart';
 import '/providers/order_provider.dart';
@@ -16,7 +15,7 @@ import '/routes/routes_manage.dart';
 import '/widgets/appbar_widget.dart';
 import '/widgets/bage.dart';
 import '/widgets/header_info_profile.dart';
-import '../components/primary_button.dart';
+import '../../components/primary_button.dart';
 import '/widgets/profile_widget.dart/card_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -34,23 +33,7 @@ class ProfileScreen extends StatelessWidget {
       background: kBackgroundColorWhite,
       color: kPrimaryColor,
       showLeading: false,
-      childAction: [
-        Consumer<CartProvider>(
-          builder: (ctx, cartData, ch) => Badge(
-            child: IconButton(
-              icon: Icon(
-                CupertinoIcons.cart_fill,
-                size: 25,
-                color: kPrimaryColor,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(RouteManage.cart);
-              },
-            ),
-            value: cartData.cartCount.toString(),
-          ),
-        ),
-      ],
+      showCart: true,
     );
   }
 

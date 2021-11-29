@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/routes/routes_manage.dart';
-import 'package:trado_app_uit/screens/order_detail_screen.dart';
+import 'package:trado_app_uit/screens/order/order_detail_screen.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
 import '/components/custom_text.dart';
@@ -121,13 +121,13 @@ class OrderCard extends StatelessWidget {
       case 1: //delivering
         return _buildStatusStyle(
           icon: Icons.local_shipping_outlined,
-          title: 'Đang giao',
-          color: kBlack,
+          title: 'Đang vận chuyển',
+          color: kBlack.withOpacity(.7),
         );
       case 2: // success
         return _buildStatusStyle(
           icon: CupertinoIcons.checkmark_circle,
-          title: 'Đã giao thành công',
+          title: 'Vận chuyển thành công',
           color: Colors.green,
         );
 

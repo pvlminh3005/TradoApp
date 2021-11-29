@@ -1,3 +1,8 @@
+enum CategoryType {
+  ANOTHER_CATEGORY,
+  MY_CATEGORY,
+}
+
 class CategoryModel {
   late String id;
   late String idUser;

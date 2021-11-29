@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '/providers/order_provider.dart';
-
-import 'widgets/order_card.dart';
+import '/models/order_detail_model.dart';
+import '../../../widgets/order_widget/order_card.dart';
 
 class InprocessingOrderWidget extends StatelessWidget {
-  const InprocessingOrderWidget({Key? key}) : super(key: key);
+  final List<OrderModel> inprocessOrders;
+
+  const InprocessingOrderWidget({
+    this.inprocessOrders = const [],
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List _listInprocessingOrders =
-        Provider.of<OrderProvider>(context, listen: false).inProcessingOrders();
-
     return ListView.builder(
-      itemCount: _listInprocessingOrders.length,
+      itemCount: inprocessOrders.length,
       itemBuilder: (BuildContext context, int index) {
-        var order = _listInprocessingOrders[index];
+        var order = inprocessOrders[index];
         return OrderCard(
           idOrder: order.idOrder,
           date: order.date,

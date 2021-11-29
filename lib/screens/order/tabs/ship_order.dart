@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '/providers/order_provider.dart';
-import 'widgets/order_card.dart';
+import '/models/order_detail_model.dart';
+import '../../../widgets/order_widget/order_card.dart';
 
 class ShipOrderWidget extends StatelessWidget {
-  const ShipOrderWidget({Key? key}) : super(key: key);
+  final List<OrderModel> shipOrders;
+
+  const ShipOrderWidget({
+    this.shipOrders = const [],
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List _listDeliveringOrders =
-        Provider.of<OrderProvider>(context, listen: false).deliveringOrders();
-
     return ListView.builder(
-      itemCount: _listDeliveringOrders.length,
+      itemCount: shipOrders.length,
       itemBuilder: (BuildContext context, int index) {
-        var order = _listDeliveringOrders[index];
+        var order = shipOrders[index];
         return OrderCard(
           idOrder: order.idOrder,
           date: order.date,

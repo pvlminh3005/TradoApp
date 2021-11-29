@@ -36,14 +36,36 @@ class SaleOrderProvider with ChangeNotifier {
         .toList();
   }
 
+  List<OrderDetailModel> fetchSuccessSaleOrders() {
+    return _listSaleOrders
+        .where(
+          (order) =>
+              OrderDetailType.values[order.statusOrder] ==
+              OrderDetailType.SUCCESS,
+        )
+        .toList();
+  }
+
   // Future<OrderDetailModel> fetchDetailOrderById(String id) async {
   //   await Future.delayed(Duration(seconds: 2));
   //   return _listSaleOrders.firstWhere((order) => order.id == id);
   // }
 
-  Future<void> changeStatusOrder(String id) async {
+  Future<void> changeStatusOrder(
+    String id, {
+    required OrderDetailType type,
+  }) async {
+    await Future.delayed(Duration(seconds: 2));
     int index = _listSaleOrders.indexWhere((order) => order.id == id);
-    _listSaleOrders[index].statusOrder = 1;
+
+    switch (type) {
+      case OrderDetailType.DELIVERING:
+        _listSaleOrders[index].statusOrder = OrderDetailType.DELIVERING.index;
+        break;
+      default:
+        _listSaleOrders[index].statusOrder = OrderDetailType.SUCCESS.index;
+        break;
+    }
     notifyListeners();
   }
 }

@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
+import 'package:trado_app_uit/screens/category/category_detail_screen.dart';
+import '/constants/dimen.dart';
 import '/components/config_price.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
@@ -14,7 +15,13 @@ import '../models/category_model.dart';
 
 class CategoryItem extends StatelessWidget {
   final CategoryModel category;
-  const CategoryItem({required this.category, Key? key}) : super(key: key);
+  final CategoryType typeCategory;
+
+  const CategoryItem({
+    required this.category,
+    this.typeCategory = CategoryType.ANOTHER_CATEGORY,
+    Key? key,
+  }) : super(key: key);
 
   Widget _buildFooterItem(IconData icon, String data) {
     return Padding(
@@ -51,9 +58,12 @@ class CategoryItem extends StatelessWidget {
         : category.price;
 
     return GestureDetector(
-      onTap: () => Navigator.of(context).pushNamed(
-        RouteManage.category_detail,
-        arguments: category.id,
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CategoryDetailScreen(
+            idCategory: category.id,
+          ),
+        ),
       ),
       child: Container(
         child: Stack(

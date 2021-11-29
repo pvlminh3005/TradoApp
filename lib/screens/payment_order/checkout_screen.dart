@@ -10,7 +10,7 @@ import '/components/card_shadow.dart';
 import '/components/config_price.dart';
 import '/components/primary_button.dart';
 import '/constants/sizes.dart';
-import '../widgets/checkout_widget/address_detail_widget.dart';
+import '../../widgets/checkout_widget/address_detail_widget.dart';
 import '/widgets/payment_method_widget.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';

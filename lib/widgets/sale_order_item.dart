@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/providers/sale_order_provider.dart';
-import '../../../models/order_detail_model.dart';
-import '/providers/shipping_address_provider.dart';
+import '../models/order_detail_model.dart';
 import '/widgets/category_order_item.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
@@ -57,25 +56,43 @@ class SaleOrderItem extends StatelessWidget {
           color: kTextDark,
         ),
         const Spacer(),
-        TextSaleOrder(
-          typeOrder == OrderDetailType.WAITING ? 'Chờ xác nhận' : '',
-          fontWeight: FontWeight.w700,
-          color: typeOrder == OrderDetailType.WAITING
-              ? kHighlightColor
-              : kColorGreen,
-        ),
+        _buildTextStatus(),
       ],
     );
   }
 
+  Widget _buildTextStatus() {
+    switch (typeOrder) {
+      case OrderDetailType.DELIVERING:
+        return TextSaleOrder(
+          'Đang vận chuyển',
+          fontWeight: FontWeight.w700,
+          color: kColorGreen,
+        );
+      case OrderDetailType.SUCCESS:
+        return TextSaleOrder(
+          'Đã vận chuyển',
+          fontWeight: FontWeight.w700,
+          color: kTextColorGrey,
+        );
+      default:
+        return TextSaleOrder(
+          'Chờ xác nhận',
+          fontWeight: FontWeight.w700,
+          color: kHighlightColor,
+        );
+    }
+  }
+
   Widget _buildInfoCategory() {
     return Container(
-      height: 150,
-      child: ListView.builder(
-        itemCount: orders.categories.length,
-        itemBuilder: (BuildContext context, int index) {
-          return CategoryOrderItem(category: orders.categories[index]);
-        },
+      constraints: BoxConstraints(maxHeight: 500),
+      child: SingleChildScrollView(
+        child: Column(
+          children: orders.categories.map((category) {
+            return CategoryOrderItem(category: category);
+          }).toList(),
+        ),
       ),
     );
   }
@@ -158,28 +175,61 @@ class SaleOrderItem extends StatelessWidget {
             fontSize: FontSize.SMALL,
           ),
         ),
-        Consumer<SaleOrderProvider>(
+        _buildButton(),
+      ],
+    );
+  }
+
+  Widget _buildButton() {
+    switch (typeOrder) {
+      case OrderDetailType.WAITING:
+        return Consumer<SaleOrderProvider>(
           builder: (context, provider, _) => CustomButton(
-            typeOrder == OrderDetailType.WAITING
-                ? 'Xác nhận đơn hàng'
-                : 'Đang vận chuyển',
+            'Xác nhận đơn hàng',
             radius: 0,
             sizeStyle: CustomBottomSizeStyle.WRAP_CONTENT,
             padding: const EdgeInsets.all(AppDimen.spacing_2 - 3),
             fontSize: FontSize.MEDIUM,
             fontWeight: FontWeight.w500,
-            backgroundColor: typeOrder == OrderDetailType.WAITING
-                ? kPrimaryColor
-                : kColorGreen,
-            onTap: typeOrder == OrderDetailType.WAITING
-                ? () {
-                    provider.changeStatusOrder(orders.id);
-                  }
-                : () {},
+            backgroundColor: kPrimaryColor,
+            onTap: () async {
+              await provider.changeStatusOrder(
+                orders.id,
+                type: OrderDetailType.DELIVERING,
+              );
+            },
           ),
-        ),
-      ],
-    );
+        );
+      case OrderDetailType.DELIVERING:
+        return Consumer<SaleOrderProvider>(
+          builder: (context, provider, _) => CustomButton(
+            'Đang vận chuyển',
+            radius: 0,
+            sizeStyle: CustomBottomSizeStyle.WRAP_CONTENT,
+            padding: const EdgeInsets.all(AppDimen.spacing_2 - 3),
+            fontSize: FontSize.MEDIUM,
+            fontWeight: FontWeight.w500,
+            backgroundColor: kColorGreen,
+            onTap: () async {
+              await provider.changeStatusOrder(
+                orders.id,
+                type: OrderDetailType.SUCCESS,
+              );
+            },
+          ),
+        );
+      default:
+        return CustomButton(
+          'Đã vận chuyển',
+          radius: 0,
+          sizeStyle: CustomBottomSizeStyle.WRAP_CONTENT,
+          padding: const EdgeInsets.all(AppDimen.spacing_2 - 3),
+          fontSize: FontSize.MEDIUM,
+          fontWeight: FontWeight.w500,
+          backgroundColor: kTextColorGrey,
+          onTap: () {},
+        );
+    }
   }
 }
 

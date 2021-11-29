@@ -2,15 +2,15 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '/constants/dimen.dart';
-import '/screens/message_screen.dart';
-import '/screens/favorite_screen.dart';
+import '../screens/dashboard/message_screen.dart';
+import '../screens/dashboard/favorite_screen.dart';
 import '/widgets/dotted_widget.dart';
 
 import '/constants/constants.dart';
 import './navigator_key.dart';
-import '../screens/notification_screen.dart';
-import '../screens/home_screen.dart';
-import '../screens/profile_screen.dart';
+import '../screens/dashboard/notification_screen.dart';
+import '../screens/dashboard/home_screen.dart';
+import '../screens/dashboard/profile_screen.dart';
 
 class NavigatorTab extends StatefulWidget {
   late int pages;

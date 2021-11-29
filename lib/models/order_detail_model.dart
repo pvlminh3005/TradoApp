@@ -4,6 +4,7 @@ import 'category_model.dart';
 enum OrderDetailType {
   WAITING,
   DELIVERING,
+  SUCCESS,
 }
 
 enum StatusOrderType {
@@ -20,6 +21,7 @@ class OrderDetailModel {
   late int statusOrder;
   final double totalPrice;
   final int methodPayment;
+  final int quantityCategories;
   final ShippingAddressModel address;
   final List<CategoryModel> categories;
   late TimeOrderModel time;
@@ -31,6 +33,7 @@ class OrderDetailModel {
     this.statusOrder = 0, // 1, 2
     this.totalPrice = 0.0,
     this.methodPayment = 1, //1: cash
+    this.quantityCategories = 0,
     required this.address,
     required this.time,
     required this.categories,

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
-import 'package:trado_app_uit/models/order_detail_model.dart';
+import '/constants/dimen.dart';
+import '/constants/sizes.dart';
 import '/components/custom_text.dart';
 import '/providers/sale_order_provider.dart';
-import '/widgets/sale_order_widget/widget/sale_order_item.dart';
+import '../../../widgets/sale_order_item.dart';
 
 class WaitingSaleOrderWidget extends StatelessWidget {
   const WaitingSaleOrderWidget({Key? key}) : super(key: key);

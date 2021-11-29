@@ -89,6 +89,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
               return CategoryOrderItem(
                 showMore: true,
                 category: category,
+                showQuantity: false,
               );
             },
           ),

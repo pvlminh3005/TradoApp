@@ -4,10 +4,12 @@ import '/constants/constants.dart';
 class DottedWidget extends StatelessWidget {
   final Widget? child;
   final Color? dottedColor;
+  final bool showDotted;
 
   const DottedWidget({
     this.child,
     this.dottedColor,
+    this.showDotted = true,
     Key? key,
   }) : super(key: key);
 
@@ -17,7 +19,7 @@ class DottedWidget extends StatelessWidget {
       alignment: Alignment.topRight,
       children: [
         child!,
-        _buildDotted(),
+        showDotted ? _buildDotted() : const SizedBox.shrink(),
       ],
     );
   }

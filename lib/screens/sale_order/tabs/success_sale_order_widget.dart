@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/models/order_detail_model.dart';
+import '../../../widgets/sale_order_item.dart';
 import '/components/custom_text.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
+import '/models/order_detail_model.dart';
 import '/providers/sale_order_provider.dart';
 
-import 'widget/sale_order_item.dart';
-
-class DeliveringSaleOrderWidget extends StatelessWidget {
-  const DeliveringSaleOrderWidget({Key? key}) : super(key: key);
+class SuccessSaleOrderWidget extends StatelessWidget {
+  const SuccessSaleOrderWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<SaleOrderProvider>(
       builder: (context, provider, _) {
-        var data = provider.fetchDeliveringSaleOrders();
+        var data = provider.fetchSuccessSaleOrders();
         if (data.length == 0) {
           return Center(
             child: Column(
@@ -25,7 +24,7 @@ class DeliveringSaleOrderWidget extends StatelessWidget {
                   'assets/images/empty_box.png',
                 ),
                 CustomText(
-                  'Chưa có đơn hàng nào chờ vận chuyển!',
+                  'Chưa có đơn hàng nào đã giao thành công!',
                   fontSize: FontSize.BIG,
                   margin: const EdgeInsets.only(top: AppDimen.spacing_2),
                 )
@@ -38,7 +37,7 @@ class DeliveringSaleOrderWidget extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return SaleOrderItem(
                 orders: data[index],
-                typeOrder: OrderDetailType.DELIVERING,
+                typeOrder: OrderDetailType.SUCCESS,
               );
             },
           );

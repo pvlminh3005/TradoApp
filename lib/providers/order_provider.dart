@@ -1,43 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/models/order_detail_model.dart';
+import 'package:trado_app_uit/services/order_api.dart';
 
 class OrderProvider with ChangeNotifier {
+  OrderProvider() {
+    fetchAllMyOrders();
+  }
   //status 0 => cancel, 1 => in processing, 2 => delivering, 3 => delivered
-  List<OrderModel> _listOrders = [
-    OrderModel(
-      idOrder: '123123',
-      idUser: 'user1',
-      totalPrice: 100,
-      quantity: 3,
-      statusOrder: 0,
-      date: DateTime.now(),
-    ),
-    OrderModel(
-      idOrder: '541231234',
-      idUser: 'user1',
-      totalPrice: 120,
-      quantity: 5,
-      statusOrder: 1,
-      date: DateTime.now(),
-    ),
-    OrderModel(
-      idOrder: '821371238',
-      idUser: 'user1',
-      totalPrice: 200,
-      quantity: 1,
-      statusOrder: 2,
-      date: DateTime.now(),
-    ),
-    OrderModel(
-      idOrder: '4444444',
-      idUser: 'user1',
-      totalPrice: 300,
-      quantity: 2,
-      statusOrder: 3,
-      date: DateTime.now(),
-    ),
-  ];
+
+  List<OrderModel> _listOrders = [];
   List<OrderModel> get listOrders => _listOrders;
+
+  Future<void> fetchAllMyOrders() async {
+    _listOrders = await OrderApi.fetchAllMyOrders();
+    notifyListeners();
+  }
 
   Future<void> addToOrder({
     double? totalPrice,
@@ -54,10 +31,6 @@ class OrderProvider with ChangeNotifier {
       ),
     );
 
-    notifyListeners();
-  }
-
-  Future<void> fetchAllOrders() async {
     notifyListeners();
   }
 

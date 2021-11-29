@@ -64,7 +64,10 @@ class ManageMyCategoryScreen extends StatelessWidget {
                     itemCount: provider.listCategories.length,
                     itemBuilder: (BuildContext context, int index) {
                       CategoryModel category = provider.listCategories[index];
-                      return CategoryItem(category: category);
+                      return CategoryItem(
+                        category: category,
+                        typeCategory: CategoryType.MY_CATEGORY,
+                      );
                     },
                   );
                 }

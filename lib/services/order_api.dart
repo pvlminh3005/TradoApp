@@ -13,7 +13,7 @@ class OrderApi {
   OrderApi._internal();
   static final OrderApi _instance = OrderApi._internal();
 
-  static Future<List<OrderDetailModel>> fetchAllOrders() async {
+  static Future<List<OrderModel>> fetchAllMyOrders() async {
     try {
       List<OrderDetailModel> data = [
         OrderDetailModel(
@@ -42,6 +42,51 @@ class OrderApi {
               quantity: 2,
             ),
           ],
+          statusOrder: 1,
+          quantityCategories: 1,
+          time: TimeOrderModel(
+            timeDelivery: DateTime.now(),
+            timeFinish: DateTime.now(),
+            timeOrder: DateTime.now(),
+          ),
+        ),
+        OrderDetailModel(
+          id: 'order2',
+          idUser: 'user1',
+          address: ShippingAddressModel(
+            id: 'sa3',
+            name: 'Tu Quyen',
+            phoneNumber: '(+84) 123456789',
+            address:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Semper mi magna justo, orci. Amet quis tincidunt lectus purus. Congue diam id id ut dignissim pellentesque tortor consectetur. Duis ornare eu mi vitae ac sagittis vitae porta platea.',
+          ),
+          totalPrice: 300.500,
+          categories: [
+            CategoryModel(
+              id: 'c3',
+              idUser: 'user2',
+              title:
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem',
+              price: 60000,
+              imageUrl: [
+                'https://media.istockphoto.com/photos/portrait-of-a-vietnamese-girl-with-a-red-dress-in-the-lotus-hand-picture-id1187554319?k=20&m=1187554319&s=612x612&w=0&h=5l3PZl3ffXJZJbWZCkUNb5LwXRYrs4zogO3k_gdqTG8=',
+              ],
+              quantity: 1,
+            ),
+            CategoryModel(
+              id: 'c1',
+              idUser: 'user1',
+              title: 'Sony-Canon',
+              price: 155000,
+              imageUrl: [
+                'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+                'https://images.unsplash.com/photo-1596756003714-9a02b585a1a6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2Fub258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+                'https://images.unsplash.com/photo-1603208235561-006b83924146?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGNhbm9ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+              ],
+              quantity: 2,
+            ),
+          ],
+          statusOrder: 2,
           time: TimeOrderModel(
             timeDelivery: DateTime.now(),
             timeFinish: DateTime.now(),
@@ -49,8 +94,18 @@ class OrderApi {
           ),
         )
       ];
+      var convertData = data
+          .map((order) => OrderModel(
+                idOrder: order.id,
+                idUser: order.idUser,
+                totalPrice: order.totalPrice,
+                quantity: order.quantityCategories,
+                statusOrder: order.statusOrder,
+                date: order.time.timeOrder,
+              ))
+          .toList();
       await Future.delayed(Duration(seconds: 3));
-      return data;
+      return convertData;
     } catch (e) {
       return [];
     }
@@ -60,7 +115,7 @@ class OrderApi {
     try {
       List<OrderDetailModel> data = [
         OrderDetailModel(
-          id: 'order2',
+          id: 'order3',
           idUser: 'user1',
           name: 'Le Minh',
           address: ShippingAddressModel(
@@ -85,6 +140,7 @@ class OrderApi {
               quantity: 2,
             ),
           ],
+          quantityCategories: 1,
           time: TimeOrderModel(
             timeDelivery: DateTime.now(),
             timeFinish: DateTime.now(),
@@ -129,6 +185,7 @@ class OrderApi {
               quantity: 2,
             ),
           ],
+          quantityCategories: 2,
           time: TimeOrderModel(
             timeDelivery: DateTime.now(),
             timeFinish: DateTime.now(),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/screens/checkout_screen.dart';
+import 'package:trado_app_uit/screens/payment_order/checkout_screen.dart';
 import '/utils/input_formatter.dart';
 import '/components/custom_icon.dart';
 import '/routes/routes_manage.dart';
@@ -12,10 +12,10 @@ import '/constants/dimen.dart';
 import '/constants/sizes.dart';
 import '/constants/constants.dart';
 
-import '../models/cart_model.dart';
-import '../providers/cart_provider.dart';
-import '../widgets/appbar_widget.dart';
-import '../widgets/cart_item.dart';
+import '../../models/cart_model.dart';
+import '../../providers/cart_provider.dart';
+import '../../widgets/appbar_widget.dart';
+import '../../widgets/cart_item.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);

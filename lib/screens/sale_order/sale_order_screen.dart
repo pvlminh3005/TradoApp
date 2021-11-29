@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
-import 'package:trado_app_uit/providers/sale_order_provider.dart';
+import '/routes/routes_manage.dart';
+import '/components/custom_icon.dart';
+import '/constants/dimen.dart';
+import '/providers/sale_order_provider.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
-import '/providers/cart_provider.dart';
-import '/routes/routes_manage.dart';
 import '/widgets/appbar_widget.dart';
-import '/widgets/bage.dart';
-import '/widgets/sale_order_widget/all_sale_order_widget.dart';
-import '/widgets/sale_order_widget/delivering_sale_order_widget.dart';
-import '/widgets/sale_order_widget/waiting_sale_order_widget.dart';
+import 'tabs/waiting_sale_order_widget.dart';
+import 'tabs/delivering_sale_order_widget.dart';
+import 'tabs/success_sale_order_widget.dart';
 
 List<Widget> _listWidgets = [
   // AllSaleOrderWidget(),
   WaitingSaleOrderWidget(),
   DeliveringSaleOrderWidget(),
+  SuccessSaleOrderWidget(),
 ];
 
 class SaleOrderScreen extends StatefulWidget {
@@ -37,9 +37,13 @@ class _SaleOrderScreenState extends State<SaleOrderScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: _listWidgets.length,
+      initialIndex: 0,
       child: Scaffold(
         appBar: _buildAppBar(context),
-        body: _buildBody(),
+        body: Padding(
+          padding: const EdgeInsets.all(AppDimen.horizontalSpacing_10),
+          child: TabBarView(children: _listWidgets),
+        ),
       ),
     );
   }
@@ -49,43 +53,30 @@ class _SaleOrderScreenState extends State<SaleOrderScreen> {
       title: 'Đơn bán',
       background: kBackgroundColorWhite,
       color: kPrimaryColor,
+      showCart: true,
       childAction: [
-        Consumer<CartProvider>(
-          builder: (ctx, cartData, ch) => Badge(
-            child: IconButton(
-              icon: Icon(
-                CupertinoIcons.cart_fill,
-                size: 25,
-                color: kPrimaryColor,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(RouteManage.cart);
-              },
-            ),
-            value: cartData.cartCount.toString(),
-          ),
+        CustomIcon(
+          CupertinoIcons.chart_bar_square,
+          color: kPrimaryColor,
+          onTap: () => Navigator.pushNamed(context, RouteManage.sale_chart),
         ),
       ],
       bottom: _buildTabBar(),
     );
   }
 
-  Widget _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.all(AppDimen.horizontalSpacing_10),
-      child: TabBarView(children: _listWidgets),
-    );
-  }
-
   _buildTabBar() {
     return PreferredSize(
-      preferredSize: Size(0, 25),
+      preferredSize: Size(1000, 25),
       child: TabBar(
         indicatorColor: kPrimaryColor,
+        indicatorSize: TabBarIndicatorSize.tab,
+        isScrollable: true,
         tabs: [
           // _buildTabText('Tất cả'),
           _buildTabText('Chờ xác nhận'),
           _buildTabText('Đang vận chuyển'),
+          _buildTabText('Đã giao hàng'),
         ],
       ),
     );

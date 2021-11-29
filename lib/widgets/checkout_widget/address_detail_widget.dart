@@ -4,7 +4,7 @@ import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
-import '/screens/add_shipping_address_screen.dart';
+import '../../screens/shipping_address/add_shipping_address_screen.dart';
 
 class AddressDetailWidget extends StatelessWidget {
   final String? id;

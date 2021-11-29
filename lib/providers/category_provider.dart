@@ -49,4 +49,6 @@ class CategoryProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<void> fetchCagetoriesDelivered() async {}
 }
