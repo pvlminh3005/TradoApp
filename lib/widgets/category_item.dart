@@ -53,8 +53,8 @@ class CategoryItem extends StatelessWidget {
         Provider.of<RateReviewProvider>(context, listen: false)
             .amountRates(category.id);
 
-    double priceDecreaseSale = category.priceSale != 0
-        ? (category.price * (100 - category.priceSale) / 100)
+    int priceDecreaseSale = category.priceSale != 0
+        ? (category.price * (100 - category.priceSale) ~/ 100)
         : category.price;
 
     return GestureDetector(

@@ -17,7 +17,7 @@ class OrderProvider with ChangeNotifier {
   }
 
   Future<void> addToOrder({
-    double? totalPrice,
+    int? totalPrice,
     int? quantity,
   }) async {
     await Future.delayed(Duration(seconds: 2));

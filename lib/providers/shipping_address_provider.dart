@@ -30,6 +30,7 @@ class ShippingAddressProvider with ChangeNotifier {
     await Future.delayed(Duration(seconds: 2));
     _listAddresses.add(
       ShippingAddressModel(
+        id: name,
         name: name,
         phoneNumber: phone,
         address: address,

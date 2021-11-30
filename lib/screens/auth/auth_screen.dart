@@ -34,9 +34,8 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void fetchCurrentUser() {
-    LoadingApp.loadingPage(seconds: 3);
-
     AuthController.getCurrentUser();
+    LoadingApp.loadingPage(seconds: 3);
     Provider.of<ShippingAddressProvider>(context, listen: false)
         .fetchAllAddresses();
   }

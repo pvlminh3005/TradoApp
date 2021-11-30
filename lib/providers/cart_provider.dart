@@ -10,8 +10,8 @@ class CartProvider with ChangeNotifier {
 
   int get cartCount => _listCart.length;
 
-  double get totalAmount {
-    double _total = 0.0;
+  int get totalAmount {
+    int _total = 0;
     _listCheckCart.forEach((key, cart) {
       _total += cart.price * cart.quantity;
     });
@@ -27,7 +27,7 @@ class CartProvider with ChangeNotifier {
     String categoryId,
     String title,
     String imageUrl,
-    double price,
+    int price,
     int quantity,
   ) {
     if (_listCart.containsKey(categoryId)) {

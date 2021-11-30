@@ -14,8 +14,37 @@ class CategoryProvider with ChangeNotifier {
   List<CategoryModel> _listCategories = [];
   List<CategoryModel> get listCategories => _listCategories;
 
+  List<CategoryModel> _listMyCategories = [];
+  List<CategoryModel> get listMyCategories => _listMyCategories;
+
   int _totalCategories = 0;
   int get totalCategories => _totalCategories;
+
+  Future<void> createCategory({
+    required String idUser,
+    required String title,
+    required String description,
+    required int price,
+    required int priceSale,
+    required List<dynamic> imageUrl,
+    required int quantity,
+    required bool status,
+  }) async {
+    var data = CategoryModel(
+      idUser: idUser,
+      title: title,
+      description: description,
+      price: price,
+      priceSale: priceSale,
+      imageUrl: imageUrl,
+      quantity: quantity,
+      status: status,
+    );
+
+    await CategoryApi.createNewCategory(data);
+    _listMyCategories.add(data);
+    notifyListeners();
+  }
 
   Future<void> fetchAllCategories() async {
     _listCategories = await CategoryApi.fetchCategories();
@@ -27,9 +56,9 @@ class CategoryProvider with ChangeNotifier {
   }
 
   Future<void> fetchAllCategoriesMyUser() async {
-    String? idUser = AuthController.currentUser.auth!.id;
-    var data = await CategoryApi.fetchCateogriesById(idUser!);
-    _listCategories.addAll(data);
+    String? idUser = AuthController.idUser;
+    var data = await CategoryApi.fetchCateogriesById(idUser);
+    _listMyCategories = data;
     _totalCategories = data.length;
     notifyListeners();
   }

@@ -19,7 +19,7 @@ class OrderDetailModel {
   final String idUser;
   final String name;
   late int statusOrder;
-  final double totalPrice;
+  final int totalPrice;
   final int methodPayment;
   final int quantityCategories;
   final ShippingAddressModel address;
@@ -31,7 +31,7 @@ class OrderDetailModel {
     required this.idUser,
     this.name = 'Unknown',
     this.statusOrder = 0, // 1, 2
-    this.totalPrice = 0.0,
+    this.totalPrice = 0,
     this.methodPayment = 1, //1: cash
     this.quantityCategories = 0,
     required this.address,
@@ -57,7 +57,7 @@ class OrderModel {
   final String? idUser;
   final DateTime? date;
   final int quantity;
-  final double totalPrice;
+  final int totalPrice;
   final int statusOrder;
 
   OrderModel({
@@ -65,7 +65,7 @@ class OrderModel {
     required this.idUser,
     this.date,
     this.quantity = 0,
-    this.totalPrice = 0.0,
+    this.totalPrice = 0,
     this.statusOrder = 0,
   });
 }

@@ -27,7 +27,7 @@ class OrderApi {
             note: 'Khi toi goi dien vao so 09xxxxxxx',
             defaultAddress: true,
           ),
-          totalPrice: 300.500,
+          totalPrice: 300500,
           categories: [
             CategoryModel(
               id: 'c1',
@@ -60,7 +60,7 @@ class OrderApi {
             address:
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Semper mi magna justo, orci. Amet quis tincidunt lectus purus. Congue diam id id ut dignissim pellentesque tortor consectetur. Duis ornare eu mi vitae ac sagittis vitae porta platea.',
           ),
-          totalPrice: 300.500,
+          totalPrice: 300500,
           categories: [
             CategoryModel(
               id: 'c3',

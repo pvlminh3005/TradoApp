@@ -1,20 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/models/category_model.dart';
-import 'package:trado_app_uit/models/order_detail_model.dart';
-import 'package:trado_app_uit/providers/order_provider.dart';
-import 'package:trado_app_uit/services/order_api.dart';
-import 'package:trado_app_uit/widgets/loading_page.dart';
+import '/components/loading/loading_app.dart';
+import '/models/category_model.dart';
+import '/services/order_api.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
-import '/providers/sale_order_provider.dart';
 import '/widgets/category_order_item.dart';
-import '/providers/cart_provider.dart';
-import '/routes/routes_manage.dart';
-import '/widgets/bage.dart';
 import '/components/primary_button.dart';
-import '/models/shipping_address_model.dart';
 import '/providers/shipping_address_provider.dart';
 import '/widgets/checkout_widget/address_detail_widget.dart';
 import '/components/custom_icon.dart';
@@ -41,30 +34,17 @@ class OrderDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBarWidget(
         title: 'Chi tiết đơn đặt hàng',
-        childAction: [
-          Consumer<CartProvider>(
-            builder: (ctx, cartData, ch) => Badge(
-              child: IconButton(
-                icon: Icon(
-                  CupertinoIcons.cart_fill,
-                  size: 25,
-                  color: kPrimaryColor,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(RouteManage.cart);
-                },
-              ),
-              value: cartData.cartCount.toString(),
-            ),
-          ),
-        ],
+        showCart: true,
       ),
       body: FutureBuilder<dynamic>(
         future: OrderApi.fetchOrderDetailById(idOrder!),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return LoadingPage();
+            LoadingApp.LOADWAITING();
+            return SizedBox();
           } else {
+            LoadingApp.DISMISS();
+
             if (snapshot.hasError) {
               return Center(child: CustomText('Có lỗi xảy ra'));
             }

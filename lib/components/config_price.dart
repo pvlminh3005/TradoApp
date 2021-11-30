@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-String FormatPrice(double priceDecreaseSale) {
+String FormatPrice(int priceDecreaseSale) {
   return NumberFormat.currency(
     locale: 'id',
     decimalDigits: 0,

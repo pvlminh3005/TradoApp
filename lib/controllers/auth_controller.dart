@@ -12,6 +12,8 @@ class AuthController {
   static late Dio _dio = Dio();
   static late UserModel _currentUser;
   static UserModel get currentUser => _currentUser;
+  static String _idUser = '';
+  static String get idUser => _idUser;
 
   AuthController() {
     getCurrentUser();
@@ -87,6 +89,7 @@ class AuthController {
 
       if (response.statusCode == 200) {
         _currentUser = await UserModel.fromJson(response.data);
+        _idUser = _currentUser.auth!.id!;
         return;
       }
     } on DioError catch (e) {

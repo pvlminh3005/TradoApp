@@ -8,7 +8,7 @@ class CategoryModel {
   late String idUser;
   late String title;
   late String description;
-  late double price;
+  late int price;
   late List<dynamic> imageUrl;
   late int amountView;
   late int priceSale;
@@ -16,15 +16,15 @@ class CategoryModel {
   late bool status;
 
   CategoryModel({
-    required this.id,
+    this.id = '',
     required this.idUser,
     required this.title,
-    this.description = '',
     required this.imageUrl,
-    this.price = 0.0,
+    this.description = '',
+    this.price = 0,
     this.amountView = 0,
     this.priceSale = 0,
-    this.quantity = 0,
+    this.quantity = 1,
     this.status = true,
   });
 
@@ -33,7 +33,7 @@ class CategoryModel {
     idUser = json['idUserSell'] ?? '';
     title = json['title'] ?? '';
     description = json['description'] ?? '';
-    price = json['price'] ?? 0.0;
+    price = json['price'] ?? 0;
     imageUrl = json['imageUrl'] ?? [];
     amountView = json['amountView'] ?? 0;
     priceSale = json['priceSale'] ?? 0;

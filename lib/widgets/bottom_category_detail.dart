@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/utils/conver_scaffold_messenger.dart';
 import '/components/custom_button.dart';
 import '/constants/dimen.dart';
 import '/routes/routes_manage.dart';
@@ -13,7 +12,7 @@ import '../providers/cart_provider.dart';
 class BottomCategoryDetail extends StatelessWidget {
   final CategoryModel category;
   final int? quantity;
-  final double priceDecreaseSale;
+  final int priceDecreaseSale;
 
   BottomCategoryDetail({
     required this.category,

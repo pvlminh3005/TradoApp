@@ -172,7 +172,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     );
   }
 
-  Widget _buildInfoPrice(CategoryModel category, double priceDecreaseSale) {
+  Widget _buildInfoPrice(CategoryModel category, int priceDecreaseSale) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -332,8 +332,8 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     CategoryModel category =
         Provider.of<CategoryProvider>(context, listen: false)
             .findCategoryById(widget.idCategory!);
-    double priceDecreaseSale = category.priceSale != 0
-        ? (category.price * (100 - category.priceSale) / 100)
+    int priceDecreaseSale = category.priceSale != 0
+        ? (category.price * (100 - category.priceSale) ~/ 100)
         : category.price;
 
     Size size = MediaQuery.of(context).size;

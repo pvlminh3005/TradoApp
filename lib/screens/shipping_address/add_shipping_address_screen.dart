@@ -135,6 +135,7 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
     return Consumer<ShippingAddressProvider>(builder: (ctx, provider, _) {
       Future<void> onPressed() async {
         if (addressKey.currentState!.validate()) {
+          LoadingApp.LOADWAITING(title: 'Đang tạo mới...');
           await provider.addNewAddress(
             name: nameController.text,
             phone: phoneController.text,

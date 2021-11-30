@@ -1,24 +1,29 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class LoadingApp {
-  LoadingApp._();
-
   static var DELAYED = Future.delayed(Duration(seconds: 2));
 
-  static var LOADWAITING = EasyLoading.show(
-    status: 'Vui lòng chờ',
-    maskType: EasyLoadingMaskType.black,
-  );
-  static var LOADUPDATE = EasyLoading.show(status: 'Đang cập nhật');
-  static LOADSUCCESS({String title = 'Thành công'}) {
+  static void LOADWAITING({String title = 'Vui lòng chờ'}) {
+    EasyLoading.show(
+      status: title,
+      maskType: EasyLoadingMaskType.black,
+    );
+  }
+
+  static void LOADSUCCESS({String title = 'Thành công'}) {
     EasyLoading.showSuccess(title);
   }
 
-  static var DISMISS = EasyLoading.dismiss();
+  static void DISMISS() {
+    EasyLoading.dismiss();
+  }
 
   static Future<void> loadingPage({int seconds = 2}) async {
-    LoadingApp.LOADWAITING;
+    EasyLoading.show(
+      status: 'Vui lòng chờ',
+      maskType: EasyLoadingMaskType.black,
+    );
     await Future.delayed(Duration(seconds: seconds));
-    LoadingApp.DISMISS;
+    EasyLoading.dismiss();
   }
 }

@@ -18,17 +18,17 @@ import '/constants/dimen.dart';
 import '/widgets/appbar_widget.dart';
 
 class CheckOutScreen extends StatelessWidget {
-  final double totalPrice;
+  final int totalPrice;
   final int quantity;
 
   CheckOutScreen({
-    this.totalPrice = 0.0,
+    this.totalPrice = 0,
     this.quantity = 0,
     Key? key,
   }) : super(key: key);
 
-  late double deliveryPrice = 20000;
-  late double voucherPrice = 10000;
+  late int deliveryPrice = 20000;
+  late int voucherPrice = 10000;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +148,7 @@ class CheckOutScreen extends StatelessWidget {
 
   Widget _buildDetailInfoPrice({
     String? title,
-    double? price,
+    int? price,
     Color? colorPrice = kTextDark,
   }) {
     return Padding(

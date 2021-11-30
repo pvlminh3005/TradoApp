@@ -13,7 +13,7 @@ class OrderCard extends StatelessWidget {
   final String? idOrder;
   final DateTime? date;
   final int? quantity;
-  final double? total;
+  final int? total;
   final int? status; //0,1,2,3
 
   const OrderCard({

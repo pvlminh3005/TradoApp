@@ -14,6 +14,15 @@ import 'tabs/in_processing_order.dart';
 import 'tabs/ship_order.dart';
 import 'tabs/waiting_review_order.dart';
 
+List<Widget> _listWidgets = [
+  AllOrderWidget(),
+  InprocessingOrderWidget(),
+  ShipOrderWidget(),
+  CompleteOrderWidget(),
+  CancelOrderWidget(),
+  WaitingReviewOrder(),
+];
+
 class OrderScreen extends StatefulWidget {
   const OrderScreen({Key? key}) : super(key: key);
 
@@ -24,8 +33,8 @@ class OrderScreen extends StatefulWidget {
 class _OrderScreenState extends State<OrderScreen>
     with TickerProviderStateMixin {
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     Provider.of<OrderProvider>(context, listen: false).fetchAllMyOrders();
   }
 
@@ -65,15 +74,7 @@ class _OrderScreenState extends State<OrderScreen>
           ),
         ),
         body: TabBarView(
-          children: [
-            AllOrderWidget(),
-            InprocessingOrderWidget(
-                inprocessOrders: provider.inProcessingOrders()),
-            ShipOrderWidget(shipOrders: provider.deliveringOrders()),
-            CompleteOrderWidget(completeOrders: provider.deliveredOrders()),
-            CancelOrderWidget(cancelOrders: provider.cancelledOrders()),
-            WaitingReviewOrder(waitingReviewOrders: provider.deliveredOrders()),
-          ],
+          children: _listWidgets,
         ),
       ),
     );

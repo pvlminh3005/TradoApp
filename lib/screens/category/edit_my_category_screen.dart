@@ -1,11 +1,19 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/components/custom_input.dart';
-import 'package:trado_app_uit/components/custom_text.dart';
-import 'package:trado_app_uit/components/primary_button.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
-import 'package:trado_app_uit/utils/validator.dart';
+import 'package:provider/provider.dart';
+import '/controllers/auth_controller.dart';
+import '/providers/category_provider.dart';
+import '/components/loading/loading_app.dart';
+import '/utils/firebase_utils.dart';
+import '/components/custom_input.dart';
+import '/components/custom_text.dart';
+import '/components/primary_button.dart';
+import '/constants/sizes.dart';
+import '/utils/validator.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/controllers/choose_image_controller.dart';
@@ -22,7 +30,8 @@ class EditMyCategoryScreen extends StatefulWidget {
 
 class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
   bool status = true;
-  List<Widget> listImages = [];
+  List<File> listFiles = [];
+  List<dynamic> listConvertFiles = [];
   String validatorImage = '';
   final categoryKey = GlobalKey<FormState>();
 
@@ -102,9 +111,7 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
             Row(
               children: [
                 _buildCustomImage(),
-                listImages.isEmpty
-                    ? SizedBox.shrink()
-                    : Row(children: listImages),
+                listFiles.isEmpty ? SizedBox.shrink() : _buildCustomNewImage(),
               ],
             ),
             validatorImage.isNotEmpty
@@ -126,9 +133,11 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
     return InkWell(
       onTap: () async {
         await ImageController.showBottomSheetManageImage(context);
+        if (ImageController.file == null) return;
         setState(() {
-          listImages.add(_buildCustomNewImage());
+          listFiles.add(ImageController.file!);
         });
+        ImageController.file = null;
       },
       child: DottedBorder(
         color: kTextColorGrey,
@@ -144,16 +153,23 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
   }
 
   Widget _buildCustomNewImage() {
-    return Padding(
-      padding: const EdgeInsets.only(left: AppDimen.verticalSpacing_5),
-      child: Container(
-        height: 95.0,
-        width: 95.0,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
-          child: Image.file(ImageController.file!, fit: BoxFit.cover),
-        ),
-      ),
+    return Row(
+      children: listFiles.map((image) {
+        return Padding(
+          padding: const EdgeInsets.only(left: AppDimen.verticalSpacing_5),
+          child: Container(
+            height: 95.0,
+            width: 95.0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+              child: Image.file(
+                image,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -188,6 +204,7 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
             hintText: 'Mô tả chi tiết sản phẩm',
             margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
             maxLines: 10,
+            validator: Validator.validateEmpty,
           ),
           CustomInput(
             controller: quantityProductController,
@@ -202,24 +219,54 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
   }
 
   Widget _buildButton() {
-    return PrimaryButton(
-      title: 'Thêm sản phẩm mới',
-      margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
-      onPressed: () {
-        if (categoryKey.currentState!.validate()) {
-          if (listImages.isEmpty) {
-            setState(() {
-              validatorImage = 'Vui lòng chọn ít nhất 1 ảnh';
-            });
-            return;
-          } else {
-            setState(() {
-              validatorImage = '';
-            });
+    return Consumer<CategoryProvider>(
+      builder: (ctx, provider, _) => PrimaryButton(
+        title: 'Thêm sản phẩm mới',
+        margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
+        onPressed: () async {
+          String idUser = AuthController.idUser;
+          if (categoryKey.currentState!.validate()) {
+            if (listFiles.isEmpty) {
+              setState(() {
+                validatorImage = 'Vui lòng chọn ít nhất 1 ảnh';
+              });
+              return;
+            } else {
+              setState(() {
+                validatorImage = '';
+              });
+
+              listFiles.asMap().forEach((index, image) async {
+                final ref = FirebaseStorage.instance
+                    .ref()
+                    .child(FirebaseUtils.categoryImage)
+                    .child('${idUser}_${nameProductController.text}_$index' +
+                        '.jpg');
+                await ref.putFile(image);
+                await ref.getDownloadURL().then((url) {
+                  setState(() {
+                    listConvertFiles.add(url);
+                  });
+                });
+              });
+
+              await provider.createCategory(
+                idUser: idUser,
+                title: nameProductController.text,
+                description: descriptionProductController.text,
+                price: int.parse(priceProductController.text),
+                priceSale: int.parse(discountProductController.text),
+                imageUrl: listConvertFiles,
+                quantity: int.parse(quantityProductController.text),
+                status: status,
+              );
+              LoadingApp.LOADSUCCESS(title: 'Tạo mới sản phẩm thành công');
+              await Future.delayed(Duration(seconds: 1));
+              Navigator.pop(context, true);
+            }
           }
-          print('OK');
-        }
-      },
+        },
+      ),
     );
   }
 
