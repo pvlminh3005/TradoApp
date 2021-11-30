@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/controllers/convert_file_image.dart';
 import '/controllers/auth_controller.dart';
 import '/providers/category_provider.dart';
 import '/components/loading/loading_app.dart';
@@ -236,19 +237,19 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
                 validatorImage = '';
               });
 
-              listFiles.asMap().forEach((index, image) async {
-                final ref = FirebaseStorage.instance
-                    .ref()
-                    .child(FirebaseUtils.categoryImage)
-                    .child('${idUser}_${nameProductController.text}_$index' +
-                        '.jpg');
-                await ref.putFile(image);
-                await ref.getDownloadURL().then((url) {
-                  setState(() {
-                    listConvertFiles.add(url);
-                  });
+              for (var index = 0; index < listFiles.length; index++) {
+                final String url =
+                    '${idUser}_${nameProductController.text}_$index';
+                await ConvertFileImageToString.addImageToStorage(
+                  url: url,
+                  file: listFiles[index],
+                );
+                var data =
+                    await ConvertFileImageToString.convertFileToSring(url: url);
+                setState(() {
+                  listConvertFiles.add(data);
                 });
-              });
+              }
 
               await provider.createCategory(
                 idUser: idUser,
