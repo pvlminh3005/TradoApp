@@ -18,7 +18,7 @@ class CategoryModel {
   CategoryModel({
     this.id = '',
     required this.idUser,
-    required this.title,
+    this.title = '',
     required this.imageUrl,
     this.description = '',
     this.price = 0,
