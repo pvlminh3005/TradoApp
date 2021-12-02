@@ -47,7 +47,7 @@ class ManageMyCategoryScreen extends StatelessWidget {
             ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 2 / 3,
+              childAspectRatio: 2 / 3.5,
             ),
             itemCount: provider.listMyCategories.length,
             itemBuilder: (BuildContext context, int index) {

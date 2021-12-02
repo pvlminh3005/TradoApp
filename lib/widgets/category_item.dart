@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/custom_icon.dart';
 import 'package:trado_app_uit/screens/category/category_detail_screen.dart';
+import 'package:trado_app_uit/screens/category/edit_my_category_screen.dart';
 import '/constants/dimen.dart';
 import '/components/config_price.dart';
 import '/components/custom_text.dart';
@@ -70,9 +72,9 @@ class CategoryItem extends StatelessWidget {
           alignment: Alignment.topCenter,
           children: [
             Positioned(
-              bottom: 15,
+              bottom: AppDimen.spacing_2,
               child: Container(
-                padding: const EdgeInsets.only(top: 25),
+                padding: const EdgeInsets.only(top: 15),
                 constraints: BoxConstraints(
                   minHeight: Platform.isIOS ? 105 : 120,
                 ),
@@ -172,34 +174,60 @@ class CategoryItem extends StatelessWidget {
                 ],
               ),
               child: Stack(
+                alignment: Alignment.center,
                 children: [
                   Hero(
                     tag: '${category.id}',
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.2), BlendMode.srcATop),
-                          child: ClipRRect(
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.2), BlendMode.srcATop),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image(
                               width: size.width * .42,
                               height: 180,
                               fit: BoxFit.cover,
                               image: category.imageUrl.isEmpty
-                                  ? AssetImage('assets/images/empty_image.png')
+                                  ? AssetImage('assets/images/empty_image.jpeg')
                                       as ImageProvider
                                   : NetworkImage(category.imageUrl[0]),
                             ),
                           ),
-                        ),
-                        !category.status
-                            ? _buildSoldOut()
-                            : const SizedBox.shrink()
-                      ],
+                        ],
+                      ),
                     ),
                   ),
+                  typeCategory == CategoryType.MY_CATEGORY
+                      ? Positioned(
+                          right: 5,
+                          top: 5,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (ctx) => EditMyCategoryScreen(
+                                    category: category,
+                                    type: EditCategoryType.EDITCATEGORY,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: CircleAvatar(
+                              radius: AppDimen.icon_size - 5,
+                              backgroundColor: kPrimaryColor,
+                              child: CustomIcon(
+                                Icons.edit,
+                                color: kBackgroundColorWhite,
+                                size: AppDimen.icon_size_small,
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  !category.status ? _buildSoldOut() : const SizedBox.shrink()
                 ],
               ),
             ),
