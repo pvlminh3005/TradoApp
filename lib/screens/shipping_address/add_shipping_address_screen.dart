@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/loading/loading_app.dart';
-import 'package:trado_app_uit/utils/validator.dart';
+import '/components/loading/loading_app.dart';
+import '/utils/validator.dart';
 import '/components/custom_alert.dart';
 import '/components/custom_input.dart';
 import '/components/primary_button.dart';
@@ -135,16 +135,13 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
     return Consumer<ShippingAddressProvider>(builder: (ctx, provider, _) {
       Future<void> onPressed() async {
         if (addressKey.currentState!.validate()) {
-          LoadingApp.LOADWAITING(title: 'Đang tạo mới...');
           await provider.addNewAddress(
+            context,
             name: nameController.text,
             phone: phoneController.text,
             address: addressController.text,
             note: noteController.text,
           );
-          LoadingApp.LOADSUCCESS(title: 'Thêm địa chỉ thành công');
-          await Future.delayed(Duration(milliseconds: 1500));
-          Navigator.of(context).popAndPushNamed(RouteManage.my_profile);
         }
       }
 

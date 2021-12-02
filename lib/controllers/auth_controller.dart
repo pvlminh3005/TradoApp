@@ -78,7 +78,7 @@ class AuthController {
 
   static Future<void> getCurrentUser() async {
     try {
-      String? token = await AuthPreferences.getToken();
+      String? token = AuthPreferences.getToken();
       if (token!.isEmpty) return;
       var response = await _dio.get(
         MainURL.loginURL,

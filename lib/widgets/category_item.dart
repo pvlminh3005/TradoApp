@@ -215,7 +215,7 @@ class CategoryItem extends StatelessWidget {
                               );
                             },
                             child: CircleAvatar(
-                              radius: AppDimen.icon_size - 5,
+                              radius: AppDimen.icon_size_small,
                               backgroundColor: kPrimaryColor,
                               child: CustomIcon(
                                 Icons.edit,

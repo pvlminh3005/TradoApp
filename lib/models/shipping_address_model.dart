@@ -1,5 +1,6 @@
 class ShippingAddressModel {
   late String? id;
+  late String? idUser;
   late String? name;
   late String? phoneNumber;
   late String? address;
@@ -8,6 +9,7 @@ class ShippingAddressModel {
 
   ShippingAddressModel({
     this.id,
+    this.idUser,
     this.name = '',
     this.phoneNumber = '',
     this.address = '',
@@ -17,21 +19,23 @@ class ShippingAddressModel {
 
   ShippingAddressModel.fromJson(Map<String, dynamic> json) {
     id = json['_id'] ?? '';
+    idUser = json['idUser'] ?? '';
     name = json['name'] ?? '';
-    phoneNumber = json['phoneNumber'] ?? '';
+    phoneNumber = json['phone'] ?? '';
     address = json['address'] ?? '';
     note = json['note'] ?? '';
-    defaultAddress = json['defaultAddress'] ?? false;
+    defaultAddress = json['select'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.id;
+    data['idUser'] = this.idUser;
     data['name'] = this.name;
-    data['phoneNumber'] = this.phoneNumber;
+    data['phone'] = this.phoneNumber;
     data['address'] = this.address;
     data['note'] = this.note;
-    data['defaultAddress'] = this.defaultAddress;
+    data['select'] = this.defaultAddress;
     return data;
   }
 }

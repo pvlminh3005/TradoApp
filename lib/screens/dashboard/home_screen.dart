@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/extensions/custom_extension.dart';
+import '/components/loading/loading_app.dart';
 import '/components/custom_icon.dart';
 import '/components/data_search.dart';
 import '/constants/constants.dart';
@@ -19,6 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    LoadingApp.loadingPage(seconds: 3);
+
     Provider.of<CategoryProvider>(context, listen: false).fetchAllCategories();
   }
 
@@ -37,23 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         showCart: true,
       ),
-      body: Consumer<CategoryProvider>(
-        builder: (ctx, provider, _) => GridView.builder(
-          padding: const EdgeInsets.symmetric(
-            vertical: AppDimen.verticalSpacing_10,
-            horizontal: 5,
-          ),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 2 / 3.5,
-          ),
-          itemCount: provider.listCategories.length,
-          itemBuilder: (BuildContext context, int index) {
-            CategoryModel category = provider.listCategories[index];
-            return CategoryItem(category: category);
-          },
-        ),
-      ),
+      body: Consumer<CategoryProvider>(builder: (ctx, provider, _) {
+        return SizedBox().gridCategory(provider.listCategories);
+      }),
     );
   }
 }

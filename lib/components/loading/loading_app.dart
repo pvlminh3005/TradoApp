@@ -14,6 +14,10 @@ class LoadingApp {
     EasyLoading.showSuccess(title);
   }
 
+  static void LOADFAILED({String title = 'Thất bại'}) {
+    EasyLoading.showError(title);
+  }
+
   static void DISMISS() {
     EasyLoading.dismiss();
   }

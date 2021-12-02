@@ -38,14 +38,15 @@ class CategoryApi {
         queryParameters: {
           "idUser": id,
         },
+        options: MainURL.customOption,
       );
       if (response.statusCode == 200) {
         return (response.data['product'] as List<dynamic>)
             .map((data) => CategoryModel.fromJson(data))
             .toList();
       }
-    } on DioError catch (e) {
-      print(e);
+    } on DioError {
+      return [];
     }
   }
 

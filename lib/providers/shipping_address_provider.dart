@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import '/routes/routes_manage.dart';
+import '/components/loading/loading_app.dart';
+import '/controllers/auth_controller.dart';
 import '/models/shipping_address_model.dart';
 import '/services/address_api.dart';
 
 class ShippingAddressProvider with ChangeNotifier {
-  ShippingAddressProvider() {
-    fetchAllAddresses();
-  }
-
   List<ShippingAddressModel> _listAddresses = [];
   List<ShippingAddressModel> get listAddresses => _listAddresses;
 
@@ -20,14 +19,34 @@ class ShippingAddressProvider with ChangeNotifier {
   }
 
   void fetchDefaultAddress() {
-    _defaultAddress =
-        _listAddresses.firstWhere((address) => address.defaultAddress == true);
+    _defaultAddress = _listAddresses.firstWhere(
+      (address) => address.defaultAddress == true,
+      orElse: () => ShippingAddressModel(),
+    );
     notifyListeners();
   }
 
   Future<void> addNewAddress(
-      {String? name, String? phone, String? address, String? note = ''}) async {
-    await Future.delayed(Duration(seconds: 2));
+    BuildContext context, {
+    String? name,
+    String? phone,
+    String? address,
+    String? note,
+  }) async {
+    LoadingApp.LOADWAITING(title: 'Đang tạo mới...');
+    ShippingAddressModel newAddress = ShippingAddressModel(
+      idUser: AuthController.idUser,
+      name: name,
+      phoneNumber: phone,
+      address: address,
+      note: note,
+    );
+    var response = await AddressApi.createNewAddress(newAddress);
+
+    if (response == null) {
+      LoadingApp.LOADFAILED(title: 'Thêm địa chỉ thất bại');
+      return;
+    }
     _listAddresses.add(
       ShippingAddressModel(
         id: name,
@@ -37,6 +56,10 @@ class ShippingAddressProvider with ChangeNotifier {
         note: note,
       ),
     );
+    LoadingApp.LOADSUCCESS(title: 'Thêm địa chỉ thành công');
+    await Future.delayed(Duration(milliseconds: 1000));
+    Navigator.of(context).popAndPushNamed(RouteManage.my_profile);
+
     notifyListeners();
   }
 

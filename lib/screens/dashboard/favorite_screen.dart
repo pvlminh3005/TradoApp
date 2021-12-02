@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/components/data_search.dart';
+import '/components/custom_search_bar.dart';
 import '/models/category_model.dart';
 import '/providers/category_provider.dart';
 import '/constants/dimen.dart';
@@ -10,6 +10,12 @@ import '/components/custom_icon.dart';
 import '/constants/constants.dart';
 import '/widgets/appbar_widget.dart';
 
+List<String> data = [
+  'Macbook Pro 14 inch',
+  'Apple Watch s6',
+  'TV Sony',
+];
+
 class FavoriteScreen extends StatefulWidget {
   @override
   State<FavoriteScreen> createState() => _FavoriteScreenState();
@@ -17,6 +23,8 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen>
     with AutomaticKeepAliveClientMixin {
+  List<String> dataSearch = [];
+
   @override
   bool get wantKeepAlive => true;
 
@@ -25,6 +33,9 @@ class _FavoriteScreenState extends State<FavoriteScreen>
     super.initState();
     // _favoriteFuture = Provider.of<CategoryProvider>(context, listen: false)
     //     .fetchAllFavoriteCategories();
+    setState(() {
+      dataSearch = data.map((e) => e.toLowerCase()).toList();
+    });
   }
 
   @override
@@ -40,7 +51,11 @@ class _FavoriteScreenState extends State<FavoriteScreen>
             color: kPrimaryColor,
           ),
           onPressed: () {
-            showSearch(context: context, delegate: DataSearch());
+            showSearch(
+                context: context,
+                delegate: CustomSearch(
+                  data: dataSearch,
+                ));
           },
         ),
       ),

@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:trado_app_uit/utils/auth_preferences.dart';
+
 class MainURL {
   MainURL._();
 
@@ -29,4 +32,8 @@ class MainURL {
 
   //cart
   static String cartURL = '$mainURL$cart';
+
+  static Options customOption = Options(
+    headers: {MainURL.headerToken: AuthPreferences.getToken()},
+  );
 }
