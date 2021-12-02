@@ -11,5 +11,7 @@ class FavoriteApi {
 
   static Future<void> addToFavorite() async {}
 
-  static Future<void> removeFromFavorite() async {}
+  static Future<void> removeCategoryFavorite() async {
+    try {} on DioError {}
+  }
 }

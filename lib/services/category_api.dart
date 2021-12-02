@@ -119,4 +119,10 @@ class CategoryApi {
     await Future.delayed(Duration(seconds: 2));
     return data;
   }
+
+  static Future<void> updateCategory(String idCategory) async {
+    try {} on DioError {}
+  }
+
+  static Future<void> deleteCategory(String idCategory) async {}
 }

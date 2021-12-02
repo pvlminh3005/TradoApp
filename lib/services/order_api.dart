@@ -49,6 +49,7 @@ class OrderApi {
             timeFinish: DateTime.now(),
             timeOrder: DateTime.now(),
           ),
+          typeOrder: 0,
         ),
         OrderDetailModel(
           id: 'order2',
@@ -92,6 +93,7 @@ class OrderApi {
             timeFinish: DateTime.now(),
             timeOrder: DateTime.now(),
           ),
+          typeOrder: 0,
         )
       ];
       var convertData = data
@@ -147,6 +149,7 @@ class OrderApi {
             timeOrder: DateTime.now(),
           ),
           statusOrder: 0,
+          typeOrder: 1,
         ),
         OrderDetailModel(
           id: 'order4',
@@ -192,6 +195,7 @@ class OrderApi {
             timeOrder: DateTime.now(),
           ),
           statusOrder: 1,
+          typeOrder: 1,
         ),
       ];
       await Future.delayed(Duration(seconds: 3));
@@ -246,6 +250,7 @@ class OrderApi {
           timeOrder: DateTime.now(),
         ),
         statusOrder: 1,
+        typeOrder: 1,
       );
       await Future.delayed(Duration(seconds: 3));
       return data;

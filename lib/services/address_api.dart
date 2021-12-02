@@ -1,4 +1,4 @@
-import 'package:trado_app_uit/models/shipping_address_model.dart';
+import '/models/shipping_address_model.dart';
 
 class AddressApi {
   AddressApi._();
@@ -37,4 +37,8 @@ class AddressApi {
       return [];
     }
   }
+
+  static Future<void> updateShippingAddress() async {}
+
+  static Future<void> deleteShippingAddress() async {}
 }

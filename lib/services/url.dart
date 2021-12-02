@@ -8,9 +8,25 @@ class MainURL {
   static String register = '/';
   static String login = '/login';
   static String product = '/product';
+  static String address = '/tagshipping';
+  static String cart = 'cart';
 
+  //register
   static String registerURL = '$mainURL$account$register';
+
+  //login
   static String loginURL = '$mainURL$account$login';
+
+  //product
   static String productURl = '$mainURL$product';
   static String productUserURL = '$mainURL$product/user';
+
+  //address
+  static String newAddressURL = '$mainURL$address';
+  static String getAddressURL = '$mainURL$address/alltag';
+  static String updateAddressURL = '$mainURL$address/updatetag';
+  static String removeAddressURL = '$mainURL$address';
+
+  //cart
+  static String cartURL = '$mainURL$cart';
 }
