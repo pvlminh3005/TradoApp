@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/controllers/convert_file_image.dart';
+import 'package:trado_app_uit/components/custom_image_network.dart';
+import '/controllers/convert_file_image.dart';
+import '/models/category_model.dart';
 import '/controllers/auth_controller.dart';
 import '/providers/category_provider.dart';
 import '/components/loading/loading_app.dart';
-import '/utils/firebase_utils.dart';
 import '/components/custom_input.dart';
 import '/components/custom_text.dart';
 import '/components/primary_button.dart';
@@ -20,8 +20,18 @@ import '/constants/dimen.dart';
 import '/controllers/choose_image_controller.dart';
 import '/widgets/appbar_widget.dart';
 
+enum EditCategoryType {
+  NEWCATEGORY,
+  EDITCATEGORY,
+}
+
 class EditMyCategoryScreen extends StatefulWidget {
+  final CategoryModel? category;
+  final EditCategoryType type;
+
   EditMyCategoryScreen({
+    this.category,
+    this.type = EditCategoryType.NEWCATEGORY,
     Key? key,
   }) : super(key: key);
 
@@ -32,7 +42,8 @@ class EditMyCategoryScreen extends StatefulWidget {
 class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
   bool status = true;
   List<File> listFiles = [];
-  List<dynamic> listConvertFiles = [];
+  List<dynamic> listConvertFiles = []; //memory save url post to api
+  List<dynamic> listInitImages = []; //memory save image when initState
   String validatorImage = '';
   final categoryKey = GlobalKey<FormState>();
 
@@ -44,13 +55,35 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
 
   @override
   void initState() {
+    print(widget.category!.imageUrl);
+    if (widget.type == EditCategoryType.EDITCATEGORY) {
+      nameProductController =
+          TextEditingController(text: widget.category!.title);
+      priceProductController =
+          TextEditingController(text: widget.category!.price.toString());
+      discountProductController =
+          TextEditingController(text: widget.category!.priceSale.toString());
+      descriptionProductController =
+          TextEditingController(text: widget.category!.description);
+      quantityProductController =
+          TextEditingController(text: widget.category!.quantity.toString());
+
+      setState(() {
+        listInitImages = widget.category!.imageUrl;
+      });
+    } else {
+      initController();
+    }
+
+    super.initState();
+  }
+
+  void initController() {
     nameProductController = TextEditingController();
     priceProductController = TextEditingController();
     discountProductController = TextEditingController();
     descriptionProductController = TextEditingController();
     quantityProductController = TextEditingController(text: '1');
-
-    super.initState();
   }
 
   @override
@@ -112,7 +145,8 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
             Row(
               children: [
                 _buildCustomImage(),
-                listFiles.isEmpty ? SizedBox.shrink() : _buildCustomNewImage(),
+                _buildInitImages(),
+                _buildCustomNewImage(),
               ],
             ),
             validatorImage.isNotEmpty
@@ -174,6 +208,25 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
     );
   }
 
+  Widget _buildInitImages() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: listInitImages.map((image) {
+        return Padding(
+          padding: const EdgeInsets.only(left: AppDimen.verticalSpacing_5),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+            child: CustomImageNetWork(
+              width: 95.0,
+              height: 95.0,
+              image: image,
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
   Widget _buildListInput() {
     return Form(
       key: categoryKey,
@@ -220,55 +273,59 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
   }
 
   Widget _buildButton() {
-    return Consumer<CategoryProvider>(
-      builder: (ctx, provider, _) => PrimaryButton(
-        title: 'Thêm sản phẩm mới',
-        margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
-        onPressed: () async {
-          String idUser = AuthController.idUser;
-          if (categoryKey.currentState!.validate()) {
-            if (listFiles.isEmpty) {
-              setState(() {
-                validatorImage = 'Vui lòng chọn ít nhất 1 ảnh';
-              });
-              return;
-            } else {
-              setState(() {
-                validatorImage = '';
-              });
+    return widget.type == EditCategoryType.NEWCATEGORY
+        ? Consumer<CategoryProvider>(
+            builder: (ctx, provider, _) => PrimaryButton(
+              title: 'Thêm sản phẩm mới',
+              margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
+              onPressed: () async {
+                String idUser = AuthController.idUser;
+                if (categoryKey.currentState!.validate()) {
+                  if (listFiles.isEmpty) {
+                    setState(() {
+                      validatorImage = 'Vui lòng chọn ít nhất 1 ảnh';
+                    });
+                    return;
+                  } else {
+                    setState(() {
+                      validatorImage = '';
+                    });
 
-              for (var index = 0; index < listFiles.length; index++) {
-                final String url =
-                    '${idUser}_${nameProductController.text}_$index';
-                await ConvertFileImageToString.addImageToStorage(
-                  url: url,
-                  file: listFiles[index],
-                );
-                var data =
-                    await ConvertFileImageToString.convertFileToSring(url: url);
-                setState(() {
-                  listConvertFiles.add(data);
-                });
-              }
+                    for (var index = 0; index < listFiles.length; index++) {
+                      final String url =
+                          '${idUser}_${nameProductController.text}_$index';
+                      await ConvertFileImageToString.addImageToStorage(
+                        url: url,
+                        file: listFiles[index],
+                      );
+                      var data =
+                          await ConvertFileImageToString.convertFileToSring(
+                              url: url);
+                      setState(() {
+                        listConvertFiles.add(data);
+                      });
+                    }
 
-              await provider.createCategory(
-                idUser: idUser,
-                title: nameProductController.text,
-                description: descriptionProductController.text,
-                price: int.parse(priceProductController.text),
-                priceSale: int.parse(discountProductController.text),
-                imageUrl: listConvertFiles,
-                quantity: int.parse(quantityProductController.text),
-                status: status,
-              );
-              LoadingApp.LOADSUCCESS(title: 'Tạo mới sản phẩm thành công');
-              await Future.delayed(Duration(seconds: 1));
-              Navigator.pop(context, true);
-            }
-          }
-        },
-      ),
-    );
+                    await provider.createCategory(
+                      idUser: idUser,
+                      title: nameProductController.text,
+                      description: descriptionProductController.text,
+                      price: int.parse(priceProductController.text),
+                      priceSale: int.parse(discountProductController.text),
+                      imageUrl: listConvertFiles,
+                      quantity: int.parse(quantityProductController.text),
+                      status: status,
+                    );
+                    LoadingApp.LOADSUCCESS(
+                        title: 'Tạo mới sản phẩm thành công');
+                    await Future.delayed(Duration(seconds: 1));
+                    Navigator.pop(context, true);
+                  }
+                }
+              },
+            ),
+          )
+        : _buildEditButton();
   }
 
   Widget _buildSwitch() {
@@ -304,5 +361,33 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
             status = value;
           });
         });
+  }
+
+  Widget _buildEditButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+      child: Row(
+        children: [
+          Consumer<CategoryProvider>(
+            builder: (ctx, provider, _) => Flexible(
+              child: PrimaryButton(
+                title: 'Chỉnh sửa',
+                onPressed: () async {},
+              ),
+            ),
+          ),
+          const SizedBox(width: 6.0),
+          Consumer<CategoryProvider>(
+            builder: (ctx, provider, _) => Flexible(
+              child: PrimaryButton(
+                title: 'Xoá',
+                backgroundColor: kErrorColor,
+                onPressed: () async {},
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
