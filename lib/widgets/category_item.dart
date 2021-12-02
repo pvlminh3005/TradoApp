@@ -2,15 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/custom_icon.dart';
-import 'package:trado_app_uit/screens/category/category_detail_screen.dart';
-import 'package:trado_app_uit/screens/category/edit_my_category_screen.dart';
+import '/components/custom_icon.dart';
+import '/screens/category/category_detail_screen.dart';
+import '/screens/category/edit_my_category_screen.dart';
 import '/constants/dimen.dart';
 import '/components/config_price.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/constants/sizes.dart';
-import '/routes/routes_manage.dart';
 import '/components/sale_component.dart';
 import '/providers/rate_review_provider.dart';
 import '../models/category_model.dart';

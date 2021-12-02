@@ -15,7 +15,7 @@ class WaitingReviewOrder extends StatelessWidget {
       body: ListView.builder(
         itemCount: waitingReviewOrders.length,
         itemBuilder: (BuildContext context, int index) {
-          var waitingOrder = waitingReviewOrders[index];
+          // var waitingOrder = waitingReviewOrders[index];
           return Text('Hi');
         },
       ),

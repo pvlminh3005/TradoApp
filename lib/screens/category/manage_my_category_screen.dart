@@ -7,7 +7,6 @@ import '/constants/sizes.dart';
 import '/models/category_model.dart';
 import '/providers/category_provider.dart';
 import '/widgets/category_item.dart';
-import '/widgets/loading_page.dart';
 
 import '/constants/constants.dart';
 import '/routes/routes_manage.dart';

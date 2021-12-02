@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/cart_provider.dart';
-import 'package:trado_app_uit/widgets/loading_page.dart';
+import '/providers/cart_provider.dart';
 import '/providers/order_provider.dart';
 import '/routes/routes_manage.dart';
-import '/models/shipping_address_model.dart';
 import '/providers/shipping_address_provider.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
@@ -17,6 +15,7 @@ import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/widgets/appbar_widget.dart';
 
+// ignore: must_be_immutable
 class CheckOutScreen extends StatelessWidget {
   final int totalPrice;
   final int quantity;

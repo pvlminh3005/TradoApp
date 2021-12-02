@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/routes/routes_manage.dart';
-import 'package:trado_app_uit/screens/order/order_detail_screen.dart';
+import '/screens/order/order_detail_screen.dart';
 import '/components/card_shadow.dart';
 import '/components/config_price.dart';
 import '/components/custom_text.dart';

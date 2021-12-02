@@ -16,8 +16,6 @@ import '/components/sale_component.dart';
 import '/constants/constants.dart';
 import '/providers/rate_review_provider.dart';
 
-import '/providers/cart_provider.dart';
-import '/widgets/bage.dart';
 import '../../widgets/appbar_widget.dart';
 import '../../widgets/scroll_hide_widget.dart';
 import '../../widgets/bottom_category_detail.dart';

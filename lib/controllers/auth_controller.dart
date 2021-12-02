@@ -36,7 +36,7 @@ class AuthController {
           (Route<dynamic> route) => false,
         );
       }
-    } on DioError catch (e) {
+    } on DioError {
       CustomSnackBar.dialogMessenger(
         context,
         'Tài khoản này đã có người sử dụng',
@@ -65,7 +65,7 @@ class AuthController {
         (Route<dynamic> route) => false,
       );
       await AuthController.getCurrentUser();
-    } on DioError catch (e) {
+    } on DioError {
       CustomSnackBar.dialogMessenger(
           context, 'Tài khoản hoặc mật khẩu không đúng');
       return;

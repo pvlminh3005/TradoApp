@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/screens/payment_order/checkout_screen.dart';
+import '/screens/payment_order/checkout_screen.dart';
 import '/utils/input_formatter.dart';
 import '/components/custom_icon.dart';
-import '/routes/routes_manage.dart';
 import '/components/config_price.dart';
 import '/components/primary_button.dart';
 import '/components/custom_text.dart';

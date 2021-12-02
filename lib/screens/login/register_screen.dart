@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trado_app_uit/controllers/auth_controller.dart';
+import '/controllers/auth_controller.dart';
 import '/constants/constants.dart';
 import '/utils/validator.dart';
 import '/constants/dimen.dart';

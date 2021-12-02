@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../components/loading/loading_app.dart';
 import '/components/custom_icon.dart';
 import '/components/data_search.dart';
 import '/constants/constants.dart';

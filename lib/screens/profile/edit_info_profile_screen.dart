@@ -2,12 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/controllers/auth_controller.dart';
-import 'package:trado_app_uit/controllers/choose_image_controller.dart';
-import 'package:trado_app_uit/models/user_model.dart';
-import 'package:trado_app_uit/routes/navigator_tabs_route.dart';
-import 'package:trado_app_uit/routes/routes_manage.dart';
-import 'package:trado_app_uit/widgets/custom_avatar.dart';
+import '/controllers/auth_controller.dart';
+import '/models/user_model.dart';
+import '/routes/navigator_tabs_route.dart';
+import '/routes/routes_manage.dart';
+import '/widgets/custom_avatar.dart';
 import '/components/primary_button.dart';
 import '/components/custom_input.dart';
 import '/constants/constants.dart';

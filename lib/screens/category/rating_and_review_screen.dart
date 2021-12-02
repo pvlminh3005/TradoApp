@@ -28,32 +28,30 @@ class RatingAndReviewScreen extends StatefulWidget {
 }
 
 class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
-  bool _showFavorite = false;
-
-  PopupMenuItem _buildPopupMenuFilter(
-      int amountStars, int total, ThemeData theme) {
-    return PopupMenuItem(
-      child: Row(
-        children: [
-          Row(
-            children: List.generate(
-              5,
-              (index) {
-                return Icon(
-                  Icons.star_rate_rounded,
-                  color: index < amountStars
-                      ? kHighlightColor
-                      : kTextColorGrey.withOpacity(.3),
-                );
-              },
-            ),
-          ),
-          SizedBox(width: 3),
-          Text(total.toString()),
-        ],
-      ),
-    );
-  }
+  // PopupMenuItem _buildPopupMenuFilter(
+  //     int amountStars, int total, ThemeData theme) {
+  //   return PopupMenuItem(
+  //     child: Row(
+  //       children: [
+  //         Row(
+  //           children: List.generate(
+  //             5,
+  //             (index) {
+  //               return Icon(
+  //                 Icons.star_rate_rounded,
+  //                 color: index < amountStars
+  //                     ? kHighlightColor
+  //                     : kTextColorGrey.withOpacity(.3),
+  //               );
+  //             },
+  //           ),
+  //         ),
+  //         SizedBox(width: 3),
+  //         Text(total.toString()),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

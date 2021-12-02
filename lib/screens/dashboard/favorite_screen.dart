@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/custom_text.dart';
-import 'package:trado_app_uit/components/data_search.dart';
-import 'package:trado_app_uit/models/category_model.dart';
-import 'package:trado_app_uit/providers/category_provider.dart';
-import 'package:trado_app_uit/widgets/loading_page.dart';
+import '/components/data_search.dart';
+import '/models/category_model.dart';
+import '/providers/category_provider.dart';
 import '/constants/dimen.dart';
 import '/widgets/category_order_item.dart';
 import '/components/custom_icon.dart';
@@ -21,8 +19,6 @@ class _FavoriteScreenState extends State<FavoriteScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-
-  late Future _favoriteFuture;
 
   @override
   void initState() {
