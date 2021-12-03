@@ -73,7 +73,7 @@ class CategoryItem extends StatelessWidget {
             Positioned(
               bottom: AppDimen.spacing_2,
               child: Container(
-                padding: const EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 20),
                 constraints: BoxConstraints(
                   minHeight: Platform.isIOS ? 105 : 120,
                 ),
