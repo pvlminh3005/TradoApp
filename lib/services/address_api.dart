@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import '/controllers/auth_controller.dart';
 import '/services/url.dart';
-import '/utils/auth_preferences.dart';
 import '/models/shipping_address_model.dart';
 
 class AddressApi {
@@ -49,8 +48,11 @@ class AddressApi {
 
   static Future updateShippingAddress(ShippingAddressModel address) async {
     try {
-      var response =
-          await dio.post(MainURL.updateAddressURL, data: address.toJson());
+      var response = await dio.post(
+        MainURL.updateAddressURL,
+        data: address.toJson(),
+        options: MainURL.customOption,
+      );
 
       if (response.statusCode == 200) return response.data;
     } on DioError {
@@ -58,21 +60,27 @@ class AddressApi {
     }
   }
 
-  static Future deleteShippingAddress(String idAddress) async {
+  static Future<void> deleteShippingAddress(String idAddress) async {
     try {
-      String? token = AuthPreferences.getToken();
-      var response = await dio.delete(
-        MainURL.address,
-        queryParameters: {"_id": idAddress},
-        options: Options(
-          headers: {MainURL.headerToken: token},
-        ),
+      await dio.delete(
+        MainURL.removeAddressURL,
+        queryParameters: {"idTag": idAddress},
+        options: MainURL.customOption,
       );
-      if (response.statusCode == 200) {
-        return response.data;
-      }
     } on DioError {
-      return null;
+      return;
+    }
+  }
+
+  static Future<void> changeDefaultAddress(String idTag) async {
+    try {
+      await dio.post(
+        MainURL.defaultAddressURL,
+        data: {'idTag': idTag},
+        options: MainURL.customOption,
+      );
+    } on DioError {
+      return;
     }
   }
 }

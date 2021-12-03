@@ -56,6 +56,8 @@ class ShippingAddressProvider with ChangeNotifier {
         note: note,
       ),
     );
+    await fetchAllAddresses();
+
     LoadingApp.LOADSUCCESS(title: 'Thêm địa chỉ thành công');
     await Future.delayed(Duration(milliseconds: 1000));
     Navigator.of(context).popAndPushNamed(RouteManage.my_profile);
@@ -64,19 +66,70 @@ class ShippingAddressProvider with ChangeNotifier {
   }
 
   Future<void> removeAddress(String id) async {
-    await Future.delayed(Duration(seconds: 2));
-    _listAddresses.removeWhere((address) => address.id == id);
+    LoadingApp.LOADWAITING();
+    int index = _listAddresses.indexWhere((address) => address.id == id);
+    await AddressApi.deleteShippingAddress(id);
+
+    if (_listAddresses[index].defaultAddress == true) {
+      await setDefaultAddress(_listAddresses[0].id);
+      _listAddresses[0].defaultAddress == true;
+    }
+    _listAddresses.removeAt(index);
+
+    LoadingApp.LOADSUCCESS(
+      title: 'Xoá địa chỉ thành công',
+      seconds: 2,
+    );
+
     notifyListeners();
   }
 
-  void setDefaultAddress(String? idAddress) {
-    _listAddresses.forEach((address) {
+  Future<void> updateAddress(
+    BuildContext context, {
+    String? idTag,
+    String? name,
+    String? phone,
+    String? address,
+    String? note,
+  }) async {
+    LoadingApp.LOADWAITING();
+    int index = _listAddresses.indexWhere((address) => address.id == idTag);
+
+    var newAddress = ShippingAddressModel(
+      id: idTag,
+      idUser: AuthController.idUser,
+      name: name,
+      phoneNumber: phone,
+      address: address,
+      note: note,
+      defaultAddress: _listAddresses[index].defaultAddress,
+    );
+
+    var response = await AddressApi.updateShippingAddress(newAddress);
+    if (response == null) {
+      LoadingApp.LOADFAILED(title: 'Cập nhật địa chỉ thất bại!');
+      return;
+    } else {
+      // success
+      _listAddresses[index] = newAddress;
+      LoadingApp.LOADSUCCESS(title: 'Cập nhật địa chỉ thành công!');
+      Navigator.pop(context, true);
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> setDefaultAddress(String? idAddress) async {
+    _listAddresses.forEach((address) async {
       if (address.id == idAddress) {
         address.defaultAddress = true;
+        await AddressApi.changeDefaultAddress(idAddress!);
         return;
       }
       address.defaultAddress = false;
     });
+
+    fetchDefaultAddress();
 
     notifyListeners();
   }

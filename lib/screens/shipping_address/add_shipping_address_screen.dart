@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/components/loading/loading_app.dart';
+import '/components/custom_icon.dart';
 import '/utils/validator.dart';
 import '/components/custom_alert.dart';
 import '/components/custom_input.dart';
@@ -9,7 +10,6 @@ import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
 import '/providers/shipping_address_provider.dart';
-import '/routes/routes_manage.dart';
 import '/widgets/appbar_widget.dart';
 
 class AddShippingAddressScreen extends StatefulWidget {
@@ -42,6 +42,7 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
   late TextEditingController phoneController;
   late TextEditingController addressController;
   late TextEditingController noteController;
+
   @override
   void initState() {
     super.initState();
@@ -71,8 +72,23 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
 
   AppBarWidget _buildAppBar() {
     return AppBarWidget(
-      title: 'Thông tin địa chỉ giao hàng',
+      title: widget.isEditAddress
+          ? 'Chỉnh sửa thông tin địa chỉ'
+          : 'Thông tin địa chỉ giao hàng',
       background: kBackgroundColorWhite,
+      childAction: [
+        CustomIcon(
+          CupertinoIcons.refresh_thick,
+          color: kTextColorGrey,
+          size: AppDimen.icon_size_small,
+          onTap: () {
+            nameController.text = '';
+            phoneController.text = '';
+            addressController.text = '';
+            noteController.text = '';
+          },
+        ),
+      ],
     );
   }
 
@@ -85,10 +101,7 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
           _buildInput(),
           Column(
             children: [
-              _buildButtonAdd(),
-              widget.isEditAddress
-                  ? _buildButtonRemove()
-                  : const SizedBox.shrink(),
+              widget.isEditAddress ? _buildButtonEdit() : _buildButtonAdd(),
             ],
           ),
         ],
@@ -147,7 +160,7 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
 
       return PrimaryButton(
         onPressed: onPressed,
-        showShadow: false,
+        showShadow: true,
         margin:
             const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_5),
         title: 'Thêm địa chỉ',
@@ -155,34 +168,69 @@ class _AddShippingAddressScreenState extends State<AddShippingAddressScreen> {
     });
   }
 
-  Widget _buildButtonRemove() {
-    return Consumer<ShippingAddressProvider>(builder: (ctx, provider, _) {
-      Future<void> onPressed() async {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return CustomAlert(
-              subContent: 'Bạn có chắc muốn xoá địa chỉ này không?',
-              onPressed: () async {
-                await provider.removeAddress(widget.id!);
-                await Future.delayed(Duration(milliseconds: 1500));
-                Navigator.of(context)
-                    .popAndPushNamed(RouteManage.shipping_address);
-              },
+  Widget _buildButtonEdit() {
+    return Row(
+      children: [
+        Consumer<ShippingAddressProvider>(
+          builder: (ctx, provider, _) {
+            return Flexible(
+              child: PrimaryButton(
+                onPressed: () async {
+                  print('ID ${widget.id}');
+                  await provider.updateAddress(
+                    context,
+                    idTag: widget.id,
+                    name: nameController.text,
+                    phone: phoneController.text,
+                    address: addressController.text,
+                    note: noteController.text,
+                  );
+                },
+                margin: const EdgeInsets.symmetric(
+                    vertical: AppDimen.verticalSpacing_5),
+                backgroundColor: kPrimaryColor,
+                showShadow: false,
+                title: 'Xác nhận',
+              ),
             );
           },
-        );
-      }
+        ),
+        const SizedBox(width: 6.0),
+        Consumer<ShippingAddressProvider>(
+          builder: (ctx, provider, _) {
+            Future<void> onPressed() async {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return CustomAlert(
+                    subContent: 'Bạn có chắc muốn xoá địa chỉ này không?',
+                    onPressed: () async {
+                      await provider.removeAddress(widget.id!);
 
-      return PrimaryButton(
-        onPressed: onPressed,
-        margin:
-            const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_5),
-        backgroundColor: kErrorColor,
-        showShadow: false,
-        title: 'Xoá địa chỉ',
-      );
-    });
+                      await Future.delayed(Duration(milliseconds: 1500));
+                      //pop screen 2 times
+                      int count = 0;
+                      Navigator.of(context).popUntil((_) => count++ >= 2);
+                    },
+                  );
+                },
+              );
+            }
+
+            return Flexible(
+              child: PrimaryButton(
+                onPressed: onPressed,
+                margin: const EdgeInsets.symmetric(
+                    vertical: AppDimen.verticalSpacing_5),
+                backgroundColor: kErrorColor,
+                showShadow: false,
+                title: 'Xoá địa chỉ',
+              ),
+            );
+          },
+        ),
+      ],
+    );
   }
 }
 

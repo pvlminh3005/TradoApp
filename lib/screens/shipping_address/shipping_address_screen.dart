@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/custom_refresh_page.dart';
 import '/components/custom_text.dart';
 
 import '/constants/constants.dart';
@@ -37,21 +38,24 @@ class ShippingAddressScreen extends StatelessWidget {
   Widget _buildBody() {
     return Consumer<ShippingAddressProvider>(
       builder: (context, provider, _) {
-        return Padding(
-          padding: const EdgeInsets.all(AppDimen.spacing_2),
-          child: provider.listAddresses.isEmpty
-              ? Center(
-                  child: CustomText('Bạn chưa nhập địa chỉ nào!'),
-                )
-              : ListView.builder(
-                  itemCount: provider.listAddresses.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var address = provider.listAddresses[index];
-                    return ShippingAddressItem(
-                      shippingAddress: address,
-                    );
-                  },
-                ),
+        return CustomRefreshPage(
+          onRefresh: provider.fetchAllAddresses,
+          child: Padding(
+            padding: const EdgeInsets.all(AppDimen.spacing_2),
+            child: provider.listAddresses.isEmpty
+                ? Center(
+                    child: CustomText('Bạn chưa có địa chỉ nào!'),
+                  )
+                : ListView.builder(
+                    itemCount: provider.listAddresses.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var address = provider.listAddresses[index];
+                      return ShippingAddressItem(
+                        shippingAddress: address,
+                      );
+                    },
+                  ),
+          ),
         );
       },
     );

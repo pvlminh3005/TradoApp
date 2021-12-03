@@ -28,6 +28,7 @@ class MainURL {
   static String newAddressURL = '$mainURL$address';
   static String getAddressURL = '$mainURL$address/alltag';
   static String updateAddressURL = '$mainURL$address/updatetag';
+  static String defaultAddressURL = '$mainURL$address/selecttag';
   static String removeAddressURL = '$mainURL$address';
 
   //cart
