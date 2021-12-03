@@ -10,8 +10,8 @@ class LoadingApp {
     );
   }
 
-  static void LOADSUCCESS({String title = 'Thành công'}) {
-    EasyLoading.showSuccess(title);
+  static void LOADSUCCESS({String title = 'Thành công', int seconds = 1}) {
+    EasyLoading.showSuccess(title, duration: Duration(seconds: seconds));
   }
 
   static void LOADFAILED({String title = 'Thất bại'}) {

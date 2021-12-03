@@ -20,9 +20,9 @@ class CustomIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
+    return IconButton(
+      onPressed: onTap,
+      icon: Padding(
         padding: margin,
         child: Icon(
           icon,

@@ -19,7 +19,7 @@ extension CustomExtension on Widget {
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 2 / 3.5,
+        childAspectRatio: 1 / 1.5,
       ),
       itemCount: data.length,
       itemBuilder: (BuildContext context, int index) {

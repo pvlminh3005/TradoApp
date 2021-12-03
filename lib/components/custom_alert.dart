@@ -45,6 +45,7 @@ class _CustomAlertState extends State<CustomAlert> {
           ? CustomText(
               widget.subContent!,
               align: TextAlign.center,
+              fontSize: FontSize.MEDIUM + 1,
               color: kTextColorGrey,
             )
           : const SizedBox.shrink(),
