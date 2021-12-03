@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/screens/review/write_review_screen.dart';
 import '../screens/dashboard/home_screen.dart';
 import '../screens/sale_order/sale_chart_screen.dart';
 import '../screens/category/edit_my_category_screen.dart';
@@ -15,7 +16,7 @@ import '../screens/shipping_address/shipping_address_screen.dart';
 
 import '../screens/payment_order/cart_screen.dart';
 import '../screens/profile/diff_profile_screen.dart';
-import '../screens/category/rating_and_review_screen.dart';
+import '../screens/review/rating_and_review_screen.dart';
 import '/routes/navigator_tabs_route.dart';
 import '../screens/category/category_detail_screen.dart';
 import '/screens/login/signin_screen.dart';
@@ -35,6 +36,7 @@ class RouteManage {
   static const diff_profile = '/diff_profile';
   static const my_profile = '/my_profile';
   static const rating_review = '/rating_review';
+  static const write_review = '/write_review';
   static const order = '/order';
   static const order_detail = 'order_detail';
   static const sale_order = '/sale_order';
@@ -60,6 +62,7 @@ class RouteManage {
     diff_profile: (_) => DiffProfileScreen(),
     my_profile: (_) => ProfileScreen(),
     rating_review: (_) => RatingAndReviewScreen(),
+    write_review: (_) => WriteReviewScreen(),
     order: (_) => OrderScreen(),
     order_detail: (_) => OrderDetailScreen(),
     sale_order: (_) => SaleOrderScreen(),

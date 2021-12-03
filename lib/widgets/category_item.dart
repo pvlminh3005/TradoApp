@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/custom_image_network.dart';
 import '/components/custom_icon.dart';
 import '/screens/category/category_detail_screen.dart';
 import '/screens/category/edit_my_category_screen.dart';
@@ -48,8 +47,6 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     Map<String, dynamic> rate =
         Provider.of<RateReviewProvider>(context, listen: false)
             .amountRates(category.id);
@@ -67,103 +64,16 @@ class CategoryItem extends StatelessWidget {
         ),
       ),
       child: Container(
-        child: Stack(
-          alignment: Alignment.topCenter,
+        decoration: BoxDecoration(
+          color: kCardColor,
+          borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+        ),
+        child: Column(
           children: [
-            Positioned(
-              bottom: AppDimen.spacing_2,
-              child: Container(
-                padding: const EdgeInsets.only(top: 20),
-                constraints: BoxConstraints(
-                  minHeight: Platform.isIOS ? 105 : 120,
-                ),
-                width: size.width * .45,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
-                  color: kCardColor,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 10,
-                    bottom: 5,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomText(
-                        category.title,
-                        fontSize: FontSize.SMALL,
-                        maxLines: 2,
-                      ),
-
-                      //Widget Price & Sale
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CustomText(
-                            '${FormatPrice(priceDecreaseSale)} đ',
-                            fontWeight: FontWeight.w700,
-                            color: category.priceSale != 0
-                                ? kErrorColor
-                                : kTextDark,
-                          ),
-                          const SizedBox(width: 10),
-                          category.priceSale != 0
-                              ? SaleComponent(text: category.priceSale)
-                              : SizedBox.shrink(),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //stars & review
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star_rate_rounded,
-                                color: rate['rating'] != 0
-                                    ? kHighlightColor
-                                    : kTextColorGrey,
-                                size: 20,
-                              ),
-                              CustomText(
-                                '${rate['rating'].toStringAsFixed(1)}',
-                                fontSize: FontSize.SMALL,
-                              ),
-                              const SizedBox(width: 10),
-                              CustomText(
-                                '(${rate['review']} nhận xét)',
-                                fontSize: FontSize.SMALL,
-                                color: kTextColorGrey,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _buildFooterItem(
-                                Icons.remove_red_eye,
-                                0.toString(),
-                              ),
-                              _buildFooterItem(
-                                Icons.near_me_outlined,
-                                '< 4km',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
             Container(
               decoration: BoxDecoration(
                 color: kCardColor,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black26,
@@ -183,16 +93,11 @@ class CategoryItem extends StatelessWidget {
                       child: Stack(
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image(
-                              width: size.width * .42,
-                              height: 180,
-                              fit: BoxFit.cover,
-                              image: category.imageUrl.isEmpty
-                                  ? AssetImage('assets/images/empty_image.jpeg')
-                                      as ImageProvider
-                                  : NetworkImage(category.imageUrl[0]),
-                            ),
+                            borderRadius:
+                                BorderRadius.circular(AppDimen.radiusNormal),
+                            child: category.imageUrl.isEmpty
+                                ? _buildImageEmpty()
+                                : _buildImageNetwork(),
                           ),
                         ],
                       ),
@@ -230,9 +135,108 @@ class CategoryItem extends StatelessWidget {
                 ],
               ),
             ),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: AppDimen.spacing_1,
+                  horizontal: AppDimen.horizontalSpacing_10,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: const Radius.circular(AppDimen.radiusNormal),
+                    bottomRight: const Radius.circular(AppDimen.radiusNormal),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CustomText(
+                      category.title,
+                      fontSize: FontSize.SMALL,
+                      maxLines: 2,
+                    ),
+
+                    //Widget Price & Sale
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CustomText(
+                          '${FormatPrice(priceDecreaseSale)} đ',
+                          fontWeight: FontWeight.w700,
+                          color:
+                              category.priceSale != 0 ? kErrorColor : kTextDark,
+                        ),
+                        const SizedBox(width: 8.0),
+                        category.priceSale != 0
+                            ? SaleComponent(text: category.priceSale)
+                            : SizedBox.shrink(),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //stars & review
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star_rate_rounded,
+                              color: rate['rating'] != 0
+                                  ? kHighlightColor
+                                  : kTextColorGrey,
+                              size: 20,
+                            ),
+                            CustomText(
+                              '${rate['rating'].toStringAsFixed(1)}',
+                              fontSize: FontSize.SMALL,
+                            ),
+                            const SizedBox(width: 10),
+                            CustomText(
+                              '(${rate['review']} nhận xét)',
+                              fontSize: FontSize.SMALL,
+                              color: kTextColorGrey,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _buildFooterItem(
+                              Icons.remove_red_eye,
+                              0.toString(),
+                            ),
+                            _buildFooterItem(
+                              Icons.near_me_outlined,
+                              '< 4km',
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildImageEmpty() {
+    return Image(
+      width: double.infinity,
+      height: 180,
+      fit: BoxFit.cover,
+      image: AssetImage('assets/images/empty_image.jpeg'),
+    );
+  }
+
+  Widget _buildImageNetwork() {
+    return CustomImageNetWork(
+      image: category.imageUrl[0],
+      height: 180,
+      width: double.infinity,
     );
   }
 

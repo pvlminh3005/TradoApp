@@ -1,15 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/extensions/custom_extension.dart';
-import '/components/loading/loading_app.dart';
+import '/extensions/custom_extension.dart';
 import '/components/custom_icon.dart';
 import '/components/data_search.dart';
 import '/constants/constants.dart';
-import '/constants/dimen.dart';
-import '/models/category_model.dart';
 import '/providers/category_provider.dart';
-import '/widgets/category_item.dart';
 import '/widgets/appbar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    LoadingApp.loadingPage(seconds: 3);
 
     Provider.of<CategoryProvider>(context, listen: false).fetchAllCategories();
   }

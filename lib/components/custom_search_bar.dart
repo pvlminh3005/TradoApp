@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '/constants/sizes.dart';
 import '/extensions/custom_extension.dart';
 import '/constants/dimen.dart';
 import '/components/custom_text.dart';

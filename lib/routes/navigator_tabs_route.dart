@@ -3,8 +3,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '/screens/review/write_review_screen.dart';
 import '/constants/dimen.dart';
-import '../screens/dashboard/message_screen.dart';
 import '../screens/dashboard/favorite_screen.dart';
 import '/widgets/dotted_widget.dart';
 
@@ -29,7 +29,8 @@ class _NavigatorTabState extends State<NavigatorTab> {
     // SuccessScreen(),
     FavoriteScreen(),
     NotificationScreen(),
-    MessageScreen(),
+    // MessageScreen(),
+    WriteReviewScreen(),
     ProfileScreen(),
   ];
 
@@ -43,7 +44,6 @@ class _NavigatorTabState extends State<NavigatorTab> {
         index: widget.pages,
         height: 65,
         backgroundColor: Colors.transparent,
-        // buttonBackgroundColor: Theme.of(context).primaryColor,
         onTap: (index) {
           setState(() {
             widget.pages = index;

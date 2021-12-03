@@ -20,6 +20,8 @@ extension CustomExtension on Widget {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 1 / 1.5,
+        mainAxisSpacing: AppDimen.spacing_1 + 2,
+        crossAxisSpacing: AppDimen.spacing_1,
       ),
       itemCount: data.length,
       itemBuilder: (BuildContext context, int index) {
