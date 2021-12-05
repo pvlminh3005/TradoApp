@@ -89,8 +89,8 @@ class SaleOrderItem extends StatelessWidget {
       constraints: BoxConstraints(maxHeight: 500),
       child: SingleChildScrollView(
         child: Column(
-          children: orders.categories.map((category) {
-            return CategoryOrderItem(category: category);
+          children: orders.categories.map((order) {
+            return CategoryOrderItem(category: order);
           }).toList(),
         ),
       ),

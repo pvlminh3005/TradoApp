@@ -28,9 +28,15 @@ class SaleOrderScreen extends StatefulWidget {
 
 class _SaleOrderScreenState extends State<SaleOrderScreen> {
   @override
+  void initState() {
+    super.initState();
+
+    Provider.of<SaleOrderProvider>(context, listen: false).fetchAllSaleOrders();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<SaleOrderProvider>(context, listen: false).fetchAllSaleOrders();
   }
 
   @override

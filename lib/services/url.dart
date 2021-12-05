@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:trado_app_uit/utils/auth_preferences.dart';
+import '/utils/auth_preferences.dart';
 
 class MainURL {
   MainURL._();
@@ -13,6 +13,7 @@ class MainURL {
   static String product = '/product';
   static String address = '/tagshipping';
   static String cart = 'cart';
+  static String review = 'review';
 
   //register
   static String registerURL = '$mainURL$account$register';
@@ -33,6 +34,11 @@ class MainURL {
 
   //cart
   static String cartURL = '$mainURL$cart';
+
+  //review
+  static String newReviewURL = '$mainURL$review';
+  static String userReviewURL = '$mainURL$review/user';
+  static String productReviewURL = '$mainURL$review/product';
 
   static Options customOption = Options(
     headers: {MainURL.headerToken: AuthPreferences.getToken()},

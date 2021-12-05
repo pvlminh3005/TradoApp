@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import '/models/category_model.dart';
+import '/models/shipping_address_model.dart';
 import '../models/order_detail_model.dart';
 import '/services/order_api.dart';
 
 class SaleOrderProvider with ChangeNotifier {
-  SaleOrderProvider() {
-    fetchAllSaleOrders();
-  }
+  // SaleOrderProvider() {
+  //   fetchAllSaleOrders();
+  // }
 
   List<OrderDetailModel> _listSaleOrders = [];
   List<OrderDetailModel> get listSaleOrders => _listSaleOrders;
@@ -13,6 +15,27 @@ class SaleOrderProvider with ChangeNotifier {
   Future<void> fetchAllSaleOrders() async {
     var data = await OrderApi.fetchAllSaleOrders();
     _listSaleOrders = data;
+    notifyListeners();
+  }
+
+  Future<void> addToSaleOrder({
+    String? idUser,
+    ShippingAddressModel? address,
+    int? totalPrice,
+    TimeOrderModel? time,
+    List<CategoryModel> categories = const [],
+  }) async {
+    await Future.delayed(Duration(seconds: 2));
+    var data = OrderDetailModel(
+      idUser: idUser!,
+      address: address!,
+      time: time!,
+      categories: categories,
+      totalPrice: totalPrice!,
+      typeOrder: OrderType.SALEORDER.index,
+    );
+    _listSaleOrders.add(data);
+    print(_listSaleOrders.length);
     notifyListeners();
   }
 

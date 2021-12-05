@@ -70,16 +70,16 @@ class CategoryApi {
       CategoryModel(
         id: 'c2',
         idUser: 'user1',
-        title: 'Áo dài',
+        title: 'Porsche 911',
         description:
             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem, eius veniam porro assumenda praesentium fugit ipsam fuga perferendis? Obcaecati maiores explicabo facere!',
-        price: 60000,
+        price: 3000000,
         imageUrl: [
-          'https://media.istockphoto.com/photos/portrait-of-a-vietnamese-girl-with-a-red-dress-in-the-lotus-hand-picture-id1187554319?k=20&m=1187554319&s=612x612&w=0&h=5l3PZl3ffXJZJbWZCkUNb5LwXRYrs4zogO3k_gdqTG8=',
+          'https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8Y2FyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
         ],
         amountView: 120,
         priceSale: 10,
-        status: false,
+        status: true,
       ),
       CategoryModel(
         id: 'c3',

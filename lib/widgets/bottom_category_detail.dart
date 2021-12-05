@@ -47,8 +47,7 @@ class BottomCategoryDetail extends StatelessWidget {
             onPressed: () {
               providerCart.addToCart(
                 category.id,
-                category.title,
-                category.imageUrl[0],
+                category,
                 priceDecreaseSale,
                 quantity!,
               );

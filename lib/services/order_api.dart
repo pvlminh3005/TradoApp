@@ -36,14 +36,11 @@ class OrderApi {
               price: 155000,
               imageUrl: [
                 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-                'https://images.unsplash.com/photo-1596756003714-9a02b585a1a6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2Fub258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-                'https://images.unsplash.com/photo-1603208235561-006b83924146?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGNhbm9ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
               ],
               quantity: 2,
             ),
           ],
           statusOrder: 1,
-          quantityCategories: 1,
           time: TimeOrderModel(
             timeDelivery: DateTime.now(),
             timeFinish: DateTime.now(),
@@ -81,8 +78,6 @@ class OrderApi {
               price: 155000,
               imageUrl: [
                 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-                'https://images.unsplash.com/photo-1596756003714-9a02b585a1a6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2Fub258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-                'https://images.unsplash.com/photo-1603208235561-006b83924146?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGNhbm9ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
               ],
               quantity: 2,
             ),
@@ -101,7 +96,6 @@ class OrderApi {
                 idOrder: order.id,
                 idUser: order.idUser,
                 totalPrice: order.totalPrice,
-                quantity: order.quantityCategories,
                 statusOrder: order.statusOrder,
                 date: order.time.timeOrder,
               ))
@@ -142,7 +136,6 @@ class OrderApi {
               quantity: 2,
             ),
           ],
-          quantityCategories: 1,
           time: TimeOrderModel(
             timeDelivery: DateTime.now(),
             timeFinish: DateTime.now(),
@@ -188,7 +181,6 @@ class OrderApi {
               quantity: 2,
             ),
           ],
-          quantityCategories: 2,
           time: TimeOrderModel(
             timeDelivery: DateTime.now(),
             timeFinish: DateTime.now(),

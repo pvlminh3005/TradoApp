@@ -35,8 +35,8 @@ class _CartItemState extends State<CartItem> {
         vertical: AppDimen.verticalSpacing_5,
       ),
       child: Dismissible(
-        key: Key(widget.cart.id),
-        onDismissed: (direction) => provider.removeToCart(widget.cart.id),
+        key: Key(widget.cart.id!),
+        onDismissed: (direction) => provider.removeToCart(widget.cart.id!),
         background: Container(
           decoration: BoxDecoration(
             color: const Color(0xFFFFE6E6),
@@ -65,7 +65,7 @@ class _CartItemState extends State<CartItem> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
                 child: Image.network(
-                  widget.cart.imageUrl,
+                  widget.cart.category!.imageUrl[0],
                   width: size.width * .25,
                   height: size.width * .25,
                   fit: BoxFit.cover,
@@ -82,13 +82,13 @@ class _CartItemState extends State<CartItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        widget.cart.title,
+                        widget.cart.category!.title,
                         fontWeight: FontWeight.w700,
                         fontSize: FontSize.BIG,
                         maxLines: 1,
                       ),
                       CustomText(
-                        '${FormatPrice(widget.cart.price)} đ',
+                        '${FormatPrice(widget.cart.category!.price)} đ',
                         fontSize: FontSize.BIG,
                         fontWeight: FontWeight.w700,
                         color: kErrorColor,

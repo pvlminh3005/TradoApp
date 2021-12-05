@@ -19,8 +19,8 @@ class ChangeQuantity extends StatelessWidget {
   Widget build(BuildContext context) {
     CartProvider cartProvider =
         Provider.of<CartProvider>(context, listen: false);
-    var category = cartProvider.listCart[idCategory];
-    int quantity = category!.quantity;
+    var dataCategory = cartProvider.listCart[idCategory];
+    int quantity = dataCategory!.category!.quantity;
     return Consumer<CartProvider>(
       builder: (context, cartProvider, _) => Row(
         children: [

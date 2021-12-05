@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/cart_model.dart';
+import '/models/category_model.dart';
+import '/models/cart_model.dart';
 
 class CartProvider with ChangeNotifier {
   late Map<String, CartModel> _listCart = {};
@@ -8,25 +9,29 @@ class CartProvider with ChangeNotifier {
   late Map<String, CartModel> _listCheckCart = {};
   Map<String, CartModel> get listCheckCart => _listCheckCart;
 
+  //when pay categories in cart, app auto create bill orders to salers
+  late Map<String, List<CartModel>> _listToCreateSaleOrders = {};
+  Map<String, List<CartModel>> get listToCreateSaleOrders =>
+      _listToCreateSaleOrders;
+
   int get cartCount => _listCart.length;
 
   int get totalAmount {
     int _total = 0;
     _listCheckCart.forEach((key, cart) {
-      _total += cart.price * cart.quantity;
+      _total += cart.category!.price * cart.category!.quantity;
     });
     return _total;
   }
 
   void reloadCheckCart() {
     _listCheckCart = {};
-    // notifyListeners();
+    _listToCreateSaleOrders = {};
   }
 
   void addToCart(
     String categoryId,
-    String title,
-    String imageUrl,
+    CategoryModel product,
     int price,
     int quantity,
   ) {
@@ -36,10 +41,15 @@ class CartProvider with ChangeNotifier {
         categoryId,
         (category) => CartModel(
           id: categoryId,
-          title: category.title,
-          price: category.price,
-          imageUrl: category.imageUrl,
-          quantity: category.quantity + quantity,
+          idUser: product.idUser,
+          category: CategoryModel(
+            id: categoryId,
+            idUser: product.idUser,
+            title: product.title,
+            price: price,
+            quantity: product.quantity++,
+            imageUrl: product.imageUrl,
+          ),
         ),
       );
     } else {
@@ -48,10 +58,15 @@ class CartProvider with ChangeNotifier {
         categoryId,
         () => CartModel(
           id: categoryId,
-          title: title,
-          imageUrl: imageUrl,
-          price: price,
-          quantity: quantity,
+          idUser: product.idUser,
+          category: CategoryModel(
+            id: categoryId,
+            idUser: product.idUser,
+            title: product.title,
+            price: price,
+            quantity: quantity,
+            imageUrl: product.imageUrl,
+          ),
         ),
       );
     }
@@ -63,12 +78,38 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //add to checkcart <==> create bill
   void addToCheckCart(String idCategory) {
     _listCheckCart.putIfAbsent(idCategory, () => _listCart[idCategory]!);
+    var key = _listCart[idCategory]!.idUser!;
+    if (key.isEmpty) return;
+
+    if (_listToCreateSaleOrders.containsKey(key)) {
+      _listToCreateSaleOrders.update(
+        key,
+        (value) {
+          value.add(_listCart[idCategory]!);
+          return value;
+        },
+      );
+    } else {
+      _listToCreateSaleOrders.putIfAbsent(
+        key,
+        () {
+          return [_listCart[idCategory]!];
+        },
+      );
+    }
+
+    print('KEY: $key, DATA: ${_listToCreateSaleOrders}');
+
     notifyListeners();
   }
 
   void removeCheckCart(String idCategory) {
+    var key = _listCheckCart[idCategory]!.idUser;
+    _listToCreateSaleOrders[key]!
+        .removeWhere((order) => order.category!.id == idCategory);
     _listCheckCart.removeWhere((key, category) => key == idCategory);
     notifyListeners();
   }
@@ -79,12 +120,15 @@ class CartProvider with ChangeNotifier {
   }) {
     _listCart.update(
       idCategory!,
-      (category) => CartModel(
-        id: category.id,
-        title: category.title,
-        price: category.price,
-        imageUrl: category.imageUrl,
-        quantity: quantity!,
+      (cart) => CartModel(
+        id: cart.id,
+        category: CategoryModel(
+          id: idCategory,
+          idUser: cart.category!.idUser,
+          price: cart.category!.price,
+          quantity: quantity!,
+          imageUrl: cart.category!.imageUrl,
+        ),
       ),
     );
 

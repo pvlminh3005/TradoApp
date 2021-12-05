@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/models/order_detail_model.dart';
+import '/providers/sale_order_provider.dart';
 import '/providers/cart_provider.dart';
 import '/providers/order_provider.dart';
 import '/routes/routes_manage.dart';
@@ -31,6 +33,7 @@ class CheckOutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int checkoutPrice = (totalPrice + deliveryPrice - voucherPrice);
     return Scaffold(
       appBar: _buildAppBar(),
       body: Padding(
@@ -54,13 +57,13 @@ class CheckOutScreen extends StatelessWidget {
                     _buildTitle('Payment'),
                     _buildDetailPaymentMethod(),
                     _buildInfoPrice(),
-                    _buildTotalPrice(),
+                    _buildTotalPrice(checkoutPrice),
                     // __buildDetailPayment(),
                   ],
                 ),
               ),
             ),
-            _buildButton(context),
+            _buildButton(context, checkoutPrice),
           ],
         ),
       ),
@@ -116,28 +119,47 @@ class CheckOutScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTotalPrice() {
+  Widget _buildTotalPrice(int checkoutPrice) {
     return CardShadow(
       margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
       child: _buildDetailInfoPrice(
         title: 'Tổng cộng',
-        price: (totalPrice + deliveryPrice - voucherPrice),
+        price: checkoutPrice,
       ),
     );
   }
 
-  Widget _buildButton(BuildContext context) {
+  Widget _buildButton(BuildContext context, int checkoutPrice) {
     return Consumer<OrderProvider>(
       builder: (ctx, provider, _) {
         return PrimaryButton(
           title: 'Đặt hàng',
           onPressed: () async {
+            CartProvider cartProvider =
+                Provider.of<CartProvider>(context, listen: false);
+            SaleOrderProvider saleProvider =
+                Provider.of<SaleOrderProvider>(context, listen: false);
+            ShippingAddressProvider addressProvider =
+                Provider.of<ShippingAddressProvider>(context, listen: false);
             await provider.addToOrder(
               totalPrice: (totalPrice + deliveryPrice - voucherPrice),
               quantity: quantity,
             );
-            Provider.of<CartProvider>(context, listen: false)
-                .removeCategoriesInCartWhenCheckOut();
+            cartProvider.listToCreateSaleOrders.forEach((key, orders) async {
+              await saleProvider.addToSaleOrder(
+                idUser: key,
+                address: addressProvider.defaultAddress,
+                time: TimeOrderModel(
+                  timeOrder: DateTime.now(),
+                  timeDelivery: null,
+                  timeFinish: null,
+                ),
+                categories: orders.map((order) => order.category!).toList(),
+                totalPrice: checkoutPrice,
+                // categories: orders,
+              );
+            });
+            cartProvider.removeCategoriesInCartWhenCheckOut();
             Navigator.pushNamed(context, RouteManage.success);
           },
         );

@@ -1,5 +1,6 @@
-import 'shipping_address_model.dart';
+import 'cart_model.dart';
 import 'category_model.dart';
+import 'shipping_address_model.dart';
 
 enum OrderDetailType {
   WAITING,
@@ -26,7 +27,6 @@ class OrderDetailModel {
   late int statusOrder;
   late int totalPrice;
   late int methodPayment;
-  late int quantityCategories;
   late ShippingAddressModel address;
   late List<CategoryModel> categories;
   late TimeOrderModel time;
@@ -39,7 +39,6 @@ class OrderDetailModel {
     this.statusOrder = 0, // 1, 2
     this.totalPrice = 0,
     this.methodPayment = 1, //1: cash
-    this.quantityCategories = 0,
     required this.address,
     required this.time,
     required this.categories,
@@ -53,10 +52,9 @@ class OrderDetailModel {
     statusOrder = json['statusOrder'] ?? 0;
     totalPrice = json['totalPrice'] ?? 0;
     methodPayment = json['methodPaymen'] ?? 1;
-    quantityCategories = json['quantityCategories'] ?? 0;
     address = json['address'];
-    time = TimeOrderModel.fromJson(json['data']);
-    categories = json['categories'] ?? [];
+    time = TimeOrderModel.fromJson(json['time']);
+    categories = json['categories'].map((json) => CategoryModel.fromJson(json));
     this.typeOrder = json['typeOrder'] ?? 0;
   }
 
@@ -68,7 +66,6 @@ class OrderDetailModel {
     data['statusOrder'] = this.statusOrder;
     data['totalPrice'] = this.totalPrice;
     data['methodPayment'] = this.methodPayment;
-    data['quantityCategories'] = this.quantityCategories;
     data['address'] = this.address;
     data['time'] = this.time;
     data['categories'] = this.categories;
@@ -78,14 +75,14 @@ class OrderDetailModel {
 }
 
 class TimeOrderModel {
-  late DateTime timeOrder;
-  late DateTime timeDelivery;
-  late DateTime timeFinish;
+  late DateTime? timeOrder;
+  late DateTime? timeDelivery;
+  late DateTime? timeFinish;
 
   TimeOrderModel({
-    required this.timeOrder,
-    required this.timeDelivery,
-    required this.timeFinish,
+    this.timeOrder,
+    this.timeDelivery,
+    this.timeFinish,
   });
 
   TimeOrderModel.fromJson(Map<String, dynamic> json) {
