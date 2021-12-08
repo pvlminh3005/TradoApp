@@ -4,15 +4,17 @@ import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
-import '/screens/add_shipping_address_screen.dart';
+import '../../screens/shipping_address/add_shipping_address_screen.dart';
 
 class AddressDetailWidget extends StatelessWidget {
+  final String? id;
   final String? name;
   final String? phoneNumber;
   final String? address;
   final String? note;
 
   const AddressDetailWidget({
+    this.id,
     this.name,
     this.phoneNumber,
     this.address,
@@ -23,7 +25,7 @@ class AddressDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardShadow(
-      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_16),
+      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_10),
       padding: const EdgeInsets.all(0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,10 +80,12 @@ class AddressDetailWidget extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (BuildContext context) => AddShippingAddressScreen(
+            id: id!,
             name: name!,
             phone: phoneNumber!,
             address: address!,
             note: note!,
+            isEditAddress: true,
           ),
         ),
       );

@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import '/providers/auth_provider.dart';
 
+import '/providers/sale_order_provider.dart';
 import '/providers/shipping_address_provider.dart';
 import '/providers/cart_provider.dart';
 import '/providers/category_provider.dart';
@@ -12,9 +12,6 @@ import '/providers/rate_review_provider.dart';
 
 class ProviderManage {
   static List<SingleChildWidget> providersApp = [
-    ChangeNotifierProvider(
-      create: (_) => AuthProvider(),
-    ),
     ChangeNotifierProvider(
       create: (_) => GoogleSiginController(),
     ),
@@ -32,6 +29,9 @@ class ProviderManage {
     ),
     ChangeNotifierProvider(
       create: (_) => OrderProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => SaleOrderProvider(),
     ),
     ChangeNotifierProvider(
       create: (_) => ShippingAddressProvider(),

@@ -1,50 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '/providers/cart_provider.dart';
 import '/constants/dimen.dart';
 import '/components/custom_text.dart';
 import '/constants/sizes.dart';
 
 import '/constants/constants.dart';
 
-class ChangeQuantity extends StatefulWidget {
-  late int quantity;
+class ChangeQuantity extends StatelessWidget {
+  final String? idCategory;
 
   ChangeQuantity({
-    this.quantity = 1,
+    this.idCategory = '',
     Key? key,
   }) : super(key: key);
 
   @override
-  _ChangeQuantityState createState() => _ChangeQuantityState();
-}
-
-class _ChangeQuantityState extends State<ChangeQuantity> {
-  @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ButtonCount(
-          icon: Icons.remove,
-          onPressed: () {
-            setState(() {
-              if (widget.quantity <= 1) return;
-              widget.quantity--;
-            });
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: CustomText(
-            '${widget.quantity.toString().padLeft(2, "0")}',
-            fontSize: FontSize.BIG,
+    CartProvider cartProvider =
+        Provider.of<CartProvider>(context, listen: false);
+    var dataCategory = cartProvider.listCart[idCategory];
+    int quantity = dataCategory!.category!.quantity;
+    return Consumer<CartProvider>(
+      builder: (context, cartProvider, _) => Row(
+        children: [
+          ButtonCount(
+            icon: Icons.remove,
+            onPressed: () {
+              if (quantity < 2) return;
+
+              cartProvider.changeQuantityCategory(
+                idCategory: idCategory!,
+                quantity: --quantity,
+              );
+            },
           ),
-        ),
-        ButtonCount(
-          icon: Icons.add,
-          onPressed: () => setState(() {
-            widget.quantity++;
-          }),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppDimen.spacing_1),
+            child: CustomText(
+              '${quantity.toString().padLeft(2, "0")}',
+              fontSize: FontSize.BIG,
+            ),
+          ),
+          ButtonCount(
+            icon: Icons.add,
+            onPressed: () {
+              cartProvider.changeQuantityCategory(
+                idCategory: idCategory!,
+                quantity: ++quantity,
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -64,9 +72,9 @@ class ButtonCount extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: const EdgeInsets.all(7),
+        padding: const EdgeInsets.all(AppDimen.spacing_1 - 1),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppDimen.radiusBig),
+          borderRadius: BorderRadius.circular(AppDimen.radiusNormal + 2),
           color: kColorItemGrey,
         ),
         child: Icon(icon),

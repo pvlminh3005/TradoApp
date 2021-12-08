@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/constants/constants.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
+import '/constants/constants.dart';
 
 class IconSuccess extends StatelessWidget {
   const IconSuccess({Key? key}) : super(key: key);

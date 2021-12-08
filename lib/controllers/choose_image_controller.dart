@@ -15,15 +15,23 @@ class ImageController {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       final imageTemporary = File(image.path);
-      // return imageTemporary;
       file = imageTemporary;
+      return imageTemporary;
     } on PlatformException catch (e) {
       print('Có lỗi xảy ra khi chọn ảnh: $e');
     }
   }
 
   static Future openCamera() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      file = imageTemporary;
+      return imageTemporary;
+    } on PlatformException catch (e) {
+      print('Có lỗi xảy ra khi chụp ảnh: $e');
+    }
   }
 
   static Future<void> showBottomSheetManageImage(BuildContext context) async {

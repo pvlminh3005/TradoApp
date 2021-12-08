@@ -1,31 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/providers/shipping_address_provider.dart';
+import '/providers/shipping_address_provider.dart';
 import '/components/custom_text.dart';
 import '/constants/sizes.dart';
 import '/models/shipping_address_model.dart';
 import '/widgets/checkout_widget/address_detail_widget.dart';
 
-class ShippingAddressItem extends StatefulWidget {
+class ShippingAddressItem extends StatelessWidget {
   final ShippingAddressModel? shippingAddress;
 
   ShippingAddressItem({
     this.shippingAddress,
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<ShippingAddressItem> createState() => _ShippingAddressItemState();
-}
-
-class _ShippingAddressItemState extends State<ShippingAddressItem> {
-  bool defaultAddress = false;
-
-  @override
-  void initState() {
-    super.initState();
-    defaultAddress = widget.shippingAddress!.defaultAddress;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +29,11 @@ class _ShippingAddressItemState extends State<ShippingAddressItem> {
       builder: (ctx, provider, _) {
         return InkWell(
           onTap: () {
-            provider.setDefaultAddress(widget.shippingAddress!.id);
-            setState(() {
-              if (defaultAddress) return;
-              defaultAddress = !defaultAddress;
-            });
+            provider.setDefaultAddress(shippingAddress!.id);
           },
           child: Row(
             children: [
-              defaultAddress
+              shippingAddress!.defaultAddress
                   ? Image.asset(
                       'assets/images/icon_checked.png',
                       width: 20.0,
@@ -74,10 +57,11 @@ class _ShippingAddressItemState extends State<ShippingAddressItem> {
 
   Widget _buildInfo() {
     return AddressDetailWidget(
-      name: widget.shippingAddress!.name,
-      phoneNumber: widget.shippingAddress!.phoneNumber,
-      address: widget.shippingAddress!.address,
-      note: widget.shippingAddress!.note,
+      id: shippingAddress!.id,
+      name: shippingAddress!.name,
+      phoneNumber: shippingAddress!.phoneNumber,
+      address: shippingAddress!.address,
+      note: shippingAddress!.note,
     );
   }
 }

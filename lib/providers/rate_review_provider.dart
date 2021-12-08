@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '/models/review_model.dart';
+import '/services/review_api.dart';
 import '../models/rate_category_model.dart';
 
 class RateReviewProvider with ChangeNotifier {
@@ -43,13 +45,18 @@ class RateReviewProvider with ChangeNotifier {
     };
   }
 
-  List<RateModel> findRateByIdCategory(String idCategory) {
-    return _listRates
-        .where((category) => category.idCategory == idCategory)
-        .toList();
+  Future<List<ReviewModel>> fetchReviewByIdCategory(String idCategory) async {
+    var data = await ReviewApi.fetchReviewCategory(idCategory);
+    return data;
   }
 
-  // List<RateModel> findRateByIdUser(String idUser){
+  //test data
+  findRateByIdCategory(String idCategory) {
+    return _listRates.map((rate) => rate.idCategory == idCategory).toList();
+  }
 
-  // }
+  Future<List<ReviewModel>> fetchReviewByIdUser(String idUser) async {
+    var data = await ReviewApi.fetchReviewUser(idUser);
+    return data;
+  }
 }

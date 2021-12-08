@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:trado_app_uit/components/custom_icon.dart';
 import '/constants/constants.dart';
 import '/constants/dimen.dart';
 import '/constants/sizes.dart';
 
 class CustomInput extends StatefulWidget {
-  final String hintText;
+  final String hintText, labelText;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
+
   final bool showPrefixIcon;
   final bool showSuffixIcon;
+  final bool readOnly;
   final Color iconColor;
   final Color backgroundColor;
   final IconData? prefixIcon;
   final double? fontSize;
   final double? radius;
+  final double? height;
   final Color colorIcon;
   final Color textColor;
   final EdgeInsets margin;
@@ -20,21 +26,27 @@ class CustomInput extends StatefulWidget {
   final double borderWidth;
   final int maxLength;
   final Color borderColor;
-  final String labelText;
   final TextInputType keyboardType;
+  final TextInputAction inputAction;
   final FontWeight fontWeight;
+  final int maxLines;
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomInput({
     this.controller,
+    this.focusNode,
     this.hintText = '',
     this.labelText = '',
     this.showPrefixIcon = false,
     this.showSuffixIcon = false,
+    this.readOnly = false,
     this.prefixIcon = null,
     this.iconColor = kPrimaryColor,
     this.fontSize = FontSize.SMALL,
     this.radius = AppDimen.radiusNormal,
-    this.backgroundColor = kPrimaryColorLight,
+    this.height = 1,
+    this.backgroundColor = kBackgroundColorWhite,
     this.colorIcon = kPrimaryColor,
     this.textColor = kTextColorGrey,
     this.margin = const EdgeInsets.all(0.0),
@@ -46,7 +58,11 @@ class CustomInput extends StatefulWidget {
     this.maxLength = 100,
     this.borderColor = Colors.transparent,
     this.keyboardType = TextInputType.text,
+    this.inputAction = TextInputAction.next,
     this.fontWeight = FontWeight.w500,
+    this.maxLines = 1,
+    this.validator,
+    this.inputFormatters,
     Key? key,
   }) : super(key: key);
 
@@ -64,15 +80,26 @@ class _CustomInputState extends State<CustomInput> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: TextField(
+            child: TextFormField(
+              focusNode: widget.focusNode,
               controller: widget.controller,
               obscureText: widget.showSuffixIcon ? obscureText : false,
-              maxLines: widget.showSuffixIcon ? 1 : null,
+              maxLines: widget.showSuffixIcon ? 1 : widget.maxLines,
               maxLength: widget.maxLength,
+              readOnly: widget.readOnly,
+              textAlignVertical: TextAlignVertical.top,
               keyboardType: widget.keyboardType,
+              textInputAction: widget.inputAction,
+              validator: widget.validator,
+              inputFormatters: widget.keyboardType == TextInputType.phone
+                  ? <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp('[0-9+]'))
+                    ]
+                  : widget.inputFormatters,
               style: TextStyle(
                 fontSize: FontSize.MEDIUM,
                 fontWeight: widget.fontWeight,
+                height: widget.height,
               ),
               decoration: InputDecoration(
                 counterText: '',
@@ -94,23 +121,13 @@ class _CustomInputState extends State<CustomInput> {
                   color: kTextColorGrey,
                 ),
                 prefixIcon: widget.showPrefixIcon
-                    ? Icon(widget.prefixIcon, color: widget.iconColor)
-                    : null,
-                suffixIcon: widget.showSuffixIcon
-                    ? GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            obscureText = !obscureText;
-                          });
-                        },
-                        child: Icon(
-                          !obscureText
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: widget.colorIcon,
-                        ),
+                    ? CustomIcon(
+                        widget.prefixIcon,
+                        color: widget.iconColor,
+                        size: AppDimen.icon_size + 2,
                       )
                     : null,
+                suffixIcon: widget.showSuffixIcon ? _buildObscure() : null,
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     width: widget.borderWidth,
@@ -125,11 +142,50 @@ class _CustomInputState extends State<CustomInput> {
                   ),
                   borderRadius: BorderRadius.circular(widget.radius!),
                 ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: widget.borderWidth,
+                    color: kErrorColor,
+                  ),
+                  borderRadius: BorderRadius.circular(widget.radius!),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: widget.borderWidth,
+                    color: kErrorColor,
+                  ),
+                  borderRadius: BorderRadius.circular(widget.radius!),
+                ),
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildObscure() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          obscureText = !obscureText;
+        });
+      },
+      child: Icon(
+        !obscureText ? Icons.visibility : Icons.visibility_off,
+        color: widget.colorIcon,
+      ),
+    );
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
     );
   }
 }

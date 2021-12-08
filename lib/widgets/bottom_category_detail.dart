@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/custom_button.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
+import '/components/custom_button.dart';
+import '/constants/dimen.dart';
 import '/routes/routes_manage.dart';
 
 import '/constants/constants.dart';
@@ -11,8 +11,8 @@ import '../providers/cart_provider.dart';
 
 class BottomCategoryDetail extends StatelessWidget {
   final CategoryModel category;
-  final int quantity;
-  final double priceDecreaseSale;
+  final int? quantity;
+  final int priceDecreaseSale;
 
   BottomCategoryDetail({
     required this.category,
@@ -47,23 +47,10 @@ class BottomCategoryDetail extends StatelessWidget {
             onPressed: () {
               providerCart.addToCart(
                 category.id,
-                category.title,
-                category.imageUrl[0],
+                category,
                 priceDecreaseSale,
-                quantity,
+                quantity!,
               );
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content: Text('Add to cart!'),
-              //     duration: Duration(seconds: 1),
-              //     action: SnackBarAction(
-              //       label: 'UNDO',
-              //       onPressed: () {
-              //         providerCart.removeSingleCategory(category.id);
-              //       },
-              //     ),
-              //   ),
-              // );
             },
           ),
           SizedBox(width: size.width * .04),
@@ -72,8 +59,14 @@ class BottomCategoryDetail extends StatelessWidget {
               'Mua ngay',
               radius: AppDimen.radiusNormal,
               textColor: kTextLight,
-              backgroundColor: kPrimaryColor,
-              onTap: () {},
+              backgroundColor: category.status
+                  ? kPrimaryColor
+                  : kTextColorGrey.withOpacity(.3),
+              onTap: !category.status
+                  ? () {}
+                  : () {
+                      print('OK');
+                    },
             ),
           ),
         ],

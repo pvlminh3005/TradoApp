@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '/constants/sizes.dart';
 import '/constants/constants.dart';
 import 'custom_text.dart';
 
@@ -18,7 +17,6 @@ class OrDivider extends StatelessWidget {
             child: CustomText(
               'Hoặc đăng nhập với',
               color: kPrimaryColor,
-              fontSize: FontSize.BIG,
               fontWeight: FontWeight.w700,
             ),
           ),

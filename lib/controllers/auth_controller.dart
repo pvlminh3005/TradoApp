@@ -1,48 +1,82 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
-import 'package:trado_app_uit/models/user_model.dart';
-import 'package:trado_app_uit/utils/auth_preferences.dart';
+import 'package:flutter/material.dart';
+import '/utils/conver_scaffold_messenger.dart';
+import '/routes/routes_manage.dart';
+import '/models/user_model.dart';
+import '/utils/auth_preferences.dart';
 import '/services/url.dart';
 
 class AuthController {
-  late Dio _dio;
+  static late Dio _dio = Dio();
+  static late UserModel _currentUser;
+  static UserModel get currentUser => _currentUser;
+  static String _idUser = '';
+  static String get idUser => _idUser;
+
   AuthController() {
-    _dio = Dio();
+    getCurrentUser();
   }
 
-  Future<dynamic> register(String username, String password) async {
+  static Future<void> register(
+      BuildContext context, String username, String password) async {
     try {
       var response = await _dio.post(MainURL.registerURL, data: {
         'username': username,
         'password': password,
       });
       if (response.statusCode == 200) {
-        return response.data;
+        String tokenUser = response.data['token'];
+        await AuthPreferences.setToken(tokenUser);
+
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RouteManage.edit_profile,
+          (Route<dynamic> route) => false,
+        );
       }
-    } catch (e) {
-      print(e);
+    } on DioError {
+      CustomSnackBar.dialogMessenger(
+        context,
+        'Tài khoản này đã có người sử dụng',
+      );
+      return;
     }
   }
 
-  Future<dynamic> signIn(String username, String password) async {
+  static Future<void> signIn(
+      BuildContext context, String username, String password) async {
     try {
-      var response = await _dio.post(MainURL.loginURL, data: {
-        'username': username,
-        'password': password,
-      });
+      var response = await _dio.post(
+        MainURL.loginURL,
+        data: {
+          'username': username,
+          'password': password,
+        },
+      );
 
-      if (response.statusCode == 200) {
-        return response.data;
-      }
-    } catch (e) {
-      print(e);
+      String tokenUser = response.data['accessToken'];
+      await AuthPreferences.setToken(tokenUser);
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RouteManage.navigator_tab,
+        (Route<dynamic> route) => false,
+      );
+      await AuthController.getCurrentUser();
+    } on DioError {
+      CustomSnackBar.dialogMessenger(
+          context, 'Tài khoản hoặc mật khẩu không đúng');
+      return;
     }
   }
 
-  Future<void> signOut() async {
+  static Future<void> signOut() async {
     await AuthPreferences.removeToken();
   }
 
-  Future getCurrentUser() async {
+  static Future<void> getCurrentUser() async {
     try {
       String? token = AuthPreferences.getToken();
       if (token!.isEmpty) return;
@@ -53,9 +87,15 @@ class AuthController {
         ),
       );
 
-      return UserModel.fromJson(response.data);
-    } catch (e) {
+      if (response.statusCode == 200) {
+        _currentUser = await UserModel.fromJson(response.data);
+        _idUser = _currentUser.auth!.id!;
+        return;
+      }
+    } on DioError catch (e) {
       print(e);
     }
   }
+
+  static Future<void> updateProfileUser() async {}
 }

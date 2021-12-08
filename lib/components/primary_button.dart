@@ -41,11 +41,11 @@ class PrimaryButton extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 5),
+              offset: Offset(0, 10),
               spreadRadius: 0,
-              blurRadius: 30,
+              blurRadius: 15,
               color: showShadow
-                  ? Color(0xFF8A959E).withOpacity(.25)
+                  ? Color(0xFF8A959E).withOpacity(.35)
                   : Colors.transparent,
             ),
           ],
@@ -60,6 +60,7 @@ class PrimaryButton extends StatelessWidget {
               backgroundColor == kPrimaryColor ? Colors.white : indicatorColor!,
           radius: AppDimen.radiusNormal,
           borderWidth: borderWidth,
+          borderOpacity: borderOpacity,
           sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
           onTap: () async {
             await onPressed!();

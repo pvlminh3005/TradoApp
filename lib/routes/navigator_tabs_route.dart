@@ -1,29 +1,36 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '/screens/success_screen.dart';
-import '/screens/checkout_screen.dart';
+import '/screens/review/write_review_screen.dart';
+import '/constants/dimen.dart';
+import '../screens/dashboard/favorite_screen.dart';
+import '/widgets/dotted_widget.dart';
 
 import '/constants/constants.dart';
 import './navigator_key.dart';
-import '../screens/notification_screen.dart';
-import '../screens/home_screen.dart';
-import '../screens/profile_screen.dart';
+import '../screens/dashboard/notification_screen.dart';
+import '../screens/dashboard/home_screen.dart';
+import '../screens/dashboard/profile_screen.dart';
 
 class NavigatorTab extends StatefulWidget {
+  late int pages;
+
+  NavigatorTab({this.pages = 0});
   @override
   _NavigatorTabState createState() => _NavigatorTabState();
 }
 
 class _NavigatorTabState extends State<NavigatorTab> {
-  double size = 27;
-  int _pages = 0;
+  double size = AppDimen.icon_size_big - 2;
   final _screens = [
     HomeScreen(),
-    SuccessScreen(),
-    // HighlightScreen(),
+    // SuccessScreen(),
+    FavoriteScreen(),
     NotificationScreen(),
     // MessageScreen(),
-    CheckOutScreen(),
+    WriteReviewScreen(),
     ProfileScreen(),
   ];
 
@@ -34,46 +41,56 @@ class _NavigatorTabState extends State<NavigatorTab> {
       backgroundColor: kBackgroundColor,
       bottomNavigationBar: CurvedNavigationBar(
         key: NavBarKey.getKey,
-        index: 0,
+        index: widget.pages,
         height: 65,
         backgroundColor: Colors.transparent,
-        // buttonBackgroundColor: Theme.of(context).primaryColor,
         onTap: (index) {
           setState(() {
-            _pages = index;
-            color = Colors.red;
+            widget.pages = index;
           });
         },
         items: [
           Icon(
-            Icons.home,
+            widget.pages == 0
+                ? CupertinoIcons.house_fill
+                : CupertinoIcons.house,
             size: size,
             color: color,
           ),
           Icon(
-            Icons.verified,
+            widget.pages == 1
+                ? CupertinoIcons.bookmark_fill
+                : CupertinoIcons.bookmark,
             size: size,
             color: color,
           ),
-          Icon(
-            Icons.notifications,
-            size: size,
-            color: color,
-          ),
-          Icon(
-            Icons.question_answer,
-            size: size,
-            color: color,
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundImage: AssetImage(
-              'assets/images/background_blue.jpeg',
+          DottedWidget(
+            dottedColor: widget.pages == 2 ? Colors.white : null,
+            child: Icon(
+              widget.pages == 2
+                  ? CupertinoIcons.bell_fill
+                  : CupertinoIcons.bell,
+              size: size,
+              color: color,
             ),
+          ),
+          Icon(
+            widget.pages == 3
+                ? CupertinoIcons.chat_bubble_2_fill
+                : CupertinoIcons.chat_bubble_2,
+            size: size,
+            color: color,
+          ),
+          Icon(
+            widget.pages == 4
+                ? CupertinoIcons.person_alt_circle_fill
+                : CupertinoIcons.person_alt_circle,
+            size: size + 5,
+            color: color,
           ),
         ],
       ),
-      body: _screens[_pages],
+      body: _screens[widget.pages],
     );
   }
 }
