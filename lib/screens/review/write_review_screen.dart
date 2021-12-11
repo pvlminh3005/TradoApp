@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '/components/custom_refresh_page.dart';
 import '/constants/sizes.dart';
 import '/components/custom_text.dart';
 import '/components/primary_button.dart';
@@ -29,23 +30,25 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         title: 'Viết đánh giá',
         showCart: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(AppDimen.verticalSpacing_10),
-          child: Form(
-            key: reviewKey,
-            child: Column(
-              children: [
-                HeaderInfo(idCategory: 'c1'),
-                const SizedBox(height: 10.0),
-                _buildRateStars(),
-                CustomInput(
-                  hintText: 'Viết đánh giá',
-                  maxLines: 10,
-                ),
-                _buildSwitchName(),
-                _buildButton(),
-              ],
+      body: CustomRefreshPage(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(AppDimen.verticalSpacing_10),
+            child: Form(
+              key: reviewKey,
+              child: Column(
+                children: [
+                  HeaderInfo(idCategory: 'c1'),
+                  const SizedBox(height: 10.0),
+                  _buildRateStars(),
+                  CustomInput(
+                    hintText: 'Viết đánh giá',
+                    maxLines: 10,
+                  ),
+                  _buildSwitchName(),
+                  _buildButton(),
+                ],
+              ),
             ),
           ),
         ),

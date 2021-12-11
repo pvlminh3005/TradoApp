@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/custom_refresh_page.dart';
 import '/screens/payment_order/checkout_screen.dart';
 import '/utils/input_formatter.dart';
 import '/components/custom_icon.dart';
@@ -61,27 +62,29 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget _buildBody(Map<String, CartModel> listCart) {
-    return Column(
-      children: [
-        Expanded(
-          child: listCart.isNotEmpty
-              ? ListView.builder(
-                  itemCount: listCart.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    CartModel cart = listCart.values.toList()[index];
-                    return CartItem(cart);
-                  },
-                )
-              : Center(
-                  child: CustomText(
-                    'Giỏ hàng trống',
-                    fontSize: FontSize.BIG - 1,
-                    color: kTextColorGrey,
+    return CustomRefreshPage(
+      child: Column(
+        children: [
+          Expanded(
+            child: listCart.isNotEmpty
+                ? ListView.builder(
+                    itemCount: listCart.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      CartModel cart = listCart.values.toList()[index];
+                      return CartItem(cart);
+                    },
+                  )
+                : Center(
+                    child: CustomText(
+                      'Giỏ hàng trống',
+                      fontSize: FontSize.BIG - 1,
+                      color: kTextColorGrey,
+                    ),
                   ),
-                ),
-        ),
-        listCart.isNotEmpty ? _buildFooter() : const SizedBox.shrink(),
-      ],
+          ),
+          _buildFooter(),
+        ],
+      ),
     );
   }
 
@@ -209,15 +212,17 @@ class _CartScreenState extends State<CartScreen> {
           flex: 2,
           child: PrimaryButton(
             title: 'Tiếp tục',
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CheckOutScreen(
-                  totalPrice: provider.totalAmount,
-                  quantity: provider.listCheckCart.length,
-                ),
-              ),
-            ),
+            onPressed: provider.listCheckCart.isNotEmpty
+                ? () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CheckOutScreen(
+                          totalPrice: provider.totalAmount,
+                          quantity: provider.listCheckCart.length,
+                        ),
+                      ),
+                    )
+                : null,
           ),
         );
       },

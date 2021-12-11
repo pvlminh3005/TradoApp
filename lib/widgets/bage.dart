@@ -15,12 +15,12 @@ class Badge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.center,
+      alignment: Alignment.topRight,
       children: [
         child,
         Positioned(
-          right: 5.0,
-          top: 5.0,
+          top: 3.0,
+          right: 3.0,
           child: CircleAvatar(
             radius: 9.0,
             backgroundColor: kErrorColor,
@@ -32,7 +32,7 @@ class Badge extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-        )
+        ),
       ],
     );
   }

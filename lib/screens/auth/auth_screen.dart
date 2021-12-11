@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
+import 'package:trado_app_uit/screens/login/signin_screen.dart';
+import 'package:trado_app_uit/widgets/loading_page.dart';
 import '/components/loading/loading_app.dart';
 import '/controllers/auth_controller.dart';
 import '/providers/shipping_address_provider.dart';
@@ -15,18 +18,38 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  bool haveToken = false;
   String? tokenUser = '';
 
   @override
   void initState() {
-    setState(() {
-      tokenUser = getTokenUser();
+    checkExpiredToken().then((res) {
+      if (!haveToken) {
+        AuthPreferences.removeToken();
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(RouteManage.signin, (route) => false);
+        return;
+      } //failed
+
+      setState(() {
+        tokenUser = getTokenUser();
+      });
+
+      fetchCurrentUser();
+
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(RouteManage.navigator_tab, (route) => true);
     });
 
-    if (tokenUser!.isEmpty) return;
-    fetchCurrentUser();
-
     super.initState();
+  }
+
+  Future<void> checkExpiredToken() async {
+    Map msgError = await AuthController.checkToken();
+
+    setState(() {
+      haveToken = msgError.isNotEmpty;
+    });
   }
 
   String getTokenUser() {
@@ -48,8 +71,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: (tokenUser != '' ? NavigatorTab() : SplashScreen()),
-    );
+    return Scaffold(body: LoadingPage());
   }
 }

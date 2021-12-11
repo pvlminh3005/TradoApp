@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/extensions/custom_extension.dart';
+import '/components/custom_refresh_page.dart';
 import '/components/custom_icon.dart';
 import '/components/data_search.dart';
 import '/constants/constants.dart';
@@ -18,7 +19,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    Provider.of<CategoryProvider>(context, listen: false).fetchAllCategories();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    await Provider.of<CategoryProvider>(context, listen: false)
+        .fetchAllCategories();
+    ;
   }
 
   @override
@@ -31,14 +38,17 @@ class _HomeScreenState extends State<HomeScreen> {
             color: kPrimaryColor,
           ),
           onPressed: () {
-            showSearch(context: context, delegate: DataSearch());
+            // showSearch(context: context, delegate: DataSearch());
           },
         ),
         showCart: true,
       ),
-      body: Consumer<CategoryProvider>(builder: (ctx, provider, _) {
-        return SizedBox().gridCategory(provider.listCategories);
-      }),
+      body: CustomRefreshPage(
+        onRefresh: fetchData,
+        child: Consumer<CategoryProvider>(builder: (ctx, provider, _) {
+          return SizedBox().gridCategory(provider.listCategories);
+        }),
+      ),
     );
   }
 }

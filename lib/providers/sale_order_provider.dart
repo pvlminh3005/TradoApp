@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/models/cart_model.dart';
 import '/models/category_model.dart';
 import '/models/shipping_address_model.dart';
 import '../models/order_detail_model.dart';
@@ -23,7 +24,7 @@ class SaleOrderProvider with ChangeNotifier {
     ShippingAddressModel? address,
     int? totalPrice,
     TimeOrderModel? time,
-    List<CategoryModel> categories = const [],
+    List<CartModel> categories = const [],
   }) async {
     await Future.delayed(Duration(seconds: 2));
     var data = OrderDetailModel(
@@ -35,7 +36,6 @@ class SaleOrderProvider with ChangeNotifier {
       typeOrder: OrderType.SALEORDER.index,
     );
     _listSaleOrders.add(data);
-    print(_listSaleOrders.length);
     notifyListeners();
   }
 

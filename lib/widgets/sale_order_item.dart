@@ -90,7 +90,7 @@ class SaleOrderItem extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: orders.categories.map((order) {
-            return CategoryOrderItem(category: order);
+            return CategoryOrderItem(category: order.category);
           }).toList(),
         ),
       ),

@@ -121,10 +121,10 @@ class CategoryItem extends StatelessWidget {
                             },
                             child: CircleAvatar(
                               radius: AppDimen.icon_size_small,
-                              backgroundColor: kPrimaryColor,
+                              backgroundColor: kPrimaryColor.withOpacity(.6),
                               child: CustomIcon(
                                 Icons.edit,
-                                color: kBackgroundColorWhite,
+                                color: kBackgroundColorWhite.withOpacity(.8),
                                 size: AppDimen.icon_size_small,
                               ),
                             ),

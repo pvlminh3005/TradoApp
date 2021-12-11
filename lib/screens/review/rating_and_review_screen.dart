@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/custom_refresh_page.dart';
 import '/components/custom_text.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
+import '/constants/sizes.dart';
 
 import '/constants/constants.dart';
 import '/models/rate_category_model.dart';
@@ -66,72 +67,74 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
         color: kPrimaryColor,
         title: 'Nhận xét & đánh giá (${listRates.length})',
       ),
-      body: Column(
-        children: [
-          HeaderInfo(idCategory: idCategory),
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                // Container(
-                //   alignment: Alignment.topRight,
-                //   child: PopupMenuButton(
-                //     padding: const EdgeInsets.all(5),
-                //     // onSelected: (FilterOptions selectedValue) {
-                //     //   setState(() {
-                //     //     switch (selectedValue) {
-                //     //       case FilterOptions.All:
-                //     //         _showFavorite = false;
-                //     //         break;
-                //     //       default:
-                //     //         break;
-                //     //     }
-                //     //   });
-                //     // },
-                //     icon: Icon(
-                //       Icons.filter_list_outlined,
-                //       color: theme.textSelectionColor,
-                //       size: 25,
-                //     ),
-                //     itemBuilder: (_) => [
-                //       PopupMenuItem(
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             Text(
-                //               'All',
-                //               style: theme.textTheme.bodyText1,
-                //             ),
-                //             Icon(
-                //               Icons.arrow_forward_ios_rounded,
-                //               size: 15,
-                //             ),
-                //           ],
-                //         ),
-                //         value: FilterOptions.All,
-                //       ),
-                //       _buildPopupMenuFilter(5, 10, theme),
-                //       _buildPopupMenuFilter(4, 8, theme),
-                //       _buildPopupMenuFilter(3, 6, theme),
-                //       _buildPopupMenuFilter(2, 5, theme),
-                //       _buildPopupMenuFilter(1, 4, theme),
-                //     ],
-                //   ),
-                // ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: listRates.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      RateModel rate = listRates[index];
-                      return RatingItemType2(rate);
-                    },
+      body: CustomRefreshPage(
+        child: Column(
+          children: [
+            HeaderInfo(idCategory: idCategory),
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  // Container(
+                  //   alignment: Alignment.topRight,
+                  //   child: PopupMenuButton(
+                  //     padding: const EdgeInsets.all(5),
+                  //     // onSelected: (FilterOptions selectedValue) {
+                  //     //   setState(() {
+                  //     //     switch (selectedValue) {
+                  //     //       case FilterOptions.All:
+                  //     //         _showFavorite = false;
+                  //     //         break;
+                  //     //       default:
+                  //     //         break;
+                  //     //     }
+                  //     //   });
+                  //     // },
+                  //     icon: Icon(
+                  //       Icons.filter_list_outlined,
+                  //       color: theme.textSelectionColor,
+                  //       size: 25,
+                  //     ),
+                  //     itemBuilder: (_) => [
+                  //       PopupMenuItem(
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //           children: [
+                  //             Text(
+                  //               'All',
+                  //               style: theme.textTheme.bodyText1,
+                  //             ),
+                  //             Icon(
+                  //               Icons.arrow_forward_ios_rounded,
+                  //               size: 15,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         value: FilterOptions.All,
+                  //       ),
+                  //       _buildPopupMenuFilter(5, 10, theme),
+                  //       _buildPopupMenuFilter(4, 8, theme),
+                  //       _buildPopupMenuFilter(3, 6, theme),
+                  //       _buildPopupMenuFilter(2, 5, theme),
+                  //       _buildPopupMenuFilter(1, 4, theme),
+                  //     ],
+                  //   ),
+                  // ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: listRates.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        RateModel rate = listRates[index];
+                        return RatingItemType2(rate);
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )),
-        ],
+                ],
+              ),
+            )),
+          ],
+        ),
       ),
     );
   }

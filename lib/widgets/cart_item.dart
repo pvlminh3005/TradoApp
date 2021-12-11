@@ -118,7 +118,7 @@ class _CartItemState extends State<CartItem> {
           setState(() {
             isChecked = !isChecked;
           });
-
+          print("121: " + infoCategory.id);
           if (isChecked == true) {
             cartProvider.addToCheckCart(infoCategory.id);
           } else

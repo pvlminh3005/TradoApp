@@ -78,13 +78,9 @@ class AuthController {
 
   static Future<void> getCurrentUser() async {
     try {
-      String? token = AuthPreferences.getToken();
-      if (token!.isEmpty) return;
       var response = await _dio.get(
         MainURL.loginURL,
-        options: Options(
-          headers: {MainURL.headerToken: token},
-        ),
+        options: MainURL.customOption,
       );
 
       if (response.statusCode == 200) {
@@ -94,6 +90,19 @@ class AuthController {
       }
     } on DioError catch (e) {
       print(e);
+    }
+  }
+
+  static Future checkToken() async {
+    try {
+      var response = await _dio.get(
+        MainURL.loginURL,
+        options: MainURL.customOption,
+      );
+
+      return response.data;
+    } on DioError {
+      return {};
     }
   }
 

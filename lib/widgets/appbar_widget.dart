@@ -65,12 +65,10 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         showCart
             ? Consumer<CartProvider>(
                 builder: (ctx, cartData, ch) => Badge(
-                  child: IconButton(
-                    icon: CustomIcon(
-                      CupertinoIcons.cart_fill,
-                      color: kPrimaryColor,
-                    ),
-                    onPressed: () {
+                  child: CustomIcon(
+                    CupertinoIcons.cart_fill,
+                    color: kPrimaryColor,
+                    onTap: () {
                       Navigator.of(context).pushNamed(RouteManage.cart);
                     },
                   ),

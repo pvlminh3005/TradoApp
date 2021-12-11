@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trado_app_uit/components/custom_button.dart';
-import 'package:trado_app_uit/constants/constants.dart';
-import 'package:trado_app_uit/constants/dimen.dart';
-import 'package:trado_app_uit/constants/sizes.dart';
+import '/components/custom_button.dart';
+import '/constants/constants.dart';
+import '/constants/dimen.dart';
+import '/constants/sizes.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String title;
@@ -38,33 +38,37 @@ class PrimaryButton extends StatelessWidget {
       child: Container(
         margin: margin,
         height: 52.0,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 10),
-              spreadRadius: 0,
-              blurRadius: 15,
-              color: showShadow
-                  ? Color(0xFF8A959E).withOpacity(.35)
-                  : Colors.transparent,
-            ),
-          ],
-        ),
+        decoration: onPressed != null
+            ? BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 10),
+                    spreadRadius: 0,
+                    blurRadius: 15,
+                    color: showShadow
+                        ? Color(0xFF8A959E).withOpacity(.35)
+                        : Colors.transparent,
+                  ),
+                ],
+              )
+            : null,
         child: CustomButton(
           title,
           padding: EdgeInsets.all(16),
           fontSize: FontSize.BIG,
           textColor: textColor,
-          backgroundColor: backgroundColor,
+          backgroundColor: onPressed != null ? backgroundColor : kColorItemGrey,
           indicatorColor:
               backgroundColor == kPrimaryColor ? Colors.white : indicatorColor!,
           radius: AppDimen.radiusNormal,
           borderWidth: borderWidth,
           borderOpacity: borderOpacity,
           sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
-          onTap: () async {
-            await onPressed!();
-          },
+          onTap: onPressed != null
+              ? () async {
+                  await onPressed!();
+                }
+              : () {},
         ),
       ),
     );

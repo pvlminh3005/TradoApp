@@ -28,7 +28,7 @@ class OrderDetailModel {
   late int totalPrice;
   late int methodPayment;
   late ShippingAddressModel address;
-  late List<CategoryModel> categories;
+  late List<CartModel> categories;
   late TimeOrderModel time;
   late int typeOrder;
 
@@ -51,10 +51,10 @@ class OrderDetailModel {
     name = json['name'] ?? 'Unknown';
     statusOrder = json['statusOrder'] ?? 0;
     totalPrice = json['totalPrice'] ?? 0;
-    methodPayment = json['methodPaymen'] ?? 1;
+    methodPayment = json['methodPayment'] ?? 1;
     address = json['address'];
     time = TimeOrderModel.fromJson(json['time']);
-    categories = json['categories'].map((json) => CategoryModel.fromJson(json));
+    categories = json['categories'].map((json) => CartModel.fromJson(json));
     this.typeOrder = json['typeOrder'] ?? 0;
   }
 
@@ -68,7 +68,7 @@ class OrderDetailModel {
     data['methodPayment'] = this.methodPayment;
     data['address'] = this.address;
     data['time'] = this.time;
-    data['categories'] = this.categories;
+    data['categories'] = this.categories.map((data) => data.id);
     data['typeOrder'] = this.typeOrder;
     return data;
   }

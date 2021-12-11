@@ -59,6 +59,21 @@ class _CustomButtonState extends State<CustomButton> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    if (!mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return widget.sizeStyle == CustomBottomSizeStyle.WRAP_CONTENT
         ? Row(
@@ -73,7 +88,6 @@ class _CustomButtonState extends State<CustomButton> {
       onTap: () async {
         changeLoad();
         await widget.onTap!();
-        changeLoad();
       },
       child: Container(
         margin: widget.margin,

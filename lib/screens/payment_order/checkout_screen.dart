@@ -154,7 +154,7 @@ class CheckOutScreen extends StatelessWidget {
                   timeDelivery: null,
                   timeFinish: null,
                 ),
-                categories: orders.map((order) => order.category!).toList(),
+                categories: orders,
                 totalPrice: checkoutPrice,
                 // categories: orders,
               );

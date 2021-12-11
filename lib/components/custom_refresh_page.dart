@@ -14,8 +14,7 @@ class CustomRefreshPage extends StatelessWidget {
     return RefreshIndicator(
       child: child!,
       onRefresh: () async {
-        await Future.delayed(Duration(seconds: 2));
-        onRefresh!();
+        await onRefresh!();
       },
     );
   }

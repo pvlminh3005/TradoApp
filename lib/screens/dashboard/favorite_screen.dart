@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/custom_refresh_page.dart';
 import '/components/custom_search_bar.dart';
 import '/models/category_model.dart';
 import '/providers/category_provider.dart';
@@ -90,19 +91,21 @@ class _FavoriteScreenState extends State<FavoriteScreen>
       //       }
       //     },
       //   ),
-      body: Padding(
-        padding: const EdgeInsets.all(AppDimen.spacing_1 + 2),
-        child: Consumer<CategoryProvider>(
-          builder: (ctx, provider, _) => ListView.builder(
-            itemCount: provider.listFavoriteCategories.length,
-            itemBuilder: (context, index) {
-              CategoryModel category = provider.listFavoriteCategories[index];
-              return CategoryOrderItem(
-                showMore: true,
-                category: category,
-                showQuantity: false,
-              );
-            },
+      body: CustomRefreshPage(
+        child: Padding(
+          padding: const EdgeInsets.all(AppDimen.spacing_1 + 2),
+          child: Consumer<CategoryProvider>(
+            builder: (ctx, provider, _) => ListView.builder(
+              itemCount: provider.listFavoriteCategories.length,
+              itemBuilder: (context, index) {
+                CategoryModel category = provider.listFavoriteCategories[index];
+                return CategoryOrderItem(
+                  showMore: true,
+                  category: category,
+                  showQuantity: false,
+                );
+              },
+            ),
           ),
         ),
       ),

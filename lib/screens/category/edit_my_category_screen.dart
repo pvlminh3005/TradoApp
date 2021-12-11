@@ -4,7 +4,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/components/custom_image_network.dart';
+import '/components/custom_image_network.dart';
 import '/controllers/convert_file_image.dart';
 import '/models/category_model.dart';
 import '/controllers/auth_controller.dart';
@@ -55,7 +55,6 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
 
   @override
   void initState() {
-    print(widget.category!.imageUrl);
     if (widget.type == EditCategoryType.EDITCATEGORY) {
       nameProductController =
           TextEditingController(text: widget.category!.title);

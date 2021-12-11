@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/custom_refresh_page.dart';
 import '/providers/sale_order_provider.dart';
 import '/providers/category_provider.dart';
 import '/components/custom_text.dart';
@@ -16,7 +17,28 @@ import '/widgets/header_info_profile.dart';
 import '../../components/primary_button.dart';
 import '/widgets/profile_widget.dart/card_profile.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // fetchAllData();
+  }
+
+  Future<void> fetchAllData() async {
+    await Provider.of<ShippingAddressProvider>(context, listen: false)
+        .fetchAllAddresses();
+    await Provider.of<CategoryProvider>(context, listen: false)
+        .fetchAllCategoriesMyUser();
+    await Provider.of<OrderProvider>(context, listen: false).fetchAllMyOrders();
+    await Provider.of<SaleOrderProvider>(context, listen: false)
+        .fetchAllSaleOrders();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,22 +58,28 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: AppDimen.spacing_1),
-      child: Column(
-        children: [
-          _buildHeaderInfo(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  _buildCardProfile(),
-                  _buildButtonLogout(context),
-                ],
+    return CustomRefreshPage(
+      onRefresh: () async {
+        await AuthController.getCurrentUser();
+        await fetchAllData();
+      },
+      child: Container(
+        padding: const EdgeInsets.only(bottom: AppDimen.spacing_1),
+        child: Column(
+          children: [
+            _buildHeaderInfo(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildCardProfile(),
+                    _buildButtonLogout(context),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

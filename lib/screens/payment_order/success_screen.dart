@@ -75,7 +75,8 @@ class SuccessScreen extends StatelessWidget {
           title: 'Tiếp tục mua sắm',
           margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, RouteManage.cart);
+            Navigator.pushNamedAndRemoveUntil(
+                context, RouteManage.cart, (Route<dynamic> route) => false);
           },
         ),
         PrimaryButton(
@@ -84,7 +85,8 @@ class SuccessScreen extends StatelessWidget {
           backgroundColor: Colors.white60,
           textColor: kTextColorGrey,
           onPressed: () {
-            Navigator.pushReplacementNamed(context, RouteManage.navigator_tab);
+            Navigator.pushNamedAndRemoveUntil(context,
+                RouteManage.navigator_tab, (Route<dynamic> route) => false);
           },
         ),
       ],

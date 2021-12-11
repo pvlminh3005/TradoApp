@@ -41,13 +41,13 @@ class CartProvider with ChangeNotifier {
         categoryId,
         (category) => CartModel(
           id: categoryId,
-          idUser: product.idUser,
+          idUser: category.idUser,
           category: CategoryModel(
             id: categoryId,
             idUser: product.idUser,
             title: product.title,
             price: price,
-            quantity: product.quantity++,
+            quantity: product.quantity + quantity,
             imageUrl: product.imageUrl,
           ),
         ),
@@ -81,9 +81,8 @@ class CartProvider with ChangeNotifier {
   //add to checkcart <==> create bill
   void addToCheckCart(String idCategory) {
     _listCheckCart.putIfAbsent(idCategory, () => _listCart[idCategory]!);
-    var key = _listCart[idCategory]!.idUser!;
-    if (key.isEmpty) return;
 
+    String key = _listCart[idCategory]!.idUser!;
     if (_listToCreateSaleOrders.containsKey(key)) {
       _listToCreateSaleOrders.update(
         key,
@@ -122,8 +121,9 @@ class CartProvider with ChangeNotifier {
       idCategory!,
       (cart) => CartModel(
         id: cart.id,
+        idUser: cart.idUser,
         category: CategoryModel(
-          id: idCategory,
+          id: cart.category!.id,
           idUser: cart.category!.idUser,
           price: cart.category!.price,
           quantity: quantity!,
@@ -140,6 +140,7 @@ class CartProvider with ChangeNotifier {
       (keyCheckCart, value) =>
           _listCart.removeWhere((key, value) => key == keyCheckCart),
     );
+    _listToCreateSaleOrders = {};
 
     notifyListeners();
   }

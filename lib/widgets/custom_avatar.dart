@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/components/custom_icon.dart';
 import '/constants/constants.dart';
 import '/controllers/choose_image_controller.dart';
 
@@ -34,7 +36,13 @@ class _CustomAvatarState extends State<CustomAvatar> {
           backgroundImage: chooseImage == null
               ? widget.imageUrl.isEmpty
                   ? AssetImage('assets/images/unknown_person.jpeg')
-                  : NetworkImage(widget.imageUrl) as ImageProvider
+                  : CachedNetworkImageProvider(
+                      widget.imageUrl,
+                      errorListener: () => CustomIcon(
+                        Icons.error,
+                        color: kErrorColor,
+                      ),
+                    ) as ImageProvider
               : FileImage(chooseImage!),
         ),
         widget.type == AvatarType.editAvatar

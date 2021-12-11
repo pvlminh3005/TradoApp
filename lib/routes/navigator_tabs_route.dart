@@ -40,7 +40,7 @@ class _NavigatorTabState extends State<NavigatorTab> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       bottomNavigationBar: CurvedNavigationBar(
-        key: NavBarKey.getKey,
+        // key: NavBarKey.getKey,
         index: widget.pages,
         height: 65,
         backgroundColor: Colors.transparent,
