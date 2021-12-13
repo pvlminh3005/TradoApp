@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/components/custom_text.dart';
 import '/constants/dimen.dart';
 import '/models/category_model.dart';
 import '/widgets/category_item.dart';
@@ -26,6 +27,11 @@ extension CustomExtension on Widget {
       itemCount: data.length,
       itemBuilder: (BuildContext context, int index) {
         CategoryModel category = data[index];
+        if (data.length == 0) {
+          return Center(
+            child: CustomText('Không có sản phẩm nào'),
+          );
+        }
         return CategoryItem(
           category: category,
           typeCategory: type,

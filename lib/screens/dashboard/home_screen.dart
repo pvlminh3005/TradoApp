@@ -18,23 +18,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<CategoryModel> dataSearch = [];
-
   @override
   void initState() {
     super.initState();
 
     fetchData();
+
+    if (mounted) return;
   }
 
   Future<void> fetchData() async {
     await Provider.of<CategoryProvider>(context, listen: false)
         .fetchAllCategories();
     ;
-    setState(() {
-      dataSearch =
-          Provider.of<CategoryProvider>(context, listen: false).listCategories;
-    });
   }
 
   @override
@@ -50,7 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
             showSearch(
                 context: context,
                 delegate: CustomSearch(
-                  data: dataSearch,
+                  data: Provider.of<CategoryProvider>(context, listen: false)
+                      .listCategories,
                 ));
           },
         ),
