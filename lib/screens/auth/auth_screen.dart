@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trado_app_uit/routes/routes_manage.dart';
-import 'package:trado_app_uit/screens/login/signin_screen.dart';
-import 'package:trado_app_uit/widgets/loading_page.dart';
+import '/routes/routes_manage.dart';
+import '/widgets/loading_page.dart';
 import '/components/loading/loading_app.dart';
 import '/controllers/auth_controller.dart';
 import '/providers/shipping_address_provider.dart';
-import '/routes/navigator_tabs_route.dart';
-import '/screens/splash/splash_screen.dart';
 import '/utils/auth_preferences.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -23,11 +20,10 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   void initState() {
-    checkExpiredToken().then((res) {
+    checkExpiredToken().then((res) async {
       if (!haveToken) {
-        AuthPreferences.removeToken();
         Navigator.of(context)
-            .pushNamedAndRemoveUntil(RouteManage.signin, (route) => false);
+            .pushNamedAndRemoveUntil(RouteManage.splash, (route) => false);
         return;
       } //failed
 
@@ -35,10 +31,10 @@ class _AuthScreenState extends State<AuthScreen> {
         tokenUser = getTokenUser();
       });
 
-      fetchCurrentUser();
+      await fetchCurrentUser();
 
       Navigator.of(context)
-          .pushNamedAndRemoveUntil(RouteManage.navigator_tab, (route) => true);
+          .pushNamedAndRemoveUntil(RouteManage.navigator_tab, (route) => false);
     });
 
     super.initState();
@@ -65,12 +61,26 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: LoadingPage());
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/images/logo_trado.png',
+            width: size.width * .8,
+            height: size.width * .6,
+            fit: BoxFit.cover,
+          ),
+          LoadingPage(width: 4),
+        ],
+      ),
+    );
   }
 }

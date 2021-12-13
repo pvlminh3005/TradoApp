@@ -7,7 +7,6 @@ class CartModel {
   late CategoryModel? category;
   late String? idUser;
   late int quantity;
-  // late int price;
 
   CartModel({
     this.id,
@@ -25,10 +24,10 @@ class CartModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = id;
-    data['idProduct'] = category!.id;
+    data['_id'] = this.id;
+    data['idProduct'] = this.category!.id;
     data['idUser'] = AuthController.idUser;
-    data['quantity'] = quantity;
+    data['quantity'] = this.quantity;
     return data;
   }
 }

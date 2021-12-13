@@ -96,6 +96,7 @@ class CheckOutScreen extends StatelessWidget {
           phoneNumber: data.phoneNumber,
           address: data.address,
           note: data.note,
+          type: AddressType.ChangeAddress,
         );
       },
     );

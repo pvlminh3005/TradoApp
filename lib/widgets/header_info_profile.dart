@@ -43,6 +43,9 @@ class HeaderInfoProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (profile == null) {
+      return Container();
+    }
     return Container(
       color: kCardColor,
       child: Column(

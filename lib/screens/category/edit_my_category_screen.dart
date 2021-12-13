@@ -4,6 +4,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/custom_icon.dart';
 import '/components/custom_image_network.dart';
 import '/controllers/convert_file_image.dart';
 import '/models/category_model.dart';
@@ -191,16 +192,25 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
       children: listFiles.map((image) {
         return Padding(
           padding: const EdgeInsets.only(left: AppDimen.verticalSpacing_5),
-          child: Container(
-            height: 95.0,
-            width: 95.0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
-              child: Image.file(
-                image,
-                fit: BoxFit.cover,
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              Container(
+                height: 95.0,
+                width: 95.0,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+                  child: Image.file(
+                    image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
+              CustomIcon(
+                Icons.highlight_remove_rounded,
+                color: Colors.white,
+              ),
+            ],
           ),
         );
       }).toList(),
@@ -213,13 +223,23 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
       children: listInitImages.map((image) {
         return Padding(
           padding: const EdgeInsets.only(left: AppDimen.verticalSpacing_5),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
-            child: CustomImageNetWork(
-              width: 95.0,
-              height: 95.0,
-              image: image,
-            ),
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+                child: CustomImageNetWork(
+                  width: 95.0,
+                  height: 95.0,
+                  image: image,
+                ),
+              ),
+              CustomIcon(
+                Icons.highlight_remove_rounded,
+                color: Colors.white,
+                size: AppDimen.icon_size_big,
+              ),
+            ],
           ),
         );
       }).toList(),
@@ -315,6 +335,7 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
                       quantity: int.parse(quantityProductController.text),
                       status: status,
                     );
+
                     LoadingApp.LOADSUCCESS(
                         title: 'Tạo mới sản phẩm thành công');
                     await Future.delayed(Duration(seconds: 1));

@@ -17,7 +17,7 @@ class CategoryApi {
       String? token = AuthPreferences.getToken();
       if (token!.isEmpty) return;
       var response = await dio.post(
-        MainURL.productURl,
+        MainURL.productURL,
         data: category.toJson(),
         options: Options(
           headers: {MainURL.headerToken: token},
@@ -99,6 +99,17 @@ class CategoryApi {
     ];
     await Future.delayed(Duration(seconds: 2));
     return data;
+    // try {
+    //   var response = await dio.get(
+    //     MainURL.productURL,
+    //   );
+
+    //   return (response.data['product'] as List<dynamic>)
+    //       .map((category) => CategoryModel.fromJson(category))
+    //       .toList();
+    // } on DioError {
+    //   return [];
+    // }
   }
 
   static Future<List<CategoryModel>> fetchFavoriteCategories() async {

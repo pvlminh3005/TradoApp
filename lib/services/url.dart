@@ -22,7 +22,7 @@ class MainURL {
   static String loginURL = '$mainURL$account$login';
 
   //product
-  static String productURl = '$mainURL$product';
+  static String productURL = '$mainURL$product';
   static String productUserURL = '$mainURL$product/user';
 
   //address

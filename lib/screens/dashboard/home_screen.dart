@@ -1,10 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/custom_search_bar.dart';
+import 'package:trado_app_uit/models/category_model.dart';
 import '/extensions/custom_extension.dart';
 import '/components/custom_refresh_page.dart';
 import '/components/custom_icon.dart';
-import '/components/data_search.dart';
 import '/constants/constants.dart';
 import '/providers/category_provider.dart';
 import '/widgets/appbar_widget.dart';
@@ -15,6 +18,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<CategoryModel> dataSearch = [];
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
     await Provider.of<CategoryProvider>(context, listen: false)
         .fetchAllCategories();
     ;
+    setState(() {
+      dataSearch =
+          Provider.of<CategoryProvider>(context, listen: false).listCategories;
+    });
   }
 
   @override
@@ -38,7 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
             color: kPrimaryColor,
           ),
           onPressed: () {
-            // showSearch(context: context, delegate: DataSearch());
+            showSearch(
+                context: context,
+                delegate: CustomSearch(
+                  data: dataSearch,
+                ));
           },
         ),
         showCart: true,

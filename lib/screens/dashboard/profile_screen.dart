@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/loading/loading_app.dart';
 import '/components/custom_refresh_page.dart';
 import '/providers/sale_order_provider.dart';
 import '/providers/category_provider.dart';
@@ -44,7 +45,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: _buildAppBar(context),
-      body: _buildBody(context),
+      body: CustomRefreshPage(
+        onRefresh: () async {
+          await AuthController.getCurrentUser();
+          await fetchAllData();
+        },
+        child: Container(
+          padding: const EdgeInsets.only(bottom: AppDimen.spacing_1),
+          child: Column(
+            children: [
+              _buildHeaderInfo(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _buildCardProfile(),
+                      _buildButtonLogout(context),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -54,33 +78,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       color: kPrimaryColor,
       showLeading: false,
       showCart: true,
-    );
-  }
-
-  Widget _buildBody(BuildContext context) {
-    return CustomRefreshPage(
-      onRefresh: () async {
-        await AuthController.getCurrentUser();
-        await fetchAllData();
-      },
-      child: Container(
-        padding: const EdgeInsets.only(bottom: AppDimen.spacing_1),
-        child: Column(
-          children: [
-            _buildHeaderInfo(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _buildCardProfile(),
-                    _buildButtonLogout(context),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -172,10 +169,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: kErrorColor,
       indicatorColor: kBackgroundColorWhite,
       onPressed: () async {
-        await Future.delayed(Duration(seconds: 1));
         await AuthController.signOut();
+        await LoadingApp.loadingPage();
         Navigator.of(context)
-            .pushNamedAndRemoveUntil(RouteManage.splash, (route) => false);
+            .pushNamedAndRemoveUntil(RouteManage.signin, (route) => false);
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/routes/routes_manage.dart';
 import '/components/card_shadow.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
@@ -6,12 +7,18 @@ import '/constants/dimen.dart';
 import '/constants/sizes.dart';
 import '../../screens/shipping_address/add_shipping_address_screen.dart';
 
+enum AddressType {
+  Edit,
+  ChangeAddress,
+}
+
 class AddressDetailWidget extends StatelessWidget {
   final String? id;
   final String? name;
   final String? phoneNumber;
   final String? address;
   final String? note;
+  final AddressType type;
 
   const AddressDetailWidget({
     this.id,
@@ -19,6 +26,7 @@ class AddressDetailWidget extends StatelessWidget {
     this.phoneNumber,
     this.address,
     this.note,
+    this.type = AddressType.Edit,
     Key? key,
   }) : super(key: key);
 
@@ -75,24 +83,26 @@ class AddressDetailWidget extends StatelessWidget {
   }
 
   Widget _buildButtonIcon(BuildContext context) {
-    void onTap() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => AddShippingAddressScreen(
-            id: id!,
-            name: name!,
-            phone: phoneNumber!,
-            address: address!,
-            note: note!,
-            isEditAddress: true,
-          ),
-        ),
-      );
-    }
-
     return InkWell(
-      onTap: onTap,
+      onTap: type == AddressType.Edit
+          ? () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => AddShippingAddressScreen(
+                    id: id!,
+                    name: name!,
+                    phone: phoneNumber!,
+                    address: address!,
+                    note: note!,
+                    isEditAddress: true,
+                  ),
+                ),
+              );
+            }
+          : () {
+              Navigator.pushNamed(context, RouteManage.shipping_address);
+            },
       child: Image.asset('assets/images/edit-2.png'),
     );
   }

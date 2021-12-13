@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/models/category_model.dart';
 import '/extensions/custom_extension.dart';
 import '/constants/dimen.dart';
 import '/components/custom_text.dart';
@@ -8,12 +9,11 @@ import '/constants/constants.dart';
 import 'custom_icon.dart';
 
 class CustomSearch extends SearchDelegate {
-  final List<dynamic> data;
+  final List<CategoryModel> data;
 
   final List<String> recentSearch = [
-    '1 Ipad',
-    '2 Iphone',
-    '3 Macbook',
+    'Sony',
+    '911',
   ];
 
   CustomSearch({required this.data});
@@ -21,10 +21,13 @@ class CustomSearch extends SearchDelegate {
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
-      CustomIcon(Icons.clear,
-          margin: const EdgeInsets.symmetric(horizontal: 10), onTap: () {
-        query = '';
-      })
+      CustomIcon(
+        Icons.clear,
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        onTap: () {
+          query = '';
+        },
+      )
     ];
   }
 
@@ -40,22 +43,15 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     if (query.isNotEmpty) {
-      final dataSearch =
-          data.where((e) => e.contains(query.toLowerCase())).toList();
-      print('DATA: $dataSearch && LIST: ${data[0]}');
+      List<CategoryModel> dataSearch = data
+          .where((category) =>
+              category.title.toUpperCase().contains(query.toUpperCase()))
+          .toList();
       if (dataSearch.isEmpty) {
         return CustomText('Không tìm thấy kết quả! :(').center();
       }
 
-      return Column(
-        children: dataSearch
-            .map(
-              (e) => ListTile(
-                title: CustomText(e),
-              ),
-            )
-            .toList(),
-      );
+      return SizedBox().gridCategory(dataSearch);
     } else {
       return CustomText('');
     }

@@ -55,7 +55,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
             showSearch(
                 context: context,
                 delegate: CustomSearch(
-                  data: dataSearch,
+                  data: [],
                 ));
           },
         ),

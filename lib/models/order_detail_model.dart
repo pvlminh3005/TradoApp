@@ -1,5 +1,4 @@
 import 'cart_model.dart';
-import 'category_model.dart';
 import 'shipping_address_model.dart';
 
 enum OrderDetailType {
@@ -76,8 +75,10 @@ class OrderDetailModel {
 
 class TimeOrderModel {
   late DateTime? timeOrder;
+  late DateTime? timePayment;
   late DateTime? timeDelivery;
   late DateTime? timeFinish;
+  late DateTime? timeCancel;
 
   TimeOrderModel({
     this.timeOrder,
@@ -87,8 +88,10 @@ class TimeOrderModel {
 
   TimeOrderModel.fromJson(Map<String, dynamic> json) {
     timeOrder = json['timeOrder'];
+    timePayment = json['timePayment'];
     timeDelivery = json['timeDelivery'];
     timeFinish = json['timeFinish'];
+    timeCancel = json['timeCancel'];
   }
 }
 

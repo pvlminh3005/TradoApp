@@ -3,9 +3,11 @@ import '/constants/constants.dart';
 
 class LoadingPage extends StatelessWidget {
   final Color? color;
+  final double width;
 
   const LoadingPage({
     this.color = kPrimaryColor,
+    this.width = 2,
     Key? key,
   }) : super(key: key);
 
@@ -14,7 +16,7 @@ class LoadingPage extends StatelessWidget {
     return Center(
       child: CircularProgressIndicator(
         color: color,
-        strokeWidth: 2,
+        strokeWidth: width,
       ),
     );
   }
