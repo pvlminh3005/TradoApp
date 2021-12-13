@@ -8,13 +8,25 @@ const OrderSchema = new Schema({
         ref: "profile",
         required: true
     },
-    item:[
+    name: String,
+    statusOrder: Number,
+    totalPrice: Number,
+    methodPayment: Number,
+    address: {
+        type:ObjectID,
+        ref: "tagshipping",
+        required: true
+    },
+    cart:[
         {
-            productId: { type: ObjectID, ref: "product", required: true},
-            amount: Number,
+            cartId: { type: ObjectID, ref: "cart", required: true}
         },
     ],
-    totalmoney:Number,
+    timeOrder: { type: Date, default: null },
+    timePayment: { type: Date, default: null },
+    timeDelivery: { type: Date, default: null },
+    timeFinish: { type: Date, default: null },
+    timeCancel: { type: Date, default: null },
     registration_data: {
         type: Date,
         default: Date.now,
