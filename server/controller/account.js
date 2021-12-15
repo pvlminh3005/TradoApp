@@ -175,7 +175,7 @@ const checkToken = (req,res) =>{
         .then((profile) => {
             if(!profile)
                 return res.status(StatusCode.NotAuthentication).json({msg:"Dont have profile"})
-            return res.status(StatusCode.SuccessStatus).json({msg:""})
+            return res.status(StatusCode.SuccessStatus).json({profile:profile, msg:""})
         })
         .catch(err=>{
             return res.status(StatusCode.NotAuthentication).json({msg:err.message})
