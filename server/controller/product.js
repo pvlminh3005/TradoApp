@@ -5,7 +5,7 @@ const StatusCode = require('../common/StatusCode');
 
 //#region Create product
 const createProduct = async (req, res) => {
-    const {idUserSell, tag, imageUrl, title, description, quantity, price, priceSale, amountView} = req.body
+    const {idUserSell, tag, imageUrl, title, description, quantity, price, priceSale, amountView, status} = req.body
 
     if(req.TradoUser.id != idUserSell || !req.TradoUser.id)
     {
@@ -36,6 +36,7 @@ const createProduct = async (req, res) => {
             quantity:quantity,
             price:price,
             priceSale:priceSale,
+            status:status,
             amountView:amountView,
         })
 
@@ -75,7 +76,58 @@ const getProductUser = async (req, res) => {
 }
 //#endregion
 
+//#region update product
+const updateProduct = async (req, res) => {
+
+    const {id, idUserSell, tag, imageUrl, title, description, quantity, price, priceSale, status, amountView} = req.body
+    
+    if(req.TradoUser.id != idUserSell || !req.TradoUser.id)
+    {
+        return res.status(StatusCode.PayloadIsInvalid).json({ msg: "Invalid user" });
+    }
+
+    try{
+        const product = await Product.findOne({_id:id, idUserSell:idUserSell});
+        if (!product) 
+            throw new Error("Product doesn't exist")
+        
+        if(tag)
+            product.tag = tag
+        if(imageUrl.length != 0)
+            product.imageUrl = imageUrl
+        if(title)
+            product.title = title
+        if(description)
+            product.description = description
+        if(quantity)
+            product.quantity = quantity
+        if(price)
+            product.price = price
+        if(priceSale)
+            product.priceSale = priceSale
+        if(status)
+            product.status = status
+        if(amountView)
+            product.amountView = amountView
+
+
+        const result = await product.save().catch(err=>{
+            throw new Error("Cant update product")
+        })
+
+        return res.status(StatusCode.SuccessStatus).json({
+            product: result,
+            msg: "Update product success"
+        })
+    }
+    catch(error){
+        return res.status(StatusCode.PayloadIsInvalid).json({ msg: error.message });
+    }
+    
+}
+//#endregion
 module.exports = {
     createProduct,
     getProductUser,
+    updateProduct, 
 }

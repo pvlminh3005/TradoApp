@@ -36,9 +36,13 @@ const ProductSchema = new Schema({
         type: Number,
         default: 0
     },
-    amountView: {
-        type: Number,
-        default: 0
+    status:{
+        type:Boolean,
+        default: true,
+    },
+    amountView:{
+        type:Number,
+        default:0
     }
 })
 
