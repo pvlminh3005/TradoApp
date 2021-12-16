@@ -24,13 +24,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // fetchAllData();
-  }
-
   Future<void> fetchAllData() async {
+    await AuthController.getCurrentUser();
+
     await Provider.of<ShippingAddressProvider>(context, listen: false)
         .fetchAllAddresses();
     await Provider.of<CategoryProvider>(context, listen: false)
@@ -47,7 +43,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: _buildAppBar(context),
       body: CustomRefreshPage(
         onRefresh: () async {
-          await AuthController.getCurrentUser();
           await fetchAllData();
         },
         child: Container(

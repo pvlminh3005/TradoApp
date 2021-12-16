@@ -43,9 +43,6 @@ class HeaderInfoProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (profile == null) {
-      return Container();
-    }
     return Container(
       color: kCardColor,
       child: Column(
@@ -75,10 +72,10 @@ class HeaderInfoProfile extends StatelessWidget {
                   children: [
                     _buildInfoAccount(
                       name: profile!.name!,
-                      countPerStars: profile!.countPerStars,
-                      countRating: profile!.countRating,
+                      countPerStars: profile!.countPerStars!,
+                      countRating: profile!.countRating!,
                     ),
-                    _buildAmountFollow(profile!.fame, 'quan tâm'),
+                    _buildAmountFollow(profile!.fame!, 'quan tâm'),
                   ],
                 ),
               ],

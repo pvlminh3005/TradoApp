@@ -41,10 +41,10 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<void> checkExpiredToken() async {
-    Map msgError = await AuthController.checkToken();
+    String msgError = await AuthController.checkToken();
 
     setState(() {
-      haveToken = msgError.isNotEmpty;
+      haveToken = msgError.isEmpty;
     });
   }
 

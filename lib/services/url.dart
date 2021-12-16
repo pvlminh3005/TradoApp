@@ -2,12 +2,18 @@ import 'package:dio/dio.dart';
 import '/utils/auth_preferences.dart';
 
 class MainURL {
-  MainURL._();
+  factory MainURL() {
+    return _instance;
+  }
+  MainURL._internal();
+  static final MainURL _instance = MainURL._internal();
 
   static String mainURL = 'http://localhost:3000/api';
 
   static String headerToken = 'trado-token';
   static String account = '/account';
+  static String profile = '/profile';
+
   static String register = '/';
   static String login = '/login';
   static String product = '/product';
@@ -20,6 +26,9 @@ class MainURL {
 
   //login
   static String loginURL = '$mainURL$account$login';
+
+  //profile
+  static String profileURL = '$mainURL$profile/update';
 
   //product
   static String productURL = '$mainURL$product';
@@ -41,6 +50,6 @@ class MainURL {
   static String productReviewURL = '$mainURL$review/product';
 
   static Options customOption = Options(
-    headers: {MainURL.headerToken: AuthPreferences.getToken()},
+    headers: {MainURL.headerToken: AuthPreferences.getToken() ?? ''},
   );
 }

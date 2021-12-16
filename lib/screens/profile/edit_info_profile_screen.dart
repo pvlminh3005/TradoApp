@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/controllers/convert_file_image.dart';
 import '/controllers/auth_controller.dart';
 import '/models/user_model.dart';
 import '/routes/navigator_tabs_route.dart';
@@ -31,7 +32,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   File? chooseImage;
   late UserModel infoUser;
   late TextEditingController nameController;
-  late TextEditingController verifyController;
+  late TextEditingController idCardController;
   late TextEditingController phoneController;
   late TextEditingController addressController;
   late TextEditingController emailController;
@@ -44,7 +45,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     });
 
     nameController = TextEditingController(text: infoUser.name);
-    verifyController = TextEditingController(text: infoUser.idCard);
+    idCardController = TextEditingController(text: infoUser.idCard);
     phoneController = TextEditingController(text: infoUser.phoneNumber);
     addressController = TextEditingController(text: infoUser.address);
     emailController = TextEditingController(text: infoUser.email);
@@ -53,7 +54,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void dispose() {
     nameController.dispose();
-    verifyController.dispose();
+    idCardController.dispose();
     phoneController.dispose();
     addressController.dispose();
     emailController.dispose();
@@ -83,7 +84,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     icon: CupertinoIcons.person_circle,
                   ),
                   _buildInputField(
-                    controller: verifyController,
+                    controller: idCardController,
                     title: 'CMND / CCCD',
                     icon: CupertinoIcons.doc_text_viewfinder,
                   ),
@@ -148,7 +149,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return PrimaryButton(
       title: 'Lưu thông tin',
       showShadow: false,
-      onPressed: () {
+      onPressed: () async {
+        String getUrlAvatar = chooseImage != null
+            ? await ConvertFileImageToString.uploadImageUserAndGetUrl(
+                file: chooseImage!)
+            : infoUser.imageUrl;
+
+        var data = UserModel(
+          auth: AuthModel(id: AuthController.idUser),
+          name: nameController.text,
+          idCard: idCardController.text,
+          phoneNumber: phoneController.text,
+          address: addressController.text,
+          email: emailController.text,
+          imageUrl: getUrlAvatar,
+        );
+        await AuthController.updateProfileUser(data);
+
         switch (widget.editType) {
           case EditProfileType.register:
             Navigator.pushReplacementNamed(context, RouteManage.navigator_tab);

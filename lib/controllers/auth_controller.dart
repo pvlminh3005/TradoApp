@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/constants/constants.dart';
 import '/utils/conver_scaffold_messenger.dart';
 import '/routes/routes_manage.dart';
 import '/models/user_model.dart';
@@ -9,15 +10,16 @@ import '/utils/auth_preferences.dart';
 import '/services/url.dart';
 
 class AuthController {
+  factory AuthController() {
+    return _instance;
+  }
+  AuthController._internal();
+  static final AuthController _instance = AuthController._internal();
+
   static late Dio _dio = Dio();
-  static late UserModel _currentUser;
-  static UserModel get currentUser => _currentUser;
+  static late UserModel currentUser;
   static String _idUser = '';
   static String get idUser => _idUser;
-
-  AuthController() {
-    getCurrentUser();
-  }
 
   static Future<void> register(
       BuildContext context, String username, String password) async {
@@ -40,6 +42,7 @@ class AuthController {
       CustomSnackBar.dialogMessenger(
         context,
         'Tài khoản này đã có người sử dụng',
+        backgroundColor: Colors.red.shade400,
       );
       return;
     }
@@ -58,16 +61,19 @@ class AuthController {
 
       String tokenUser = response.data['accessToken'];
       await AuthPreferences.setToken(tokenUser);
+      await AuthController.getCurrentUser();
 
       Navigator.pushNamedAndRemoveUntil(
         context,
         RouteManage.navigator_tab,
         (Route<dynamic> route) => false,
       );
-      await AuthController.getCurrentUser();
     } on DioError {
       CustomSnackBar.dialogMessenger(
-          context, 'Tài khoản hoặc mật khẩu không đúng');
+        context,
+        'Tài khoản hoặc mật khẩu không đúng',
+        backgroundColor: Colors.red.shade400,
+      );
       return;
     }
   }
@@ -80,16 +86,15 @@ class AuthController {
     try {
       var response = await _dio.get(
         MainURL.loginURL,
-        options: MainURL.customOption,
+        options: Options(
+          headers: {MainURL.headerToken: AuthPreferences.getToken() ?? ''},
+        ),
       );
-
-      if (response.statusCode == 200) {
-        _currentUser = await UserModel.fromJson(response.data);
-        _idUser = _currentUser.auth!.id!;
-        return;
-      }
-    } on DioError catch (e) {
-      print(e);
+      currentUser = await UserModel.fromJson(response.data['profile']);
+      _idUser = currentUser.auth!.id!;
+      return;
+    } on DioError {
+      return;
     }
   }
 
@@ -100,11 +105,19 @@ class AuthController {
         options: MainURL.customOption,
       );
 
-      return response.data;
+      return response.data['msg'];
     } on DioError {
-      return {};
+      return 'Error';
     }
   }
 
-  static Future<void> updateProfileUser() async {}
+  static Future<void> updateProfileUser(UserModel data) async {
+    try {
+      await _dio.put(
+        MainURL.profileURL,
+        data: data.toJson(),
+        options: MainURL.customOption,
+      );
+    } on DioError {}
+  }
 }

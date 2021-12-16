@@ -88,6 +88,7 @@ class _CustomButtonState extends State<CustomButton> {
       onTap: () async {
         changeLoad();
         await widget.onTap!();
+        changeLoad();
       },
       child: Container(
         margin: widget.margin,

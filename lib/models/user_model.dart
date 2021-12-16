@@ -6,12 +6,12 @@ class UserModel {
   String? address;
   String? email;
   String? imageUrl;
-  late double countPerStars;
-  late int countRating;
-  int? feedBack;
-  late int countSell;
-  late int countBuy;
-  late int fame;
+  late double? countPerStars;
+  late int? countRating;
+  late int? feedBack;
+  late int? countSell;
+  late int? countBuy;
+  late int? fame;
   String? registrationData;
 
   UserModel({
@@ -22,17 +22,17 @@ class UserModel {
     this.address,
     this.email,
     this.imageUrl,
-    this.countPerStars = 0,
-    this.countRating = 0,
+    this.countPerStars,
+    this.countRating,
     this.feedBack,
-    this.countSell = 0,
-    this.countBuy = 0,
-    this.fame = 0,
+    this.countSell,
+    this.countBuy,
+    this.fame,
     this.registrationData,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    auth = json['_id'] != null ? new AuthModel.fromJson(json['_id']) : null;
+    auth = json['_id'] != null ? AuthModel.fromJson(json['_id']) : null;
     name = json['name'] ?? '';
     idCard = json['id_card'] ?? '';
     phoneNumber = json['phone_umber'] ?? '';
@@ -41,7 +41,7 @@ class UserModel {
     imageUrl = json['image'] ?? '';
     countPerStars = json['count_per_star'] ?? 0;
     countRating = json['count_rating'] ?? 0;
-    feedBack = json['feed_back'] ?? '';
+    feedBack = json['feed_back'] ?? 0;
     countSell = json['count_sell'] ?? 0;
     countBuy = json['count_buy'] ?? 0;
     fame = json['fame'] ?? 0;
