@@ -118,6 +118,9 @@ class AuthController {
         data: data.toJson(),
         options: MainURL.customOption,
       );
-    } on DioError {}
+      await AuthController.getCurrentUser();
+    } on DioError {
+      return null;
+    }
   }
 }

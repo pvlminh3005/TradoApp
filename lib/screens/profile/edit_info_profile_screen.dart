@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/components/loading/loading_app.dart';
 import 'package:trado_app_uit/controllers/convert_file_image.dart';
 import '/controllers/auth_controller.dart';
 import '/models/user_model.dart';
@@ -150,6 +151,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       title: 'Lưu thông tin',
       showShadow: false,
       onPressed: () async {
+        LoadingApp.LOADWAITING(title: 'Đang cập nhật thông tin...');
         String getUrlAvatar = chooseImage != null
             ? await ConvertFileImageToString.uploadImageUserAndGetUrl(
                 file: chooseImage!)
@@ -179,6 +181,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             );
             break;
         }
+        LoadingApp.DISMISS();
       },
     );
   }

@@ -1,3 +1,5 @@
+import 'package:trado_app_uit/controllers/auth_controller.dart';
+
 class UserModel {
   AuthModel? auth;
   String? name;
@@ -50,9 +52,8 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.auth != null) {
-      data['_id'] = this.auth!.toJson();
-    }
+    // if (this.auth != null) {}
+    data['idUser'] = AuthController.idUser;
     data['name'] = this.name;
     data['verify'] = this.idCard;
     data['phone_number'] = this.phoneNumber;
