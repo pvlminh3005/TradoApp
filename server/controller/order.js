@@ -32,7 +32,6 @@ const createOrder = async (req, res)=>{
             const checkCart = await Cart.findOne({_id:cart[i], idUser: idUser}).catch((err)=>{throw err})
             if(!checkCart)
                 throw new Error("Cart dont exist")
-
             const newOrder = new Order({
                 idUser:idUser,
                 name: name,
@@ -46,6 +45,11 @@ const createOrder = async (req, res)=>{
             })
     
             const order = await newOrder.save(opts).catch(err=>{
+                throw new Error("Cant create order")
+            })
+
+            checkCart.show = false
+            const result = await checkCart.save(opts).catch(err=>{
                 throw new Error("Cant create order")
             })
         }

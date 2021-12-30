@@ -14,6 +14,10 @@ const CartSchema = new Schema({
         required: true
     },
     amount:Number,
+    show: {
+        type: Boolean,
+        default: true,
+    },
     registration_data: {
         type: Date,
         default: Date.now,
