@@ -46,6 +46,29 @@ const updateprofile = async (req, res) => {
 }
 //#endregion
 
+//#region get profile
+const getProfile = async (req, res) => {
+
+    const {idUser} = req.query
+
+    if(!idUser)
+    {
+        return res.status(StatusCode.PayloadIsInvalid).json({ msg: "Invalid user" });
+    }
+
+    try {
+        const profile = await Profile.find({_id: mongoose.Types.ObjectId(idUser)}).populate('_id')
+
+        return res.status(StatusCode.SuccessStatus).json({profile: profile, mgs: ""});
+
+    } catch (error) {
+        return res.status(StatusCode.PayloadIsInvalid).json({ msg: error.message });
+    }
+    
+}
+//#endregion
+
 module.exports = {
     updateprofile,
+    getProfile,
 }
