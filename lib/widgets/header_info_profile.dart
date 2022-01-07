@@ -12,10 +12,10 @@ import '/constants/constants.dart';
 import '/constants/sizes.dart';
 
 class HeaderInfoProfile extends StatelessWidget {
-  final UserModel? profile;
+  late UserModel? profile;
   final bool isMyProfile;
 
-  const HeaderInfoProfile({
+  HeaderInfoProfile({
     this.profile,
     this.isMyProfile = false,
     Key? key,
@@ -43,6 +43,7 @@ class HeaderInfoProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (profile == null) return const SizedBox.shrink();
     return Container(
       color: kCardColor,
       child: Column(

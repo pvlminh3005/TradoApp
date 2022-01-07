@@ -47,7 +47,7 @@ class CategoryProvider with ChangeNotifier {
   }
 
   Future<void> fetchAllCategories() async {
-    _listCategories = await CategoryApi.fetchCategories();
+    // _listCategories = await CategoryApi.fetchCategories();
     notifyListeners();
   }
 

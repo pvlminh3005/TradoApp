@@ -120,14 +120,14 @@ class ShippingAddressProvider with ChangeNotifier {
   }
 
   Future<void> setDefaultAddress(String? idAddress) async {
-    _listAddresses.forEach((address) async {
+    await Future.wait(_listAddresses.map((address) async {
       if (address.id == idAddress) {
         address.defaultAddress = true;
         await AddressApi.changeDefaultAddress(idAddress!);
         return;
       }
       address.defaultAddress = false;
-    });
+    }));
 
     fetchDefaultAddress();
 

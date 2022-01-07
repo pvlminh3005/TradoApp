@@ -41,9 +41,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      infoUser = AuthController.currentUser;
-    });
+    infoUser = AuthController.currentUser;
+    print(infoUser.toString());
 
     nameController = TextEditingController(text: infoUser.name);
     idCardController = TextEditingController(text: infoUser.idCard);

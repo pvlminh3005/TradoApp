@@ -37,57 +37,52 @@ class CategoryOrderItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: kBackgroundColorWhite,
           borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+          border: Border.all(color: kColorItemGrey.withOpacity(.5)),
         ),
-        child: DottedBorder(
-          color: colorBorder,
-          borderType: BorderType.RRect,
-          radius: Radius.circular(AppDimen.radiusNormal),
-          padding: const EdgeInsets.all(AppDimen.spacing_1 - 3),
-          child: Row(
-            children: [
-              Container(
-                width: 100.0,
-                height: 100.0,
-                margin: const EdgeInsets.only(right: AppDimen.spacing_1),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
-                  image: DecorationImage(
-                    image: NetworkImage(category!.imageUrl[0]),
-                    fit: BoxFit.cover,
-                  ),
+        child: Row(
+          children: [
+            Container(
+              width: 110.0,
+              height: 110.0,
+              margin: const EdgeInsets.only(right: AppDimen.spacing_1),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
+                image: DecorationImage(
+                  image: NetworkImage(category!.imageUrl[0]),
+                  fit: BoxFit.cover,
                 ),
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextSaleOrder(
-                            category!.title,
-                            fontWeight: FontWeight.w700,
-                            maxLines: 1,
-                          ),
-                          showQuantity
-                              ? TextSaleOrder('Số lượng: ${category!.quantity}')
-                              : const SizedBox(height: AppDimen.spacing_1 + 2),
-                          TextSaleOrder('${FormatPrice(category!.price)} đ'),
-                        ],
-                      ),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextSaleOrder(
+                          category!.title,
+                          fontWeight: FontWeight.w700,
+                          maxLines: 1,
+                        ),
+                        showQuantity
+                            ? TextSaleOrder('Số lượng: ${category!.quantity}')
+                            : const SizedBox(height: AppDimen.spacing_1 + 2),
+                        TextSaleOrder('${FormatPrice(category!.price)} đ'),
+                      ],
                     ),
-                    showMore
-                        ? CustomIcon(
-                            CupertinoIcons.ellipsis_vertical,
-                            size: AppDimen.icon_size_small,
-                          )
-                        : const SizedBox.shrink(),
-                  ],
-                ),
+                  ),
+                  showMore
+                      ? CustomIcon(
+                          CupertinoIcons.ellipsis_vertical,
+                          size: AppDimen.icon_size_small,
+                        )
+                      : const SizedBox.shrink(),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

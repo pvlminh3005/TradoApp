@@ -64,6 +64,8 @@ class CategoryItem extends StatelessWidget {
         ),
       ),
       child: Container(
+        width: MediaQuery.of(context).size.width / 2 - AppDimen.spacing_1,
+        height: 280.0,
         decoration: BoxDecoration(
           color: kCardColor,
           borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
@@ -153,7 +155,8 @@ class CategoryItem extends StatelessWidget {
                   children: [
                     CustomText(
                       category.title,
-                      fontSize: FontSize.SMALL,
+                      fontSize: FontSize.SMALL + 1,
+                      fontWeight: FontWeight.w700,
                       maxLines: 2,
                     ),
 
@@ -198,19 +201,19 @@ class CategoryItem extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _buildFooterItem(
-                              Icons.remove_red_eye,
-                              0.toString(),
-                            ),
-                            _buildFooterItem(
-                              Icons.near_me_outlined,
-                              '< 4km',
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     _buildFooterItem(
+                        //       Icons.remove_red_eye,
+                        //       0.toString(),
+                        //     ),
+                        //     _buildFooterItem(
+                        //       Icons.near_me_outlined,
+                        //       '< 4km',
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ],

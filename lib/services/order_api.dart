@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:trado_app_uit/models/cart_model.dart';
 
 import '/models/category_model.dart';
 import '../models/order_detail_model.dart';
@@ -15,83 +16,93 @@ class OrderApi {
 
   static Future<List<OrderModel>> fetchAllMyOrders() async {
     try {
-      // List<OrderDetailModel> data = [
-      //   OrderDetailModel(
-      //     id: 'order1',
-      //     idUser: 'user1',
-      //     address: ShippingAddressModel(
-      //       id: 'sa1',
-      //       name: 'Le Minh Pham',
-      //       phoneNumber: '(+84) 123456789',
-      //       address: 'Nha xx, Duong xx, Quan XX, Tp XX, Tinh XX',
-      //       note: 'Khi toi goi dien vao so 09xxxxxxx',
-      //       defaultAddress: true,
-      //     ),
-      //     totalPrice: 300500,
-      //     categories: [
-      //       CategoryModel(
-      //         id: 'c1',
-      //         idUser: 'user1',
-      //         title: 'Sony-Canon',
-      //         price: 155000,
-      //         imageUrl: [
-      //           'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      //         ],
-      //         quantity: 2,
-      //       ),
-      //     ],
-      //     statusOrder: 1,
-      //     time: TimeOrderModel(
-      //       timeDelivery: DateTime.now(),
-      //       timeFinish: DateTime.now(),
-      //       timeOrder: DateTime.now(),
-      //     ),
-      //     typeOrder: 0,
-      //   ),
-      //   OrderDetailModel(
-      //     id: 'order2',
-      //     idUser: 'user1',
-      //     address: ShippingAddressModel(
-      //       id: 'sa3',
-      //       name: 'Tu Quyen',
-      //       phoneNumber: '(+84) 123456789',
-      //       address:
-      //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Semper mi magna justo, orci. Amet quis tincidunt lectus purus. Congue diam id id ut dignissim pellentesque tortor consectetur. Duis ornare eu mi vitae ac sagittis vitae porta platea.',
-      //     ),
-      //     totalPrice: 300500,
-      //     categories: [
-      //       CategoryModel(
-      //         id: 'c3',
-      //         idUser: 'user2',
-      //         title:
-      //             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem',
-      //         price: 60000,
-      //         imageUrl: [
-      //           'https://media.istockphoto.com/photos/portrait-of-a-vietnamese-girl-with-a-red-dress-in-the-lotus-hand-picture-id1187554319?k=20&m=1187554319&s=612x612&w=0&h=5l3PZl3ffXJZJbWZCkUNb5LwXRYrs4zogO3k_gdqTG8=',
-      //         ],
-      //         quantity: 1,
-      //       ),
-      //       CategoryModel(
-      //         id: 'c1',
-      //         idUser: 'user1',
-      //         title: 'Sony-Canon',
-      //         price: 155000,
-      //         imageUrl: [
-      //           'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-      //         ],
-      //         quantity: 2,
-      //       ),
-      //     ],
-      //     statusOrder: 2,
-      //     time: TimeOrderModel(
-      //       timeDelivery: DateTime.now(),
-      //       timeFinish: DateTime.now(),
-      //       timeOrder: DateTime.now(),
-      //     ),
-      //     typeOrder: 0,
-      //   )
-      // ];
-      var data = [];
+      List<OrderDetailModel> data = [
+        OrderDetailModel(
+          id: 'order1',
+          idUser: 'user1',
+          address: ShippingAddressModel(
+            id: 'sa1',
+            name: 'Le Minh Pham',
+            phoneNumber: '(+84) 123456789',
+            address: 'Nha xx, Duong xx, Quan XX, Tp XX, Tinh XX',
+            note: 'Khi toi goi dien vao so 09xxxxxxx',
+            defaultAddress: true,
+          ),
+          totalPrice: 300500,
+          categories: [
+            CartModel(
+              id: 'cart1',
+              category: CategoryModel(
+                id: 'c1',
+                idUser: 'user1',
+                title: 'Sony-Canon',
+                price: 155000,
+                imageUrl: [
+                  'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+                ],
+                quantity: 2,
+              ),
+            ),
+          ],
+          methodPayment: 1,
+          statusOrder: 1,
+          time: TimeOrderModel(
+            timeDelivery: DateTime.now(),
+            timeFinish: DateTime.now(),
+            timeOrder: DateTime.now(),
+          ),
+          typeOrder: 0,
+        ),
+        OrderDetailModel(
+          id: 'order2',
+          idUser: 'user1',
+          address: ShippingAddressModel(
+            id: 'sa3',
+            name: 'Tu Quyen',
+            phoneNumber: '(+84) 123456789',
+            address:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Semper mi magna justo, orci. Amet quis tincidunt lectus purus. Congue diam id id ut dignissim pellentesque tortor consectetur. Duis ornare eu mi vitae ac sagittis vitae porta platea.',
+          ),
+          totalPrice: 300500,
+          categories: [
+            CartModel(
+              id: 'cart2',
+              category: CategoryModel(
+                id: 'c3',
+                idUser: 'user2',
+                title:
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, error facere! Temporibus aperiam velit, ipsum doloremque voluptatem',
+                price: 60000,
+                imageUrl: [
+                  'https://media.istockphoto.com/photos/portrait-of-a-vietnamese-girl-with-a-red-dress-in-the-lotus-hand-picture-id1187554319?k=20&m=1187554319&s=612x612&w=0&h=5l3PZl3ffXJZJbWZCkUNb5LwXRYrs4zogO3k_gdqTG8=',
+                ],
+                quantity: 1,
+              ),
+            ),
+            CartModel(
+              id: 'cart3',
+              category: CategoryModel(
+                id: 'c1',
+                idUser: 'user1',
+                title: 'Sony-Canon',
+                price: 155000,
+                imageUrl: [
+                  'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2FtZXJhfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
+                ],
+                quantity: 2,
+              ),
+            ),
+          ],
+          methodPayment: 2,
+          statusOrder: 2,
+          time: TimeOrderModel(
+            timeDelivery: DateTime.now(),
+            timeFinish: DateTime.now(),
+            timeOrder: DateTime.now(),
+          ),
+          typeOrder: 0,
+        )
+      ];
       var convertData = data
           .map((order) => OrderModel(
                 idOrder: order.id,

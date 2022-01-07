@@ -21,8 +21,9 @@ class AddressApi {
         queryParameters: {'idUser': idUser},
         options: MainURL.customOption,
       );
+
       if (response.statusCode == 200) {
-        return (response.data['tagshipping'] as List<dynamic>)
+        return (response.data['tagshipping'] as List)
             .map((data) => ShippingAddressModel.fromJson(data))
             .toList();
       }

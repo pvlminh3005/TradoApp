@@ -69,6 +69,11 @@ class UserModel {
     data['registration_data'] = this.registrationData;
     return data;
   }
+
+  @override
+  toString() {
+    return '{name: $name, image: $imageUrl, address: $address}';
+  }
 }
 
 class AuthModel {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/widgets/header_info_profile.dart';
 
 import '/constants/constants.dart';
 import '../../widgets/appbar_widget.dart';
@@ -16,7 +17,7 @@ class DiffProfileScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // HeaderInfoProfile(),
+          HeaderInfoProfile(),
           Expanded(
             child: Container(
               alignment: Alignment.topCenter,
