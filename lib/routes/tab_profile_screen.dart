@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:trado_app_uit/constants/dimen.dart';
+import 'package:trado_app_uit/models/user_model.dart';
 import '/constants/sizes.dart';
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
-import '/providers/rate_review_provider.dart';
-import '../providers/category_provider.dart';
 import '../widgets/categories_profile.dart';
 import '../widgets/info_profile.dart';
 import '../widgets/rating.dart';
 
 class TabScreen extends StatelessWidget {
-  final List<Widget> _pages = [
-    InfoWidget(),
-    CategoriesWidget(),
-    RatingWidget(),
-  ];
+  final UserModel? profile;
+  final String? idUser;
+
+  const TabScreen({
+    Key? key,
+    this.profile,
+    this.idUser = '',
+  }) : super(key: key);
 
   Widget _buildTitleTab(String title) {
     return CustomText(
@@ -26,13 +27,8 @@ class TabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final providerCategory =
-        Provider.of<CategoryProvider>(context, listen: false);
-    int amountRates = Provider.of<RateReviewProvider>(context, listen: false)
-        .listRates
-        .length;
     return DefaultTabController(
-      length: _pages.length,
+      length: 3,
       child: Container(
         padding: const EdgeInsets.only(top: AppDimen.horizontalSpacing_5),
         color: kCardColor,
@@ -44,17 +40,16 @@ class TabScreen extends StatelessWidget {
               indicatorColor: kPrimaryColor,
               tabs: [
                 _buildTitleTab('Thông tin'),
-                _buildTitleTab(
-                    'Mặt hàng (${providerCategory.listCategories.length})'),
-                _buildTitleTab('Đánh giá (${amountRates})'),
+                _buildTitleTab('Sản phẩm'),
+                _buildTitleTab('Đánh giá'),
               ],
             ),
             // BodyContent(),
             Expanded(
               child: TabBarView(
                 children: [
-                  InfoWidget(),
-                  CategoriesWidget(),
+                  InfoWidget(profile: profile),
+                  CategoriesWidget(idUser: idUser),
                   RatingWidget(),
                 ],
               ),

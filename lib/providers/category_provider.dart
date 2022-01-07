@@ -19,6 +19,7 @@ class CategoryProvider with ChangeNotifier {
 
   int _totalCategories = 0;
   int get totalCategories => _totalCategories;
+  int page = 1;
 
   Future<void> createCategory({
     required String idUser,
@@ -47,7 +48,7 @@ class CategoryProvider with ChangeNotifier {
   }
 
   Future<void> fetchAllCategories() async {
-    // _listCategories = await CategoryApi.fetchCategories();
+    _listCategories = await CategoryApi.fetchAllCategories(page: page);
     notifyListeners();
   }
 
@@ -77,6 +78,10 @@ class CategoryProvider with ChangeNotifier {
       _listFavoriteCategories.add(category);
     }
     notifyListeners();
+  }
+
+  Future fetchCategoriesById(String id) async {
+    return await CategoryApi.fetchCateogriesById(id);
   }
 
   Future<void> fetchCagetoriesDelivered() async {}

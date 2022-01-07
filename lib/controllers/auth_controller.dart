@@ -82,6 +82,21 @@ class AuthController {
     await AuthPreferences.removeToken();
   }
 
+  static Future getUserById(String id) async {
+    try {
+      var response = await _dio.get(
+        MainURL.profileURL,
+        queryParameters: {'idUser': id},
+      );
+      if (response.statusCode == 200) {
+        return UserModel.fromJson(response.data['profile'][0]);
+      }
+      return UserModel();
+    } on DioError {
+      return UserModel();
+    }
+  }
+
   static Future<void> getCurrentUser() async {
     try {
       var response = await _dio.get(
@@ -114,7 +129,7 @@ class AuthController {
   static Future<void> updateProfileUser(UserModel data) async {
     try {
       await _dio.put(
-        MainURL.profileURL,
+        MainURL.profileUpdateURL,
         data: data.toJson(),
         options: MainURL.customOption,
       );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/controllers/auth_controller.dart';
 import '/components/custom_image_network.dart';
 import '/components/custom_icon.dart';
 import '/screens/category/category_detail_screen.dart';
@@ -60,6 +61,9 @@ class CategoryItem extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => CategoryDetailScreen(
             idCategory: category.id,
+            typeCategory: category.idUser == AuthController.idUser
+                ? CategoryType.MY_CATEGORY
+                : CategoryType.ANOTHER_CATEGORY,
           ),
         ),
       ),
@@ -161,20 +165,24 @@ class CategoryItem extends StatelessWidget {
                     ),
 
                     //Widget Price & Sale
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CustomText(
-                          '${FormatPrice(priceDecreaseSale)} đ',
-                          fontWeight: FontWeight.w700,
-                          color:
-                              category.priceSale != 0 ? kErrorColor : kTextDark,
-                        ),
-                        const SizedBox(width: 8.0),
-                        category.priceSale != 0
-                            ? SaleComponent(text: category.priceSale)
-                            : SizedBox.shrink(),
-                      ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CustomText(
+                            '${FormatPrice(priceDecreaseSale)} đ',
+                            fontWeight: FontWeight.w700,
+                            color: category.priceSale != 0
+                                ? kErrorColor
+                                : kTextDark,
+                          ),
+                          const SizedBox(width: 8.0),
+                          category.priceSale != 0
+                              ? SaleComponent(text: category.priceSale)
+                              : SizedBox.shrink(),
+                        ],
+                      ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

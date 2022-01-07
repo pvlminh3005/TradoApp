@@ -28,11 +28,13 @@ class MainURL {
   static String loginURL = '$mainURL$account$login';
 
   //profile
-  static String profileURL = '$mainURL$profile/update';
+  static String profileURL = '$mainURL$profile';
+  static String profileUpdateURL = '$mainURL$profile/update';
 
   //product
   static String productURL = '$mainURL$product';
   static String productUserURL = '$mainURL$product/user';
+  static String productHomeURL = '$mainURL$product/home';
 
   //address
   static String newAddressURL = '$mainURL$address';

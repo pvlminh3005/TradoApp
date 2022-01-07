@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/screens/profile/diff_profile_screen.dart';
 import '/components/custom_button.dart';
 import '/constants/dimen.dart';
 import '/routes/routes_manage.dart';
@@ -37,7 +38,13 @@ class BottomCategoryDetail extends StatelessWidget {
           FormIcon(
             icon: Icons.store_mall_directory,
             onPressed: () {
-              Navigator.of(context).pushNamed(RouteManage.diff_profile);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DiffProfileScreen(
+                          idUser: category.idUser,
+                        )),
+              );
             },
           ),
           SizedBox(width: size.width * .03),

@@ -65,8 +65,8 @@ class PrimaryButton extends StatelessWidget {
           borderOpacity: borderOpacity,
           sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
           onTap: onPressed != null
-              ? () {
-                  onPressed!();
+              ? () async {
+                  await onPressed!();
                 }
               : () {},
         ),

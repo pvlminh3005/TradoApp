@@ -17,24 +17,29 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
-  void initState() {
-    super.initState();
+  bool get wantKeepAlive => true;
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    fetchData();
+  //   fetchData();
 
-    if (mounted) return;
-  }
+  //   if (mounted) return;
+  // }
 
-  Future<void> fetchData() async {
-    await Provider.of<CategoryProvider>(context, listen: false)
-        .fetchAllCategories();
-    ;
-  }
+  // Future<void> fetchData() async {
+  //   await Provider.of<CategoryProvider>(context, listen: false)
+  //       .fetchAllCategories();
+  //   ;
+  // }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
       appBar: AppBarWidget(
         leading: IconButton(
@@ -53,12 +58,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         showCart: true,
       ),
-      body: CustomRefreshPage(
-        onRefresh: fetchData,
-        child: Consumer<CategoryProvider>(builder: (ctx, provider, _) {
-          return SizedBox().gridCategory(provider.listCategories);
-        }),
-      ),
+      body: Consumer<CategoryProvider>(builder: (ctx, provider, _) {
+        return CustomRefreshPage(
+          onRefresh: () async {
+            await Future.delayed(Duration(seconds: 3));
+          },
+          child: SizedBox().gridCategory(provider.listCategories),
+        );
+      }),
     );
   }
 }

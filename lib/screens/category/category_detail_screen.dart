@@ -257,6 +257,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
 
   Widget _buildDescription(CategoryModel category) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),

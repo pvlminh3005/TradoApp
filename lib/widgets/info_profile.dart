@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+
 import 'package:trado_app_uit/constants/dimen.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
+import 'package:trado_app_uit/models/user_model.dart';
+
 import '/components/custom_text.dart';
 import '/constants/constants.dart';
 import '/models/info_card_model.dart';
 
 class InfoWidget extends StatelessWidget {
-  const InfoWidget({Key? key}) : super(key: key);
+  final UserModel? profile;
+
+  const InfoWidget({
+    this.profile,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +32,12 @@ class InfoWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BuildTitle(title: 'Thông tin đã xác nhận'),
-              InfoCard(),
+              InfoCard(
+                idCard: profile!.idCard!.isNotEmpty ? true : false,
+                phone: profile!.phoneNumber!.isNotEmpty ? true : false,
+                address: profile!.address!.isNotEmpty ? true : false,
+                email: profile!.email!.isNotEmpty ? true : false,
+              ),
               BuildTitle(title: 'Mô tả chung'),
               Description(description: ''),
               BuildTitle(title: 'Thông tin giao dịch'),
@@ -58,10 +71,47 @@ class BuildTitle extends StatelessWidget {
 }
 
 class InfoCard extends StatelessWidget {
-  const InfoCard({Key? key}) : super(key: key);
+  final bool? idCard;
+  final bool? phone;
+  final bool? address;
+  final bool? email;
+
+  const InfoCard({
+    Key? key,
+    this.idCard,
+    this.phone,
+    this.address,
+    this.email,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<InfoModel> listInfo = [
+      InfoModel(
+        title: 'CMND',
+        icon: Icons.perm_contact_cal_rounded,
+        isChecked: idCard!,
+        routeName: '',
+      ),
+      InfoModel(
+        title: 'Điện thoại',
+        icon: Icons.phone,
+        isChecked: phone!,
+        routeName: '',
+      ),
+      InfoModel(
+        title: 'Địa chỉ',
+        icon: Icons.pin_drop,
+        isChecked: address!,
+        routeName: '',
+      ),
+      InfoModel(
+        title: 'Email',
+        icon: Icons.email,
+        isChecked: email!,
+        routeName: '',
+      ),
+    ];
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(

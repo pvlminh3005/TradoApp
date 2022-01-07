@@ -13,30 +13,3 @@ class InfoModel {
     required this.routeName,
   });
 }
-
-final List<InfoModel> listInfo = [
-  InfoModel(
-    title: 'CMND',
-    icon: Icons.perm_contact_cal_rounded,
-    isChecked: false,
-    routeName: '',
-  ),
-  InfoModel(
-    title: 'Điện thoại',
-    icon: Icons.phone,
-    isChecked: false,
-    routeName: '',
-  ),
-  InfoModel(
-    title: 'Địa chỉ',
-    icon: Icons.pin_drop,
-    isChecked: true,
-    routeName: '',
-  ),
-  InfoModel(
-    title: 'Email',
-    icon: Icons.email,
-    isChecked: true,
-    routeName: '',
-  ),
-];
