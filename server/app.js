@@ -2,6 +2,8 @@ const express = require('express')
 const app = express();
 const dotenv = require("dotenv")
 const mongoose = require('mongoose')
+const {creatRoom} = require('./controller/room')
+const {sendMessage} = require('./controller/message');
 dotenv.config({ path: "./config.env" })
 const PORT = process.env.PORT || 3000
 
@@ -27,11 +29,52 @@ app.use('/api/review',require('./router/review'));
 app.use('/api/cart',require('./router/cart'));
 app.use('/api/tagshipping',require('./router/tagshipping'));
 app.use('/api/profile',require('./router/profile'));
+app.use('/api/order',require('./router/order'));
+app.use('/api/message',require('./router/message'));
+app.use('/api/room',require('./router/room'));
 
 app.get('/', (req, res) => {
     res.send("Welcome to Trado App")
 })
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server running on PORT ${PORT}`)
+})
+
+// Chat
+const io = require("socket.io")(server)
+
+io.of('/api/chat').on("connection", async(socket)=>{
+    console.log("connection " + socket.id)
+    
+    socket.on("disconnect", ()=>{
+        console.log("disconnect "+socket.id)
+    })
+
+    console.log(socket.adapter.rooms)
+
+    socket.on("join-room",async (idUser1, idUser2)=>{
+        const idRoom = await creatRoom(idUser1, idUser2)
+        if(!idRoom)
+            socket.emit('send-client',{notifi: "Cant join room now"})
+        else{
+            socket.join(idRoom.id)
+            socket.phong = idRoom.id
+            console.log(socket.adapter.rooms)
+        }
+    })
+
+    socket.on("leave-room",(data)=>{
+        socket.leave(data)
+        console.log(socket.adapter.rooms)
+    })
+
+    socket.on("send-server", async(idUser, msg) =>{
+        const newMessage = await sendMessage(idUser, socket.phong, msg)
+        if(!newMessage)
+            socket.emit('send-client',{notifi: "Cant send message now"})
+        else
+            //socket.broadcast.to(id).emit('test2',msg)
+            io.of('/api/chat').to(socket.phong).emit('send-client',newMessage)
+    })
 })

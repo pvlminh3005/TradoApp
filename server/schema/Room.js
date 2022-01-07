@@ -2,21 +2,16 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 const { ObjectID } = mongoose.Schema.Types
 
-const CartSchema = new Schema({
-    idUser:{
+const RoomSchema = new Schema({
+    user1:{
         type:ObjectID,
         ref: "profile",
         required: true
     },
-    idProduct:{
+    user2:{
         type:ObjectID,
-        ref: "product",
+        ref: "profile",
         required: true
-    },
-    amount:Number,
-    show: {
-        type: Boolean,
-        default: true,
     },
     registration_data: {
         type: Date,
@@ -24,4 +19,4 @@ const CartSchema = new Schema({
     }
 })
 
-module.exports = Cart = mongoose.model("cart", CartSchema)
+module.exports = Room = mongoose.model("room", RoomSchema)

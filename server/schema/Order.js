@@ -17,11 +17,9 @@ const OrderSchema = new Schema({
         ref: "tagshipping",
         required: true
     },
-    cart:[
-        {
-            cartId: { type: ObjectID, ref: "cart", required: true}
-        },
-    ],
+    cart: {
+        type: ObjectID, ref: "cart", required: true
+    },
     timeOrder: { type: Date, default: null },
     timePayment: { type: Date, default: null },
     timeDelivery: { type: Date, default: null },

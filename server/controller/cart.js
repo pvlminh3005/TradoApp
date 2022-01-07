@@ -14,19 +14,34 @@ const addCart = async (req, res) => {
     
     try{
         const product = await Product.findOne({_id:idProduct}).catch((err)=>{throw err})
+        const oldCart = await Cart.findOne({idUser: idUser, idProduct: idProduct}).catch((err)=>{throw err})
         if(!product)
             return res.status(StatusCode.PayloadIsInvalid).json({ msg: "Cant find product" });
-        if(product.quantity<amount)
-            return res.status(StatusCode.PayloadIsInvalid).json({ msg: "Not enough products" });
-        const newCart = new Cart({
-            idUser:idUser,
-            idProduct:idProduct,
-            amount:amount
-        })
-        const cart = await newCart.save().catch(err=>{
-            throw new Error("Cant add cart")
-        })
-        return res.status(StatusCode.SuccessStatus).json({ cart: cart, msg: "Add to cart success"});
+
+        if(oldCart)
+        {
+            if(product.quantity < amount + oldCart.amount)
+                return res.status(StatusCode.PayloadIsInvalid).json({ msg: "Not enough products" });
+            oldCart.amount = oldCart.amount + amount
+            const result = await oldCart.save().catch(err=>{
+                throw new Error("Cant add cart")
+            })
+            return res.status(StatusCode.SuccessStatus).json({ cart: result, msg: "Add to cart success"});
+        }
+        else
+        {
+            if(product.quantity<amount)
+                return res.status(StatusCode.PayloadIsInvalid).json({ msg: "Not enough products" });
+            const newCart = new Cart({
+                idUser:idUser,
+                idProduct:idProduct,
+                amount:amount
+            })
+            const result = await newCart.save().catch(err=>{
+                throw new Error("Cant add cart")
+            })
+            return res.status(StatusCode.SuccessStatus).json({ cart: result, msg: "Add to cart success"});
+        }
     }
     catch(error){
         return res.status(StatusCode.PayloadIsInvalid).json({ msg: error.message });
@@ -63,7 +78,7 @@ const getCart = async (req, res) => {
     }
     
     try{
-        const cart = await Cart.find({idUser:mongoose.Types.ObjectId(req.TradoUser.id)}).populate('idProduct').populate('idUser').sort({registration_data:-1}).catch(err=>{throw err})
+        const cart = await Cart.find({idUser:mongoose.Types.ObjectId(req.TradoUser.id), show: true}).populate('idProduct').populate('idUser').sort({registration_data:-1}).catch(err=>{throw err})
         return res.status(StatusCode.SuccessStatus).json({cart:cart})
     }
     catch(error){

@@ -126,8 +126,28 @@ const updateProduct = async (req, res) => {
     
 }
 //#endregion
+
+//#region Get product home
+const getProductHome = async (req, res) => {
+
+    const {page} = req.query
+
+    const pagecv = page -1
+
+    try {
+        const product = await Product.find().limit(10).skip(pagecv*10)
+
+        return res.status(StatusCode.SuccessStatus).json({product: product});
+
+    } catch (error) {
+        return res.status(StatusCode.PayloadIsInvalid).json({ msg: error.message });
+    }
+
+}
+//#endregion
 module.exports = {
     createProduct,
     getProductUser,
     updateProduct, 
+    getProductHome,
 }
