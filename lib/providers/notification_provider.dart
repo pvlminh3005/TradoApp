@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trado_app_uit/providers/order_provider.dart';
+import 'package:trado_app_uit/screens/order/order_detail_screen.dart';
 import '/models/notification_model.dart';
 import '/services/notification_api.dart';
 
@@ -28,5 +31,25 @@ class NotificationProvider with ChangeNotifier {
         checked: true,
       ),
     ];
+  }
+
+  Future updateNotification(BuildContext context, String id) async {
+    await Future.delayed(Duration(seconds: 1));
+
+    _listNotifications.map((notification) async {
+      if (notification.id == id) {
+        print('OK');
+        await Provider.of<OrderProvider>(context)
+            .fetchOrderById(notification.idOrder);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => OrderDetailScreen()),
+        );
+        return notification.checked = true;
+      }
+    });
+
+    notifyListeners();
   }
 }

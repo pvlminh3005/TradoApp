@@ -54,14 +54,7 @@ class HeaderInfoProfile extends StatelessWidget {
             child: Row(
               children: [
                 GestureDetector(
-                  onTap: () async {
-                    await AuthPreferences.removeToken();
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      RouteManage.splash,
-                      (Route<dynamic> route) => false,
-                    );
-                  },
+                  onTap: () async {},
                   child: CustomAvatar(
                     imageUrl: profile!.imageUrl!,
                     radius: 40,

@@ -68,7 +68,8 @@ class CategoryItem extends StatelessWidget {
         ),
       ),
       child: Container(
-        width: MediaQuery.of(context).size.width / 2 - AppDimen.spacing_1,
+        width: MediaQuery.of(context).size.width / 2 -
+            AppDimen.horizontalSpacing_10,
         height: 280.0,
         decoration: BoxDecoration(
           color: kCardColor,

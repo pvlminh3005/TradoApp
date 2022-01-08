@@ -49,4 +49,8 @@ class OrderProvider with ChangeNotifier {
   List<OrderModel> cancelledOrders() {
     return _listOrders.where((order) => order.statusOrder == 3).toList();
   }
+
+  Future fetchOrderById(String idOrder) async {
+    return await OrderApi.fetchOrderDetailById(idOrder);
+  }
 }

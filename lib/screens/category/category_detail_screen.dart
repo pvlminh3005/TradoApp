@@ -341,7 +341,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       backgroundColor: kBackgroundColor,
       extendBodyBehindAppBar: true,
       appBar: AppBarWidget(
-        color: kBackgroundColorWhite,
+        color: kPrimaryColor,
         background: Colors.transparent,
         showCart: true,
       ),

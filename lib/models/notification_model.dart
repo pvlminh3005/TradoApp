@@ -1,10 +1,10 @@
 class NotificationModel {
-  final String id;
-  final String idCategory;
-  final String idOrder;
-  final String imageUrl;
+  late String id;
+  late String idCategory;
+  late String idOrder;
+  late String imageUrl;
   late DateTime date;
-  final bool checked;
+  late bool checked;
 
   NotificationModel({
     required this.id,

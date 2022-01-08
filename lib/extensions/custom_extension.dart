@@ -12,21 +12,25 @@ extension CustomExtension on Widget {
   Widget gridCategory(
     List<CategoryModel> data, {
     CategoryType type = CategoryType.ANOTHER_CATEGORY,
+    ScrollController? scrollCtrl,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: AppDimen.spacing_1,
         horizontal: AppDimen.horizontalSpacing_5,
       ),
-      child: Wrap(
-        spacing: AppDimen.horizontalSpacing_5,
-        runSpacing: AppDimen.spacing_2,
-        children: data.map((category) {
-          return CategoryItem(
-            category: category,
-            typeCategory: type,
-          );
-        }).toList(),
+      child: SingleChildScrollView(
+        controller: scrollCtrl,
+        child: Wrap(
+          spacing: AppDimen.horizontalSpacing_10,
+          runSpacing: AppDimen.spacing_2,
+          children: data.map((category) {
+            return CategoryItem(
+              category: category,
+              typeCategory: type,
+            );
+          }).toList(),
+        ),
       ),
     );
   }

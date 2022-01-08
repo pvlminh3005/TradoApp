@@ -130,7 +130,7 @@ class ShippingAddressProvider with ChangeNotifier {
     }));
 
     fetchDefaultAddress();
-
+    LoadingApp.LOADSUCCESS(title: 'Thiết lập thành công');
     notifyListeners();
   }
 }

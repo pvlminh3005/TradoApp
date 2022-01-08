@@ -19,22 +19,27 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
+  late ScrollController _scrollCtrl;
+  late CategoryProvider provider;
   @override
-  bool get wantKeepAlive => true;
-  // @override
-  // void initState() {
-  //   super.initState();
+  void initState() {
+    provider = Provider.of<CategoryProvider>(context, listen: false);
+    _scrollCtrl = ScrollController();
+    _scrollCtrl.addListener(() async {
+      if (_scrollCtrl.position.pixels >= _scrollCtrl.position.maxScrollExtent &&
+          provider.isLoading == false) {
+        await provider.fetchLoadMoreCategories();
+        // print('FETCH');
+      }
+    });
+    super.initState();
+  }
 
-  //   fetchData();
-
-  //   if (mounted) return;
-  // }
-
-  // Future<void> fetchData() async {
-  //   await Provider.of<CategoryProvider>(context, listen: false)
-  //       .fetchAllCategories();
-  //   ;
-  // }
+  Future<void> fetchData() async {
+    await Provider.of<CategoryProvider>(context, listen: false)
+        .fetchAllCategories();
+    ;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +68,15 @@ class _HomeScreenState extends State<HomeScreen>
           onRefresh: () async {
             await Future.delayed(Duration(seconds: 3));
           },
-          child: SizedBox().gridCategory(provider.listCategories),
+          child: SizedBox().gridCategory(
+            provider.listCategories,
+            scrollCtrl: _scrollCtrl,
+          ),
         );
       }),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

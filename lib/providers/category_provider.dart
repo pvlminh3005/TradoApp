@@ -20,6 +20,7 @@ class CategoryProvider with ChangeNotifier {
   int _totalCategories = 0;
   int get totalCategories => _totalCategories;
   int page = 1;
+  bool isLoading = false;
 
   Future<void> createCategory({
     required String idUser,
@@ -85,4 +86,10 @@ class CategoryProvider with ChangeNotifier {
   }
 
   Future<void> fetchCagetoriesDelivered() async {}
+
+  Future fetchLoadMoreCategories() async {
+    var data = await CategoryApi.fetchAllCategories(page: ++page);
+    listCategories.addAll(data);
+    notifyListeners();
+  }
 }
