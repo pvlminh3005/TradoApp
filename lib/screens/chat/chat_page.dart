@@ -3,14 +3,14 @@ import 'package:trado_app_uit/models/chat_model.dart';
 import 'package:trado_app_uit/widgets/message/chat_input_field.dart';
 import 'package:trado_app_uit/widgets/message/message.dart';
 
-class MessageScreen extends StatefulWidget {
-  const MessageScreen({Key? key}) : super(key: key);
+class Chat extends StatefulWidget {
+  const Chat({Key? key}) : super(key: key);
 
   @override
-  _MessageScreenState createState() => _MessageScreenState();
+  _ChatState createState() => _ChatState();
 }
 
-class _MessageScreenState extends State<MessageScreen> {
+class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,102 +67,6 @@ List<ChatModel> demeChatMessages = [
   ),
   ChatModel(
     text: "My lover",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatModel(
-    text: "Glad you like it",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "My lover",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatModel(
-    text: "Glad you like it",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "My lover",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatModel(
-    text: "Glad you like it",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatModel(
-    text: "Glad you like it",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "My lover",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatModel(
-    text: "Glad you like it",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "My lover",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatModel(
-    text: "Glad you like it",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatModel(
-    text: "Glad you like it",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "My lover",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatModel(
-    text: "Glad you like it",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "My lover",
-    isSender: true,
-  ),
-  ChatModel(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatModel(
-    text: "Glad you like it",
     isSender: true,
   ),
   ChatModel(

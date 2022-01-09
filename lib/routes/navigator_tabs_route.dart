@@ -3,6 +3,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/screens/dashboard/message_screen.dart';
 import '/screens/review/write_review_screen.dart';
 import '/constants/dimen.dart';
 import '../screens/dashboard/favorite_screen.dart';
@@ -29,8 +30,8 @@ class _NavigatorTabState extends State<NavigatorTab> {
     // SuccessScreen(),
     FavoriteScreen(),
     NotificationScreen(),
-    // MessageScreen(),
-    WriteReviewScreen(),
+    MessageScreen(),
+    //WriteReviewScreen(),
     ProfileScreen(),
   ];
 
