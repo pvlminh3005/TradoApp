@@ -38,9 +38,10 @@ class CategoryApi {
       });
 
       if (response.statusCode == 200) {
-        print(response.data['product']);
-        return List<CategoryModel>.from((response.data['product'] as List)
-            .map((category) => CategoryModel.fromJson(category)));
+        return List<CategoryModel>.from(
+          (response.data['product'] as List)
+              .map((category) => CategoryModel.fromJson(category)),
+        );
       }
       return [];
     } on DioError {

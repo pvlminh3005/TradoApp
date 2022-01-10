@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/screens/category/category_detail_screen.dart';
 import '/components/custom_icon.dart';
 import '/models/category_model.dart';
 import '/routes/routes_manage.dart';
@@ -27,9 +28,10 @@ class CategoryOrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(
-        RouteManage.category_detail,
-        arguments: category!.id,
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CategoryDetailScreen(idCategory: category!.id),
+        ),
       ),
       child: Container(
         margin:

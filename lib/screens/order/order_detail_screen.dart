@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/models/cart_model.dart';
 import '/components/loading/loading_app.dart';
 import '/models/category_model.dart';
 import '/services/order_api.dart';
@@ -19,7 +20,7 @@ import '/widgets/appbar_widget.dart';
 import '/widgets/payment_method_widget.dart';
 import '/widgets/time_line_widget.dart';
 
-class OrderDetailScreen extends StatelessWidget {
+class OrderDetailScreen extends StatefulWidget {
   final int processing;
   final String? idOrder;
 
@@ -30,6 +31,11 @@ class OrderDetailScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<OrderDetailScreen> createState() => _OrderDetailScreenState();
+}
+
+class _OrderDetailScreenState extends State<OrderDetailScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
@@ -37,7 +43,7 @@ class OrderDetailScreen extends StatelessWidget {
         showCart: true,
       ),
       body: FutureBuilder<dynamic>(
-        future: OrderApi.fetchOrderDetailById(idOrder!),
+        future: OrderApi.fetchOrderDetailById(widget.idOrder!),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             LoadingApp.LOADWAITING();
@@ -59,7 +65,7 @@ class OrderDetailScreen extends StatelessWidget {
                       icon: Icons.local_shipping_outlined,
                       title: 'Trạng thái đơn hàng',
                     ),
-                    TimeLineWidget(processing: processing),
+                    TimeLineWidget(processing: widget.processing),
                     _buildHeader(
                       icon: Icons.location_on_outlined,
                       title: 'Địa chỉ giao hàng',
@@ -124,7 +130,7 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListCategories(List<CategoryModel> categories) {
+  Widget _buildListCategories(List<CartModel> categories) {
     return Container(
       padding: const EdgeInsets.only(
         top: AppDimen.verticalSpacing_5,
@@ -134,8 +140,8 @@ class OrderDetailScreen extends StatelessWidget {
         maxHeight: 350,
       ),
       child: Column(
-        children: categories.map((category) {
-          return CategoryOrderItem(category: category);
+        children: categories.map((cart) {
+          return CategoryOrderItem(category: cart.category);
         }).toList(),
       ),
     );

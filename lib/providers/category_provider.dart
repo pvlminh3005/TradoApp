@@ -49,6 +49,7 @@ class CategoryProvider with ChangeNotifier {
   }
 
   Future<void> fetchAllCategories() async {
+    page = 1;
     _listCategories = await CategoryApi.fetchAllCategories(page: page);
     notifyListeners();
   }

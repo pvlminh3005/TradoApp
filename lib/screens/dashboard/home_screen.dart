@@ -54,11 +54,12 @@ class _HomeScreenState extends State<HomeScreen>
           ),
           onPressed: () {
             showSearch(
-                context: context,
-                delegate: CustomSearch(
-                  data: Provider.of<CategoryProvider>(context, listen: false)
-                      .listCategories,
-                ));
+              context: context,
+              delegate: CustomSearch(
+                data: Provider.of<CategoryProvider>(context, listen: false)
+                    .listCategories,
+              ),
+            );
           },
         ),
         showCart: true,
@@ -66,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen>
       body: Consumer<CategoryProvider>(builder: (ctx, provider, _) {
         return CustomRefreshPage(
           onRefresh: () async {
-            await Future.delayed(Duration(seconds: 3));
+            await fetchData();
           },
           child: SizedBox().gridCategory(
             provider.listCategories,

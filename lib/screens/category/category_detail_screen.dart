@@ -41,6 +41,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
   int quantityCategory = 1;
   bool isReadMore = false;
   late ScrollController _scrollController;
+  late CategoryModel category;
 
   Widget _buildImagesSlide(Size size, CategoryModel category) {
     return Hero(
@@ -315,6 +316,8 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
   @override
   void initState() {
     super.initState();
+    category = Provider.of<CategoryProvider>(context, listen: false)
+        .findCategoryById(widget.idCategory!);
 
     _scrollController = ScrollController();
   }
@@ -328,9 +331,6 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CategoryModel category =
-        Provider.of<CategoryProvider>(context, listen: false)
-            .findCategoryById(widget.idCategory!);
     int priceDecreaseSale = category.priceSale != 0
         ? (category.price * (100 - category.priceSale) ~/ 100)
         : category.price;

@@ -34,21 +34,21 @@ class NotificationProvider with ChangeNotifier {
   }
 
   Future updateNotification(BuildContext context, String id) async {
-    await Future.delayed(Duration(seconds: 1));
-
-    _listNotifications.map((notification) async {
+    Future.wait(_listNotifications.map((notification) async {
+      print(notification.id);
       if (notification.id == id) {
-        print('OK');
-        await Provider.of<OrderProvider>(context)
+        await Provider.of<OrderProvider>(context, listen: false)
             .fetchOrderById(notification.idOrder);
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => OrderDetailScreen()),
+          MaterialPageRoute(
+              builder: (context) =>
+                  OrderDetailScreen(idOrder: notification.idOrder)),
         );
         return notification.checked = true;
       }
-    });
+    }));
 
     notifyListeners();
   }

@@ -54,10 +54,12 @@ class _FavoriteScreenState extends State<FavoriteScreen>
           ),
           onPressed: () {
             showSearch(
-                context: context,
-                delegate: CustomSearch(
-                  data: [],
-                ));
+              context: context,
+              delegate: CustomSearch(
+                data: Provider.of<CategoryProvider>(context, listen: false)
+                    .listFavoriteCategories,
+              ),
+            );
           },
         ),
       ),
