@@ -29,7 +29,7 @@ class OrderDetailModel {
   late ShippingAddressModel address;
   late List<CartModel> categories;
   late TimeOrderModel time;
-  late int typeOrder;
+  late int? typeOrder;
 
   OrderDetailModel({
     this.id = '',
@@ -41,7 +41,7 @@ class OrderDetailModel {
     required this.address,
     required this.time,
     required this.categories,
-    required this.typeOrder,
+    this.typeOrder,
   });
 
   OrderDetailModel.fromJson(Map<String, dynamic> json) {
@@ -54,21 +54,19 @@ class OrderDetailModel {
     address = json['address'];
     time = TimeOrderModel.fromJson(json['time']);
     categories = json['categories'].map((json) => CartModel.fromJson(json));
-    this.typeOrder = json['typeOrder'] ?? 0;
+    this.typeOrder = json['typeOrder'] ?? OrderType.PURCHASEORDER.index;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.id;
+    data['id'] = this.id;
     data['idUser'] = this.idUser;
     data['name'] = this.name;
     data['statusOrder'] = this.statusOrder;
     data['totalPrice'] = this.totalPrice;
     data['methodPayment'] = this.methodPayment;
-    data['address'] = this.address;
-    data['time'] = this.time;
+    data['address'] = address.id;
     data['categories'] = this.categories.map((data) => data.id);
-    data['typeOrder'] = this.typeOrder;
     return data;
   }
 }

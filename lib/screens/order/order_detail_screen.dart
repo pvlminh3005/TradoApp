@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trado_app_uit/models/cart_model.dart';
+import 'package:trado_app_uit/screens/message/message_detail_screen.dart';
 import '/components/loading/loading_app.dart';
 import '/models/category_model.dart';
 import '/services/order_api.dart';
@@ -60,6 +61,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   horizontal: AppDimen.horizontalSpacing_16,
                 ),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     _buildHeader(
                       icon: Icons.local_shipping_outlined,
@@ -72,7 +74,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     ),
                     _buildShippingAddress(context),
                     _buildListCategories(snapshot.data!.categories),
-                    _buildTotalPrice(),
+                    _buildTotalPrice(snapshot.data!.totalPrice!),
                     _buildHeader(
                       icon: Icons.payments_outlined,
                       title: 'Phương thức thanh toán',
@@ -140,16 +142,18 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       constraints: BoxConstraints(
         maxHeight: 350,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: categories.map((cart) {
-          return CategoryOrderItem(category: cart.category);
-        }).toList(),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: categories.map((cart) {
+            return CategoryOrderItem(category: cart.category);
+          }).toList(),
+        ),
       ),
     );
   }
 
-  Widget _buildTotalPrice() {
+  Widget _buildTotalPrice(int price) {
     return Container(
       padding:
           const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_10),
@@ -168,7 +172,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             fontWeight: FontWeight.w700,
           ),
           CustomText(
-            '${FormatPrice(7000 + 10300)} đ',
+            '${FormatPrice(price)} đ',
             fontWeight: FontWeight.w700,
             fontSize: FontSize.MEDIUM + 1,
             color: kPrimaryColor,
@@ -259,7 +263,13 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     return PrimaryButton(
       title: 'Liên hệ nhà bán hàng',
       margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing_16),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => MessageDetailScreen(
+            title: 'Ha Nhat Linh',
+          ),
+        ));
+      },
     );
   }
 }

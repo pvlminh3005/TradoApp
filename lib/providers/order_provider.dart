@@ -33,13 +33,25 @@ class OrderProvider with ChangeNotifier {
             .defaultAddress;
     List<CartModel> categories =
         Provider.of<CartProvider>(context, listen: false).listCheckCart;
-    // Map<String, dynamic> data = OrderDetailModel(
-    //   idUser: AuthController.idUser,
+
+    // OrderDetailModel order = OrderDetailModel(
+    //   idUser: Auth,
     //   address: address,
     //   time: time,
     //   categories: categories,
     //   typeOrder: typeOrder,
-    // ).toJson();
+    // );
+
+    await Future.delayed(Duration(seconds: 2));
+    _listOrders.add(
+      OrderModel(
+        idOrder: 'order4',
+        idUser: 'user1',
+        totalPrice: totalPrice!,
+        quantity: quantity!,
+        date: DateTime.now(),
+      ),
+    );
 
     notifyListeners();
   }

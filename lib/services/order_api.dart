@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:trado_app_uit/models/cart_model.dart';
+import 'package:trado_app_uit/services/url.dart';
 
 import '/models/category_model.dart';
 import '../models/order_detail_model.dart';
@@ -13,6 +14,22 @@ class OrderApi {
 
   OrderApi._internal();
   static final OrderApi _instance = OrderApi._internal();
+
+  static Future createOrder(Map<String, dynamic> data) async {
+    try {
+      var response = await dio.post(
+        MainURL.createOrderURL,
+        data: data,
+        options: MainURL.customOption,
+      );
+      if (response.statusCode == 200) {
+        return response.data;
+      }
+      return null;
+    } on DioError {
+      return null;
+    }
+  }
 
   static Future<List<OrderModel>> fetchAllMyOrders() async {
     try {
@@ -222,7 +239,7 @@ class OrderApi {
           address:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Semper mi magna justo, orci. Amet quis tincidunt lectus purus. Congue diam id id ut dignissim pellentesque tortor consectetur. Duis ornare eu mi vitae ac sagittis vitae porta platea.',
         ),
-        totalPrice: 80000,
+        totalPrice: 260000,
         categories: [
           CartModel(
             id: 'c3',
@@ -231,10 +248,23 @@ class OrderApi {
             category: CategoryModel(
               idUser: 'user1',
               imageUrl: [
-                'https://images.unsplash.com/photo-1641663414537-849cdf3bb847?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2MHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
+                'https://img.sosanhgia.com/images/200x200/37afa8fe4a9b486980d3a4a77585d87c/loa-bluetooth-kiem-den-de-ban-hoc.jpeg',
               ],
-              title: 'San pham 1',
-              price: 50000,
+              title: 'Đèn học cảm ứng',
+              price: 150000,
+            ),
+          ),
+          CartModel(
+            id: 'c3',
+            idUser: 'user2',
+            quantity: 1,
+            category: CategoryModel(
+              idUser: 'user1',
+              imageUrl: [
+                'https://img.sosanhgia.com/images/200x200/68355493c15c477eaaf09dc5a5a2100a/phone-holder-mount-desktop-stand-holders-black.jpeg',
+              ],
+              title: 'Giá để điện thoại',
+              price: 100000,
             ),
           ),
         ],

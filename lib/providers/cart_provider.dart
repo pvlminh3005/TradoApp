@@ -131,6 +131,9 @@ class CartProvider with ChangeNotifier {
   }
 
   void removeCategoriesInCartWhenCheckOut() {
+    _listCheckCart.forEach(
+      (checkCart) => _listCart.removeWhere((key, value) => key == checkCart.id),
+    );
     _listCheckCart = [];
     _listToCreateSaleOrders = {};
 
