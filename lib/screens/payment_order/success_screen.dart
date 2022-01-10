@@ -5,6 +5,7 @@ import 'package:trado_app_uit/constants/constants.dart';
 import 'package:trado_app_uit/constants/dimen.dart';
 import 'package:trado_app_uit/constants/sizes.dart';
 import 'package:trado_app_uit/routes/routes_manage.dart';
+import 'package:trado_app_uit/screens/payment_order/cart_screen.dart';
 import 'package:trado_app_uit/screens/splash/background_success.dart';
 import 'package:trado_app_uit/widgets/icon_success.dart';
 
@@ -75,8 +76,10 @@ class SuccessScreen extends StatelessWidget {
           title: 'Tiếp tục mua sắm',
           margin: const EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, RouteManage.cart, (Route<dynamic> route) => false);
+            Navigator.of(context)
+              ..pop()
+              ..pop();
+            Navigator.popAndPushNamed(context, RouteManage.cart);
           },
         ),
         PrimaryButton(
