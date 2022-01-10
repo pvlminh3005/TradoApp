@@ -35,7 +35,7 @@ class _OrderScreenState extends State<OrderScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<OrderProvider>(context, listen: false).fetchAllMyOrders();
+    // Provider.of<OrderProvider>(context, listen: false).fetchAllMyOrders();
   }
 
   @override

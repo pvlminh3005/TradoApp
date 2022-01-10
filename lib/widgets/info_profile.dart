@@ -39,7 +39,7 @@ class InfoWidget extends StatelessWidget {
                 email: profile!.email!.isNotEmpty ? true : false,
               ),
               BuildTitle(title: 'Mô tả chung'),
-              Description(description: ''),
+              Description(),
               BuildTitle(title: 'Thông tin giao dịch'),
               TransactionCategories(),
             ],
@@ -156,7 +156,7 @@ class Description extends StatelessWidget {
   final String description;
 
   const Description({
-    required this.description,
+    this.description = 'Chưa có mô tả nào',
     Key? key,
   }) : super(key: key);
 
@@ -184,7 +184,7 @@ class TransactionCategories extends StatelessWidget {
 
   const TransactionCategories({
     this.countCategoriesBuy = 10,
-    this.countCategoriesSell = 4,
+    this.countCategoriesSell = 7,
     Key? key,
   }) : super(key: key);
 

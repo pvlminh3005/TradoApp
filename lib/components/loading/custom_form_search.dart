@@ -19,7 +19,12 @@ class CustomFormSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showSearch(context: context, delegate: DataSearch(data: data));
+        showSearch(
+          context: context,
+          delegate: CustomSearch(
+            data: data,
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.symmetric(

@@ -125,6 +125,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           phoneNumber: data.phoneNumber,
           address: data.address,
           note: data.note,
+          showEdit: false,
         );
       },
     );
@@ -140,6 +141,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         maxHeight: 350,
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: categories.map((cart) {
           return CategoryOrderItem(category: cart.category);
         }).toList(),

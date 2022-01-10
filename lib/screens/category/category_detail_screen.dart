@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/screens/review/rating_and_review_screen.dart';
 import '/utils/conver_scaffold_messenger.dart';
 import '/components/custom_text.dart';
 import '/constants/dimen.dart';
@@ -207,12 +208,15 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
     double amountStars = rateInfo['rating'];
     int amountViews = rateInfo['review'];
     return GestureDetector(
-      onTap: () => amountViews == 0
-          ? null
-          : Navigator.of(context).pushNamed(
-              RouteManage.rating_review,
-              arguments: idCategory,
-            ),
+      onTap: amountViews == 0
+          ? () {}
+          : () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) =>
+                        RatingAndReviewScreen(idCategory: idCategory)),
+              );
+            },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(

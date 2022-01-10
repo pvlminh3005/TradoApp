@@ -93,4 +93,9 @@ class CategoryProvider with ChangeNotifier {
     listCategories.addAll(data);
     notifyListeners();
   }
+
+  Future removeCategoryFromFavorite(String id) async {
+    listFavoriteCategories.removeWhere((category) => category.id == id);
+    notifyListeners();
+  }
 }

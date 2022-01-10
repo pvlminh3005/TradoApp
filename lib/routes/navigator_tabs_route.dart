@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trado_app_uit/screens/dashboard/message_screen.dart';
+import 'package:trado_app_uit/screens/message/message_detail_screen.dart';
 import '/screens/review/write_review_screen.dart';
 import '/constants/dimen.dart';
 import '../screens/dashboard/favorite_screen.dart';

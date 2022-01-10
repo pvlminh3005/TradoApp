@@ -107,10 +107,34 @@ class _FavoriteScreenState extends State<FavoriteScreen>
                 itemBuilder: (context, index) {
                   CategoryModel category =
                       provider.listFavoriteCategories[index];
-                  return CategoryOrderItem(
-                    showMore: true,
-                    category: category,
-                    showQuantity: false,
+                  return Dismissible(
+                    key: Key(category.id),
+                    onDismissed: (direction) async {
+                      await Provider.of<CategoryProvider>(context,
+                              listen: false)
+                          .removeCategoryFromFavorite(category.id);
+                    },
+                    background: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFE6E6),
+                        borderRadius: BorderRadius.circular(AppDimen.radiusBig),
+                      ),
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          Icon(
+                            CupertinoIcons.delete_solid,
+                            size: AppDimen.icon_size_big,
+                            color: kErrorColor.withOpacity(.7),
+                          ),
+                        ],
+                      ),
+                    ),
+                    child: CategoryOrderItem(
+                      showMore: true,
+                      category: category,
+                      showQuantity: false,
+                    ),
                   );
                 },
               ),

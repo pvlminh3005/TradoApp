@@ -31,7 +31,7 @@ class _SaleOrderScreenState extends State<SaleOrderScreen> {
   void initState() {
     super.initState();
 
-    Provider.of<SaleOrderProvider>(context, listen: false).fetchAllSaleOrders();
+    // Provider.of<SaleOrderProvider>(context, listen: false).fetchAllSaleOrders();
   }
 
   @override

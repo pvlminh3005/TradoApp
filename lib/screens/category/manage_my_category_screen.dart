@@ -30,8 +30,10 @@ class ManageMyCategoryScreen extends StatelessWidget {
         },
         child: Column(
           children: [
-            _buildSearch(Provider.of<CategoryProvider>(context, listen: false)
-                .listCategories),
+            _buildSearch(
+              Provider.of<CategoryProvider>(context, listen: false)
+                  .listCategories,
+            ),
             _buildListCategories(),
           ],
         ),

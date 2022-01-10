@@ -21,6 +21,7 @@ class SaleOrderProvider with ChangeNotifier {
 
   Future<void> addToSaleOrder({
     String? idUser,
+    String? name,
     ShippingAddressModel? address,
     int? totalPrice,
     TimeOrderModel? time,
@@ -29,6 +30,7 @@ class SaleOrderProvider with ChangeNotifier {
     await Future.delayed(Duration(seconds: 2));
     var data = OrderDetailModel(
       idUser: idUser!,
+      name: name!,
       address: address!,
       time: time!,
       categories: categories,

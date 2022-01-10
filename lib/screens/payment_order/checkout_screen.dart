@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trado_app_uit/controllers/auth_controller.dart';
 import 'package:trado_app_uit/models/order_detail_model.dart';
 import '/providers/sale_order_provider.dart';
 import '/providers/cart_provider.dart';
@@ -149,6 +150,7 @@ class CheckOutScreen extends StatelessWidget {
             cartProvider.listToCreateSaleOrders.forEach((key, orders) async {
               await saleProvider.addToSaleOrder(
                 idUser: key,
+                name: AuthController.currentUser.name,
                 address: addressProvider.defaultAddress,
                 time: TimeOrderModel(
                   timeOrder: DateTime.now(),

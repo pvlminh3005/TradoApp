@@ -19,6 +19,7 @@ class AddressDetailWidget extends StatelessWidget {
   final String? address;
   final String? note;
   final AddressType type;
+  final bool showEdit;
 
   const AddressDetailWidget({
     this.id,
@@ -27,6 +28,7 @@ class AddressDetailWidget extends StatelessWidget {
     this.address,
     this.note,
     this.type = AddressType.Edit,
+    this.showEdit = true,
     Key? key,
   }) : super(key: key);
 
@@ -95,7 +97,7 @@ class AddressDetailWidget extends StatelessWidget {
                     phone: phoneNumber!,
                     address: address!,
                     note: note!,
-                    isEditAddress: true,
+                    isEditAddress: type == AddressType.Edit ? true : false,
                   ),
                 ),
               );
@@ -103,7 +105,9 @@ class AddressDetailWidget extends StatelessWidget {
           : () {
               Navigator.pushNamed(context, RouteManage.shipping_address);
             },
-      child: Image.asset('assets/images/edit-2.png'),
+      child: showEdit
+          ? Image.asset('assets/images/edit-2.png')
+          : const SizedBox.shrink(),
     );
   }
 

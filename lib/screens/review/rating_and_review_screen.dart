@@ -22,7 +22,12 @@ enum FilterOptions {
 }
 
 class RatingAndReviewScreen extends StatefulWidget {
-  const RatingAndReviewScreen({Key? key}) : super(key: key);
+  final String? idCategory;
+
+  const RatingAndReviewScreen({
+    this.idCategory,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<RatingAndReviewScreen> createState() => _RatingAndReviewScreenState();
@@ -56,10 +61,9 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String idCategory = ModalRoute.of(context)?.settings.arguments as String;
     List<RateModel> listRates =
         Provider.of<RateReviewProvider>(context, listen: false)
-            .findRateByIdCategory(idCategory);
+            .findRateByIdCategory(widget.idCategory!);
 
     return Scaffold(
       appBar: AppBarWidget(
@@ -70,7 +74,7 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
       body: CustomRefreshPage(
         child: Column(
           children: [
-            HeaderInfo(idCategory: idCategory),
+            HeaderInfo(idCategory: widget.idCategory!),
             Expanded(
                 child: Padding(
               padding: const EdgeInsets.all(10.0),

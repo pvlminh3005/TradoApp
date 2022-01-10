@@ -228,6 +228,14 @@ class OrderApi {
             id: 'c3',
             idUser: 'user2',
             quantity: 1,
+            category: CategoryModel(
+              idUser: 'user1',
+              imageUrl: [
+                'https://images.unsplash.com/photo-1641663414537-849cdf3bb847?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2MHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
+              ],
+              title: 'San pham 1',
+              price: 50000,
+            ),
           ),
         ],
         time: TimeOrderModel(
