@@ -144,6 +144,7 @@ class CheckOutScreen extends StatelessWidget {
             ShippingAddressProvider addressProvider =
                 Provider.of<ShippingAddressProvider>(context, listen: false);
             await provider.addToOrder(
+              context,
               totalPrice: (totalPrice + deliveryPrice - voucherPrice),
               quantity: quantity,
             );

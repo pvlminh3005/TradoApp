@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trado_app_uit/controllers/auth_controller.dart';
+import 'package:trado_app_uit/models/cart_model.dart';
 import 'package:trado_app_uit/models/order_detail_model.dart';
+import 'package:trado_app_uit/models/shipping_address_model.dart';
+import 'package:trado_app_uit/providers/cart_provider.dart';
+import 'package:trado_app_uit/providers/shipping_address_provider.dart';
 import 'package:trado_app_uit/services/order_api.dart';
 
 class OrderProvider with ChangeNotifier {
@@ -16,20 +22,24 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addToOrder({
+  Future<void> addToOrder(
+    BuildContext context, {
     int? totalPrice,
     int? quantity,
   }) async {
     await Future.delayed(Duration(seconds: 2));
-    _listOrders.add(
-      OrderModel(
-        idOrder: 'order4',
-        idUser: 'user1',
-        totalPrice: totalPrice!,
-        quantity: quantity!,
-        date: DateTime.now(),
-      ),
-    );
+    ShippingAddressModel address =
+        Provider.of<ShippingAddressProvider>(context, listen: false)
+            .defaultAddress;
+    List<CartModel> categories =
+        Provider.of<CartProvider>(context, listen: false).listCheckCart;
+    // Map<String, dynamic> data = OrderDetailModel(
+    //   idUser: AuthController.idUser,
+    //   address: address,
+    //   time: time,
+    //   categories: categories,
+    //   typeOrder: typeOrder,
+    // ).toJson();
 
     notifyListeners();
   }

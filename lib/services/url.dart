@@ -21,6 +21,7 @@ class MainURL {
   static String cart = 'cart';
   static String review = 'review';
   static String room = '/room';
+  static String order = '/order';
 
   //register
   static String registerURL = '$mainURL$account$register';
@@ -35,6 +36,7 @@ class MainURL {
   //product
   static String productURL = '$mainURL$product';
   static String productUserURL = '$mainURL$product/user';
+  static String updateProductURL = '$mainURL$product/update';
   static String productHomeURL = '$mainURL$product/home';
 
   //address
@@ -51,6 +53,12 @@ class MainURL {
   static String newReviewURL = '$mainURL$review';
   static String userReviewURL = '$mainURL$review/user';
   static String productReviewURL = '$mainURL$review/product';
+
+  //order
+  static String createOrderURL = '$mainURL$order/create';
+  static String orderIdURL = '$mainURL$order/orderid';
+  static String orderBuyerURL = '$mainURL$order/orderbuyer';
+  static String orderSellerURL = '$mainURL$order/orderseller';
 
   //review
   static String getRoomURL = '$mainURL$room';

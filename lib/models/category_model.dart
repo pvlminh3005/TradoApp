@@ -43,7 +43,7 @@ class CategoryModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.id;
+    data['id'] = this.id;
     data['idUserSell'] = this.idUser;
     data['title'] = this.title;
     data['description'] = this.description;

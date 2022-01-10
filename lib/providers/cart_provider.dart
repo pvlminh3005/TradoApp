@@ -6,8 +6,8 @@ class CartProvider with ChangeNotifier {
   late Map<String, CartModel> _listCart = {};
   Map<String, CartModel> get listCart => _listCart;
 
-  late Map<String, CartModel> _listCheckCart = {};
-  Map<String, CartModel> get listCheckCart => _listCheckCart;
+  List<CartModel> _listCheckCart = [];
+  List<CartModel> get listCheckCart => _listCheckCart;
 
   //when pay categories in cart, app auto create bill orders to salers
   late Map<String, List<CartModel>> _listToCreateSaleOrders = {};
@@ -18,14 +18,14 @@ class CartProvider with ChangeNotifier {
 
   int get totalAmount {
     int _total = 0;
-    _listCheckCart.forEach((key, cart) {
+    _listCheckCart.forEach((cart) {
       _total += cart.category!.price * cart.category!.quantity;
     });
     return _total;
   }
 
   void reloadCheckCart() {
-    _listCheckCart = {};
+    _listCheckCart = [];
     _listToCreateSaleOrders = {};
   }
 
@@ -80,7 +80,7 @@ class CartProvider with ChangeNotifier {
 
   //add to checkcart <==> create bill
   void addToCheckCart(String idCategory) {
-    _listCheckCart.putIfAbsent(idCategory, () => _listCart[idCategory]!);
+    _listCheckCart.add(_listCart[idCategory]!);
 
     String key = _listCart[idCategory]!.idUser!;
     if (_listToCreateSaleOrders.containsKey(key)) {
@@ -100,16 +100,11 @@ class CartProvider with ChangeNotifier {
       );
     }
 
-    print('KEY: $key, DATA: ${_listToCreateSaleOrders}');
-
     notifyListeners();
   }
 
   void removeCheckCart(String idCategory) {
-    var key = _listCheckCart[idCategory]!.idUser;
-    _listToCreateSaleOrders[key]!
-        .removeWhere((order) => order.category!.id == idCategory);
-    _listCheckCart.removeWhere((key, category) => key == idCategory);
+    _listCheckCart.removeWhere((cart) => cart.category!.id == idCategory);
     notifyListeners();
   }
 
@@ -136,10 +131,7 @@ class CartProvider with ChangeNotifier {
   }
 
   void removeCategoriesInCartWhenCheckOut() {
-    _listCheckCart.forEach(
-      (keyCheckCart, value) =>
-          _listCart.removeWhere((key, value) => key == keyCheckCart),
-    );
+    _listCheckCart = [];
     _listToCreateSaleOrders = {};
 
     notifyListeners();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/components/loading/loading_app.dart';
 import 'package:trado_app_uit/controllers/auth_controller.dart';
 import '/models/category_model.dart';
 import '/services/category_api.dart';
@@ -96,6 +97,20 @@ class CategoryProvider with ChangeNotifier {
 
   Future removeCategoryFromFavorite(String id) async {
     listFavoriteCategories.removeWhere((category) => category.id == id);
+    notifyListeners();
+  }
+
+  Future updateCategory(CategoryModel category) async {
+    LoadingApp.LOADWAITING(title: 'Đang cập nhật');
+    var data = await CategoryApi.updateCategory(category.toJson());
+    if (data == null) {
+      LoadingApp.LOADFAILED(title: 'Cập nhật thất bại');
+      notifyListeners();
+      return;
+    }
+    await fetchAllCategoriesMyUser();
+    LoadingApp.LOADSUCCESS(title: 'Cập nhật thành công!');
+    await Future.delayed(Duration(seconds: 1));
     notifyListeners();
   }
 }

@@ -87,16 +87,19 @@ class CategoryApi {
     return data;
   }
 
-  static Future<void> updateCategory(Map<String, dynamic> data) async {
+  static Future updateCategory(Map<String, dynamic> data) async {
     try {
-      // var response = await dio.put(
-      //   MainURL.updateProductURL,
-      //   data: data,
-      //   options: MainURL.customOption,
-      // );
-      // if(response.statusCode == 200){
-
-      // }
+      print('updating---');
+      var response = await dio.post(
+        MainURL.updateProductURL,
+        data: data,
+        options: MainURL.customOption,
+      );
+      print(response.data['product']);
+      if (response.statusCode == 200) {
+        return response.data['product'];
+      }
+      return null;
     } on DioError {
       return null;
     }

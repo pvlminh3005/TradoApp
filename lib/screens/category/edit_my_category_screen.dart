@@ -392,7 +392,22 @@ class _EditMyCategoryScreenState extends State<EditMyCategoryScreen> {
             builder: (ctx, provider, _) => Flexible(
               child: PrimaryButton(
                 title: 'Chỉnh sửa',
-                onPressed: () async {},
+                onPressed: () async {
+                  await provider.updateCategory(
+                    CategoryModel(
+                      id: widget.category!.id,
+                      idUser: widget.category!.idUser,
+                      imageUrl: listFiles.isEmpty ? [] : listConvertFiles,
+                      title: nameProductController.text,
+                      description: descriptionProductController.text,
+                      price: int.parse(priceProductController.text),
+                      priceSale: int.parse(discountProductController.text),
+                      quantity: int.parse(quantityProductController.text),
+                      status: status,
+                    ),
+                  );
+                  Navigator.pop(context, true);
+                },
               ),
             ),
           ),
