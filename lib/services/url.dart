@@ -20,6 +20,7 @@ class MainURL {
   static String address = '/tagshipping';
   static String cart = 'cart';
   static String review = 'review';
+  static String room = '/room';
 
   //register
   static String registerURL = '$mainURL$account$register';
@@ -50,6 +51,9 @@ class MainURL {
   static String newReviewURL = '$mainURL$review';
   static String userReviewURL = '$mainURL$review/user';
   static String productReviewURL = '$mainURL$review/product';
+
+  //review
+  static String getRoomURL = '$mainURL$room';
 
   static Options customOption = Options(
     headers: {MainURL.headerToken: AuthPreferences.getToken() ?? ''},

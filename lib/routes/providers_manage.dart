@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:trado_app_uit/providers/room_provider.dart';
 
 import '/providers/sale_order_provider.dart';
 import '/providers/shipping_address_provider.dart';
@@ -35,6 +36,9 @@ class ProviderManage {
     ),
     ChangeNotifierProvider(
       create: (_) => ShippingAddressProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => RoomProvider(),
     ),
   ];
 }
