@@ -54,13 +54,13 @@ class NotificationProvider with ChangeNotifier {
 
   Future updateNotification(BuildContext context, String id) async {
     Future.wait(_listNotifications.map((notification) async {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                OrderDetailScreen(idOrder: notification.idOrder)),
-      );
       if (notification.id == id) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  OrderDetailScreen(idOrder: notification.idOrder)),
+        );
         await Provider.of<OrderProvider>(context, listen: false)
             .fetchOrderById(notification.idOrder!);
 

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:trado_app_uit/utils/auth_preferences.dart';
 import '/controllers/auth_controller.dart';
 import '/services/url.dart';
 import '/models/shipping_address_model.dart';
@@ -12,14 +13,16 @@ class AddressApi {
   AddressApi._internal();
   static final AddressApi _instance = AddressApi._internal();
 
-  static Future fetchAddresses() async {
+  static Future<List<ShippingAddressModel>> fetchAddresses() async {
     try {
       String idUser = AuthController.idUser;
 
       var response = await dio.get(
         MainURL.getAddressURL,
         queryParameters: {'idUser': idUser},
-        options: MainURL.customOption,
+        options: Options(
+          headers: {MainURL.headerToken: AuthPreferences.getToken()},
+        ),
       );
 
       if (response.statusCode == 200) {
@@ -27,6 +30,7 @@ class AddressApi {
             .map((data) => ShippingAddressModel.fromJson(data))
             .toList();
       }
+      return [];
     } on DioError {
       return [];
     }

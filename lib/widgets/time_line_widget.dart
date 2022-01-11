@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:trado_app_uit/components/custom_text.dart';
 import 'package:trado_app_uit/constants/constants.dart';
 import 'package:trado_app_uit/constants/dimen.dart';
@@ -88,7 +89,7 @@ class ProcessWidget extends StatelessWidget {
             SizedBox(height: 8.0),
             isProcessed
                 ? CustomText(
-                    '09-09-2021 21:15',
+                    '${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())}',
                     fontSize: FontSize.SMALL - 1,
                     color: Color(0xFF909090),
                   )

@@ -14,11 +14,11 @@ class ShippingAddressProvider with ChangeNotifier {
 
   Future<void> fetchAllAddresses() async {
     _listAddresses = await AddressApi.fetchAddresses();
-    fetchDefaultAddress();
+    await fetchDefaultAddress();
     notifyListeners();
   }
 
-  void fetchDefaultAddress() {
+  Future fetchDefaultAddress() async {
     _defaultAddress = _listAddresses.firstWhere(
       (address) => address.defaultAddress == true,
       orElse: () => ShippingAddressModel(),

@@ -26,7 +26,7 @@ class OrderDetailScreen extends StatefulWidget {
   final String? idOrder;
 
   const OrderDetailScreen({
-    this.processing = 0,
+    this.processing = 1,
     this.idOrder,
     Key? key,
   }) : super(key: key);

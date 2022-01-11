@@ -3,6 +3,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trado_app_uit/components/loading/loading_app.dart';
+import 'package:trado_app_uit/controllers/auth_controller.dart';
+import 'package:trado_app_uit/providers/shipping_address_provider.dart';
 import 'package:trado_app_uit/screens/dashboard/message_screen.dart';
 import 'package:trado_app_uit/screens/message/message_detail_screen.dart';
 import '/screens/review/write_review_screen.dart';
@@ -35,6 +39,20 @@ class _NavigatorTabState extends State<NavigatorTab> {
     //WriteReviewScreen(),
     ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    fetchCurrentUser();
+    super.initState();
+  }
+
+  Future<void> fetchCurrentUser() async {
+    LoadingApp.loadingPage(seconds: 3);
+
+    await AuthController.getCurrentUser();
+    await Provider.of<ShippingAddressProvider>(context, listen: false)
+        .fetchAllAddresses();
+  }
 
   @override
   Widget build(BuildContext context) {
