@@ -23,7 +23,7 @@ class NotificationItem extends StatelessWidget {
     return Consumer<NotificationProvider>(builder: (ctx, provider, _) {
       return InkWell(
         onTap: () async {
-          await provider.updateNotification(context, notification.id);
+          await provider.updateNotification(context, notification.id!);
         },
         child: Container(
           color: notification.checked ? kCardColor : Color(0xFFEEEEEE),
@@ -39,7 +39,7 @@ class NotificationItem extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          notification.imageUrl,
+                          notification.imageUrl!,
                           width: size.width * .2,
                           height: size.width * .2,
                           fit: BoxFit.cover,
@@ -61,7 +61,7 @@ class NotificationItem extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           CustomText(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis viverra arcu vel sagittis consequat facilisis tempus .',
+                            'Đơn hàng của bạn đã được xác nhận và giao trong thời gian sớm nhất .',
                             color: kTextColorGrey,
                             fontSize: FontSize.SMALL,
                           ),
@@ -74,7 +74,7 @@ class NotificationItem extends StatelessWidget {
               Container(
                 alignment: Alignment.centerRight,
                 child: CustomText(
-                  '${DateFormat('dd/MM/yyy').format(notification.date)}',
+                  '${DateFormat('dd/MM/yyy').format(notification.date!)}',
                   fontSize: FontSize.SMALL,
                   fontWeight: FontWeight.w700,
                 ),

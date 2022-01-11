@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trado_app_uit/controllers/auth_controller.dart';
 import 'package:trado_app_uit/models/order_detail_model.dart';
+import 'package:trado_app_uit/providers/notification_provider.dart';
 import '/providers/sale_order_provider.dart';
 import '/providers/cart_provider.dart';
 import '/providers/order_provider.dart';
@@ -143,6 +144,8 @@ class CheckOutScreen extends StatelessWidget {
                 Provider.of<SaleOrderProvider>(context, listen: false);
             ShippingAddressProvider addressProvider =
                 Provider.of<ShippingAddressProvider>(context, listen: false);
+            NotificationProvider notiProvider =
+                Provider.of<NotificationProvider>(context, listen: false);
             await provider.addToOrder(
               context,
               totalPrice: (totalPrice + deliveryPrice - voucherPrice),
@@ -162,7 +165,15 @@ class CheckOutScreen extends StatelessWidget {
                 totalPrice: checkoutPrice,
                 // categories: orders,
               );
+
+              await Future.wait(orders.map((data) async {
+                await notiProvider.createNotification(
+                  idCategory: data.category!.id,
+                  imageUrl: data.category!.imageUrl[0],
+                );
+              }));
             });
+
             cartProvider.removeCategoriesInCartWhenCheckOut();
             Navigator.pushNamed(context, RouteManage.success);
           },

@@ -11,10 +11,7 @@ import 'custom_icon.dart';
 class CustomSearch extends SearchDelegate {
   final List<CategoryModel> data;
 
-  final List<String> recentSearch = [
-    'Sony',
-    '911',
-  ];
+  final List<String> recentSearch = [];
 
   CustomSearch({required this.data});
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trado_app_uit/screens/message/message_detail_screen.dart';
 import '/widgets/custom_avatar.dart';
 import '/models/user_model.dart';
 
@@ -11,7 +12,7 @@ import '/constants/constants.dart';
 
 import '/constants/sizes.dart';
 
-class HeaderInfoProfile extends StatelessWidget {
+class HeaderInfoProfile extends StatefulWidget {
   late UserModel? profile;
   final bool isMyProfile;
 
@@ -21,6 +22,12 @@ class HeaderInfoProfile extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<HeaderInfoProfile> createState() => _HeaderInfoProfileState();
+}
+
+class _HeaderInfoProfileState extends State<HeaderInfoProfile> {
+  bool follow = false;
   Widget _buildAmountFollow(num follow, String content) {
     return RichText(
       text: TextSpan(
@@ -43,7 +50,7 @@ class HeaderInfoProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (profile == null) return const SizedBox.shrink();
+    if (widget.profile == null) return const SizedBox.shrink();
     return Container(
       color: kCardColor,
       child: Column(
@@ -56,7 +63,7 @@ class HeaderInfoProfile extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {},
                   child: CustomAvatar(
-                    imageUrl: profile!.imageUrl!,
+                    imageUrl: widget.profile!.imageUrl!,
                     radius: 40,
                   ),
                 ),
@@ -65,45 +72,47 @@ class HeaderInfoProfile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildInfoAccount(
-                      name: profile!.name!,
-                      countPerStars: profile!.countPerStars!,
-                      countRating: profile!.countRating!,
+                      name: widget.profile!.name!,
+                      countPerStars: widget.profile!.countPerStars!,
+                      countRating: widget.profile!.countRating!,
                     ),
-                    _buildAmountFollow(profile!.fame!, 'quan tâm'),
+                    _buildAmountFollow(widget.profile!.fame!, 'quan tâm'),
                   ],
                 ),
               ],
             ),
           ),
-          !isMyProfile
-              ? _buildButtonProfile()
+          !widget.isMyProfile
+              ? _buildButtonProfile(context)
               : const SizedBox(height: AppDimen.spacing_1),
         ],
       ),
     );
   }
 
-  _buildButtonProfile() {
+  _buildButtonProfile(BuildContext context) {
     return Row(
       children: [
         Flexible(
           child: CustomButton(
-            'Quan tâm',
+            follow ? 'Đang quan tâm' : 'Quan tâm',
             margin: const EdgeInsets.all(AppDimen.spacing_1),
             padding: const EdgeInsets.symmetric(
                 vertical: AppDimen.verticalSpacing_10),
             radius: AppDimen.radiusBig_1,
-            textColor: kTextLight,
-            backgroundColor: kPrimaryColor,
+            textColor: follow ? Colors.white : kTextLight,
+            backgroundColor: follow ? kColorGreen : kPrimaryColor,
             fontSize: FontSize.MEDIUM,
             onTap: () {
-              print('Quan Tam');
+              setState(() {
+                follow = !follow;
+              });
             },
           ),
         ),
         Flexible(
           child: CustomButton(
-            'Báo cáo',
+            'Nhắn tin',
             textColor: kTextDark,
             padding: const EdgeInsets.symmetric(
                 vertical: AppDimen.verticalSpacing_10),
@@ -111,7 +120,12 @@ class HeaderInfoProfile extends StatelessWidget {
             backgroundColor: kBackgroundColor,
             radius: AppDimen.radiusBig_1,
             fontSize: FontSize.MEDIUM,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    MessageDetailScreen(title: widget.profile!.name),
+              ));
+            },
           ),
         ),
       ],

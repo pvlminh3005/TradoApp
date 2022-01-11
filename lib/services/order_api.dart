@@ -239,7 +239,7 @@ class OrderApi {
           address:
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Semper mi magna justo, orci. Amet quis tincidunt lectus purus. Congue diam id id ut dignissim pellentesque tortor consectetur. Duis ornare eu mi vitae ac sagittis vitae porta platea.',
         ),
-        totalPrice: 260000,
+        totalPrice: 285000,
         categories: [
           CartModel(
             id: 'c3',
@@ -264,7 +264,7 @@ class OrderApi {
                 'https://img.sosanhgia.com/images/200x200/68355493c15c477eaaf09dc5a5a2100a/phone-holder-mount-desktop-stand-holders-black.jpeg',
               ],
               title: 'Giá để điện thoại',
-              price: 100000,
+              price: 125000,
             ),
           ),
         ],

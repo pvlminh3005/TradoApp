@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trado_app_uit/providers/order_provider.dart';
@@ -18,6 +20,23 @@ class NotificationProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future createNotification({String? idCategory, String? imageUrl}) async {
+    await Future.delayed(Duration(seconds: 1));
+    int index = _listNotifications.length;
+    int random = 100001 + Random().nextInt(999999 - 100001);
+    _listNotifications.insert(
+        0,
+        NotificationModel(
+          id: 'noti$index',
+          idCategory: idCategory!,
+          idOrder: random.toString(),
+          imageUrl: imageUrl!,
+          date: DateTime.now(),
+        ));
+
+    notifyListeners();
+  }
+
   Future<dynamic> refreshNotifications() async {
     notifyListeners();
     return _listNotifications = [
@@ -35,17 +54,16 @@ class NotificationProvider with ChangeNotifier {
 
   Future updateNotification(BuildContext context, String id) async {
     Future.wait(_listNotifications.map((notification) async {
-      print(notification.id);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                OrderDetailScreen(idOrder: notification.idOrder)),
+      );
       if (notification.id == id) {
         await Provider.of<OrderProvider>(context, listen: false)
-            .fetchOrderById(notification.idOrder);
+            .fetchOrderById(notification.idOrder!);
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  OrderDetailScreen(idOrder: notification.idOrder)),
-        );
         return notification.checked = true;
       }
     }));
